@@ -1,5 +1,5 @@
 Logs
-*.meta
+# *.meta
 Library
 Temp
 ProjectSettings
