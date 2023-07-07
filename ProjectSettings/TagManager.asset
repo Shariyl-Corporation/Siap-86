@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 2162616097
+    locked: 0
+  - name: Road
+    uniqueID: 1977679813
+    locked: 0
+  - name: Sidewalk
+    uniqueID: 16675335
+    locked: 0
+  - name: Building
+    uniqueID: 2529321183
+    locked: 0
+  - name: Misc
+    uniqueID: 1375814207
+    locked: 0
