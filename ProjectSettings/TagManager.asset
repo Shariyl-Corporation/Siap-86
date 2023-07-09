@@ -50,7 +50,13 @@ TagManager:
   - name: Sidewalk
     uniqueID: 16675335
     locked: 0
-  - name: Building
+  - name: Building Back
+    uniqueID: 2375541875
+    locked: 0
+  - name: Building Between
+    uniqueID: 832462911
+    locked: 0
+  - name: Building Front
     uniqueID: 2529321183
     locked: 0
   - name: Misc
