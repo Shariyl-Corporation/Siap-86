@@ -46,15 +46,9 @@ public class Crowds : MonoBehaviour
         {
             Debug.Log("Spawn point: " + p.x + " " + p.y);
         }
-        spawnRandomPedestrian();
-        spawnRandomPedestrian();
-        spawnRandomPedestrian();
-        spawnRandomPedestrian();
-        spawnRandomPedestrian();
-        spawnRandomPedestrian();
-        spawnRandomPedestrian();
-        spawnRandomPedestrian();
-        spawnRandomPedestrian();
+
+        for (int i = 0; i < 50; i++)
+            spawnRandomPedestrian();
     }
 
     // Update is called once per frame
