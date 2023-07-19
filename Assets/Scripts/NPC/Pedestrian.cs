@@ -12,7 +12,10 @@ public class Pedestrian : MonoBehaviour
 
 
     private HashSet<Vector3> visited;
+    private HashSet<TileBase> visited2;
     private Vector3 targetPosition;
+    private Vector3 destination;
+    private Vector3 current_direction;
 
     // a lil bit janky but idk
     [ContextMenu("Do Random Walk")]
@@ -26,6 +29,7 @@ public class Pedestrian : MonoBehaviour
         directions.Add(Vector2Int.up);
 
         Debug.Log("Position: " + p.x + " " + p.y);
+
         for (int i = 4; i > 0; i--)
         {
             var randomInt = Random.Range(0, i);
@@ -53,23 +57,25 @@ public class Pedestrian : MonoBehaviour
         visited = new HashSet<Vector3>();
     }
 
-    [ContextMenu("Let the AI choose")]
-    public void doRandomActivity()
+    public void do_astar()
     {
-        float randomNumber = Random.Range(0, 1);
-
-        if (randomNumber < 0.01)
+        foreach (TileBase tile in get_neighbor_tiles(pathTilemap.WorldToCell(transform.position)))
         {
-            // do idle animation
+            if (tile != null)
+            {
+                Debug.Log("Tile not null name: " + tile.name);
+                if (tile.name == spritePathName && !visited2.Contains(tile))
+                {
+                    // move
+                    // Debug.Log("MOVING TO:" + test.x + " " + test.y);
+                    // targetPosition = test;
+                    visited2.Add(tile);
+                    return;
+                }
+                Debug.Log("Tile is visited");
+            }
         }
-        else
-        {
-            // do random walk
-            randomWalk();
-        }
-
     }
-
     void Awake()
     {
         visited = new HashSet<Vector3>();
@@ -97,5 +103,19 @@ public class Pedestrian : MonoBehaviour
     private void MoveTowardsTargetPosition()
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+    }
+    private List<TileBase> get_neighbor_tiles(Vector3Int cell_position)
+    {
+        List<TileBase> neighbor = new List<TileBase>();
+        neighbor.Add(pathTilemap.GetTile(cell_position + Vector3Int.up));
+        neighbor.Add(pathTilemap.GetTile(cell_position + Vector3Int.right));
+        neighbor.Add(pathTilemap.GetTile(cell_position + Vector3Int.down));
+        neighbor.Add(pathTilemap.GetTile(cell_position + Vector3Int.left));
+
+        return neighbor;
+    }
+    public void setDestination(Vector3 destination)
+    {
+        this.destination = destination;
     }
 }
