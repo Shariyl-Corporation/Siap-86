@@ -1,121 +1,93 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+
+
 public class Pedestrian : MonoBehaviour
 {
-    [SerializeField] private Tilemap pathTilemap;
-    [SerializeField] private Grid pathGrid;
+    /*
+    Post-fix -Loc means it use the local grid coordinate instead of the world coordinate
+    */
+    [SerializeField] private PedestrianManager pedestrianManager;
     [SerializeField] private float speed = 1;
-    [SerializeField] private string spritePathName;
 
-
-    private HashSet<Vector3> visited;
     private HashSet<TileBase> visited2;
     private Vector3 targetPosition;
-    private Vector3 destination;
-    private Vector3 current_direction;
+    private Vector3 destinationCell;
+    private Vector3 prevCell;
 
-    // a lil bit janky but idk
-    [ContextMenu("Do Random Walk")]
-    public void randomWalk()
+    // calculating cell to the destination, BOTH using the local coordinate (grid)
+    private float calculate_heuristic_at(Vector3Int cell)
     {
-        Vector3 p = transform.position;
-        List<Vector2Int> directions = new List<Vector2Int>();
-        directions.Add(Vector2Int.right);
-        directions.Add(Vector2Int.down);
-        directions.Add(Vector2Int.left);
-        directions.Add(Vector2Int.up);
-
-        Debug.Log("Position: " + p.x + " " + p.y);
-
-        for (int i = 4; i > 0; i--)
-        {
-            var randomInt = Random.Range(0, i);
-            Vector3 test = p + ((Vector3Int)directions[randomInt]);
-            Vector3Int w2c = pathTilemap.WorldToCell(test);
-            TileBase tile = pathTilemap.GetTile(w2c);
-            if (tile != null)
-            {
-                Debug.Log("Tile not null name: " + tile.name);
-                if (tile.name == spritePathName && !visited.Contains(test))
-                {
-                    // move
-                    Debug.Log("MOVING TO:" + test.x + " " + test.y);
-                    targetPosition = test;
-                    visited.Add(test);
-                    return;
-                }
-                Debug.Log("Tile is visited");
-            }
-            directions.RemoveAt(randomInt);
-        }
-        Debug.Log("CANT MOVE");
-
-        // reset visited cuz the pedestrian just making a loop
-        visited = new HashSet<Vector3>();
+        return Vector3.Distance(cell, destinationCell);
     }
 
-    public void do_astar()
+    // it is actually not an a star, cuz it cant backtrack, maybe hill climbing?
+    private void do_astar_step()
     {
-        foreach (TileBase tile in get_neighbor_tiles(pathTilemap.WorldToCell(transform.position)))
+        Vector3Int decision = new Vector3Int();
+        float min_heuristic = float.PositiveInfinity;
+        var dict = pedestrianManager.get_neighbor_tiles_world(transform.position);
+        foreach (var kp in dict)
         {
-            if (tile != null)
+            if (kp.Value != null && (Vector3)kp.Key != prevCell)
             {
-                Debug.Log("Tile not null name: " + tile.name);
-                if (tile.name == spritePathName && !visited2.Contains(tile))
+                float heuristic = calculate_heuristic_at(kp.Key);
+                if (heuristic < min_heuristic)
                 {
-                    // move
-                    // Debug.Log("MOVING TO:" + test.x + " " + test.y);
-                    // targetPosition = test;
-                    visited2.Add(tile);
-                    return;
+                    decision = kp.Key;
+                    min_heuristic = heuristic;
                 }
-                Debug.Log("Tile is visited");
             }
         }
+
+        // cant go anywhere
+        if (min_heuristic == float.PositiveInfinity)
+        {
+            Destroy(gameObject);
+        }
+
+        prevCell = transform.position;
+        targetPosition = decision;
+        Debug.Log("Move Towards: " + targetPosition.x + " " + targetPosition.y);
+        Debug.Log("From: " + transform.position.x + " " + transform.position.y);
     }
     void Awake()
     {
-        visited = new HashSet<Vector3>();
-        targetPosition = transform.position;
     }
     void Start()
     {
+        targetPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var moving = (Vector3)transform.position != targetPosition;
-
-        if (moving)
+        if (transform.position != targetPosition)
         {
             MoveTowardsTargetPosition();
         }
         else
         {
-            randomWalk();
+            do_astar_step();
         }
+
     }
 
     private void MoveTowardsTargetPosition()
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
     }
-    private List<TileBase> get_neighbor_tiles(Vector3Int cell_position)
+    private void step(Vector3Int dir)
     {
-        List<TileBase> neighbor = new List<TileBase>();
-        neighbor.Add(pathTilemap.GetTile(cell_position + Vector3Int.up));
-        neighbor.Add(pathTilemap.GetTile(cell_position + Vector3Int.right));
-        neighbor.Add(pathTilemap.GetTile(cell_position + Vector3Int.down));
-        neighbor.Add(pathTilemap.GetTile(cell_position + Vector3Int.left));
-
-        return neighbor;
+        targetPosition = transform.position + dir;
     }
-    public void setDestination(Vector3 destination)
+
+    public void setDestination(Vector3Int destinationCell)
     {
-        this.destination = destination;
+        this.destinationCell = destinationCell;
     }
 }

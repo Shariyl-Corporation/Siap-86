@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1692091909517678681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1692091909517678695}
+  - component: {fileID: 1692091909517678680}
+  m_Layer: 0
+  m_Name: pedman
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1692091909517678695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692091909517678681}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.572386, y: -41.942944, z: -7.7177396}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1692091909517678680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692091909517678681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9aa315d4726ae942aa31f9196343570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pedestrianGO: {fileID: 7966011975070844501, guid: 0ccfa3ee23c4f81408434eae5702bd06, type: 3}
+  spawnDelay: 1
+  grid: {fileID: 6497469210920357676, guid: 03410802900da564691acca2f66c5ec9, type: 3}
+  tilemap: {fileID: 1083639817560945867, guid: 63c7bb5305c10a547a03da91951b65a8, type: 3}
+  spawnTile: {fileID: 11400000, guid: 397997a102e37cf4c95d3d719a5a56ae, type: 2}
+  walkTile: {fileID: 11400000, guid: 04607004d93e6144296af46343967604, type: 2}
+  decisionTile: {fileID: 11400000, guid: 5e729cba1b265344797beddc5c215d76, type: 2}
+  crossTile: {fileID: 11400000, guid: 7a777084b39a89c428781ca59de15d0b, type: 2}
