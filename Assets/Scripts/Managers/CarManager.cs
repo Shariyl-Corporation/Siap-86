@@ -9,6 +9,7 @@ public class CarManager : MonoBehaviour
 {
 
     private List<Vector3Int> spawnPoints;
+    private List<Vector3Int> endPoints;
     private List<Car> cars;
     [SerializeField] private Car carGO;
     [SerializeField] private float spawnDelay = 3;
@@ -20,6 +21,8 @@ public class CarManager : MonoBehaviour
     public TileBase leftTile;
     public TileBase rightTile;
     public TileBase crossTile;
+    public TileBase endTile;
+
 
     [HideInInspector] private static Dictionary<Vector3Int, TileBase> dataFromTiles;
 
@@ -45,11 +48,11 @@ public class CarManager : MonoBehaviour
         }
 
         spawnPoints = get_all_position_for_tile(spawnTile);
+        endPoints = get_all_position_for_tile(endTile);
     }
 
     private void Start()
     {
-        spawnRandomCar();
     }
     private void Update()
     {
@@ -57,40 +60,42 @@ public class CarManager : MonoBehaviour
         if (timer > spawnDelay)
         {
             timer = 0;
+            spawnRandomCar();
         }
     }
 
-    public TileBase tileAt(Vector3 position){
+    public TileBase tileAt(Vector3 position)
+    {
         var gridPosition = grid.WorldToCell(position);
         return dataFromTiles[gridPosition];
     }
     public static Dictionary<Vector3Int, TileBase> get_turn_end_tiles(Vector3Int cell_position, Quaternion direction)
     {
         Dictionary<Vector3Int, TileBase> neighbor = new Dictionary<Vector3Int, TileBase>();
-        const int straight_gap   = 12;
+        const int straight_gap = 12;
         const int turn_right_gap = 8;
-        const int turn_left_gap  = 4;
+        const int turn_left_gap = 4;
 
         Vector3Int straight_vector = Vector3Int.RoundToInt(direction * Vector3.right);
-        Vector3Int right_vector    = Vector3Int.RoundToInt(direction * Quaternion.AngleAxis(270, Vector3.forward) * Vector3.right);
-        Vector3Int left_vector     = Vector3Int.RoundToInt(direction * Quaternion.AngleAxis(90, Vector3.forward) * Vector3.right);
+        Vector3Int right_vector = Vector3Int.RoundToInt(direction * Quaternion.AngleAxis(270, Vector3.forward) * Vector3.right);
+        Vector3Int left_vector = Vector3Int.RoundToInt(direction * Quaternion.AngleAxis(90, Vector3.forward) * Vector3.right);
 
-        Debug.Log("direction eu: " + direction.eulerAngles.x + " " + direction.eulerAngles.y + " " + direction.eulerAngles.z);
-        Debug.Log("Straight: " + straight_vector.x + " " + straight_vector.y + " " + straight_vector.z);
-        Debug.Log("right: " + right_vector.x + " " + right_vector.y + " " + right_vector.z);
-        Debug.Log("left: " + left_vector.x + " " + left_vector.y + " " + left_vector.z);
+        // Debug.Log("direction eu: " + direction.eulerAngles.x + " " + direction.eulerAngles.y + " " + direction.eulerAngles.z);
+        // Debug.Log("Straight: " + straight_vector.x + " " + straight_vector.y + " " + straight_vector.z);
+        // Debug.Log("right: " + right_vector.x + " " + right_vector.y + " " + right_vector.z);
+        // Debug.Log("left: " + left_vector.x + " " + left_vector.y + " " + left_vector.z);
 
-        var straight_cell   = cell_position + straight_vector * straight_gap;
+        var straight_cell = cell_position + straight_vector * straight_gap;
         var turn_right_cell = cell_position + (straight_vector + right_vector) * turn_right_gap;
-        var turn_left_cell  = cell_position + (straight_vector + left_vector) * turn_left_gap;
+        var turn_left_cell = cell_position + (straight_vector + left_vector) * turn_left_gap;
 
-        Debug.Log("Straight: " + straight_cell.x + " " + straight_cell.y + " " + straight_cell.z);
-        Debug.Log("right: " + turn_right_cell.x + " " + turn_right_cell.y + " " + turn_right_cell.z);
-        Debug.Log("left: " + turn_left_cell.x + " " + turn_left_cell.y + " " + turn_left_cell.z);
+        // Debug.Log("Straight: " + straight_cell.x + " " + straight_cell.y + " " + straight_cell.z);
+        // Debug.Log("right: " + turn_right_cell.x + " " + turn_right_cell.y + " " + turn_right_cell.z);
+        // Debug.Log("left: " + turn_left_cell.x + " " + turn_left_cell.y + " " + turn_left_cell.z);
 
-        neighbor.Add(straight_cell,   dataFromTiles[straight_cell]);
+        neighbor.Add(straight_cell, dataFromTiles[straight_cell]);
         neighbor.Add(turn_right_cell, dataFromTiles[turn_right_cell]);
-        neighbor.Add(turn_left_cell,  dataFromTiles[turn_left_cell]);
+        neighbor.Add(turn_left_cell, dataFromTiles[turn_left_cell]);
 
         return neighbor;
     }
@@ -137,12 +142,9 @@ public class CarManager : MonoBehaviour
         int spawnPosition = Random.Range(0, spawnPoints.Count);
         Car ped = Instantiate(carGO, spawnPoints[spawnPosition], transform.rotation);
 
-        int destinationPosition;
-        do
-        {
-            destinationPosition = Random.Range(0, spawnPoints.Count);
-        } while (destinationPosition == spawnPosition);
-        ped.setDestination(spawnPoints[destinationPosition]);
+        int destinationPosition = Random.Range(0, endPoints.Count);
+        ped.setDestination(endPoints[destinationPosition]);
+
         Debug.Log("Spawn Capsule: " + spawnPoints[spawnPosition].x + " " + spawnPoints[spawnPosition].y);
         Debug.Log("Destination Capsule: " + spawnPoints[destinationPosition].x + " " + spawnPoints[destinationPosition].y);
 
