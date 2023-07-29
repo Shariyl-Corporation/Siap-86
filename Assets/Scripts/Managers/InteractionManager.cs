@@ -19,11 +19,15 @@ public class InteractionManager : MonoBehaviour
         ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         var car = onHover(ray, hit);
 
-        if (Input.GetMouseButtonDown(0) && car != null)
+        if (car != null)
         {
-            Time.timeScale = 0;
-            isInVnMode = true;
-            startVnMode(car);
+            Time.timeScale = 0.1f;
+            if(Input.GetMouseButtonDown(0) && !isInVnMode) {
+                isInVnMode = true;
+                startVnMode(car);
+            }
+        } else {
+            Time.timeScale = 1;
         }
     }
     public GameObject onHover(Ray ray, RaycastHit2D hit)
