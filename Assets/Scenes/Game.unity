@@ -59350,10 +59350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963e01ae26b569a4db2113e0a370d81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathTilemap: {fileID: 837625045}
-  pathGrid: {fileID: 2012256570}
+  pedestrianManager: {fileID: 0}
   speed: 5
-  spritePathName: logic-tiles_0
 --- !u!136 &451818750
 CapsuleCollider:
   m_ObjectHideFlags: 0
