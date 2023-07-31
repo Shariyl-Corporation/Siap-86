@@ -4,13 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-
-
 public class Pedestrian : MonoBehaviour
 {
-    /*
-    Post-fix -Loc means it use the local grid coordinate instead of the world coordinate
-    */
     [SerializeField] private PedestrianManager pedestrianManager;
     [SerializeField] private float speed = 1;
 
@@ -18,14 +13,13 @@ public class Pedestrian : MonoBehaviour
     private Vector3 targetPosition;
     private Vector3 destinationCell;
     private Vector3 prevCell;
+    private SpriteRenderer npcSpriteRenderer;
 
-    // calculating cell to the destination, BOTH using the local coordinate (grid)
     private float calculate_heuristic_at(Vector3Int cell)
     {
         return Vector3.Distance(cell, destinationCell);
     }
 
-    // it is actually not an a star, cuz it cant backtrack, maybe hill climbing?
     private void do_astar_step()
     {
         Vector3Int decision = new Vector3Int();
@@ -44,7 +38,6 @@ public class Pedestrian : MonoBehaviour
             }
         }
 
-        // cant go anywhere
         if (min_heuristic == float.PositiveInfinity)
         {
             Destroy(gameObject);
@@ -52,18 +45,27 @@ public class Pedestrian : MonoBehaviour
 
         prevCell = transform.position;
         targetPosition = decision;
+
+        if (targetPosition.x > transform.position.x)
+            npcSpriteRenderer.flipX = false; 
+
+        else if (targetPosition.x < transform.position.x)
+            npcSpriteRenderer.flipX = true; 
+
         Debug.Log("Move Towards: " + targetPosition.x + " " + targetPosition.y);
         Debug.Log("From: " + transform.position.x + " " + transform.position.y);
     }
+
     void Awake()
     {
     }
+
     void Start()
     {
         targetPosition = transform.position;
+        npcSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (transform.position != targetPosition)
@@ -74,13 +76,19 @@ public class Pedestrian : MonoBehaviour
         {
             do_astar_step();
         }
-
     }
 
     private void MoveTowardsTargetPosition()
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+
+        if (targetPosition.x > transform.position.x)
+            npcSpriteRenderer.flipX = false; 
+
+        else if (targetPosition.x < transform.position.x)
+            npcSpriteRenderer.flipX = true; 
     }
+
     private void step(Vector3Int dir)
     {
         targetPosition = transform.position + dir;
