@@ -1,416 +1,149 @@
-﻿// using System.Collections;
-// using System.Collections.Generic;
-// using System.Linq;
-// using UnityEngine;
-// using UnityEngine.UI;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
-// public class DialogueManager : MonoBehaviour
-// {
+public class DialogueManager : MonoBehaviour
+{
 
-//     public StateManager stateManager;
-//     public UI uiManager;
+    public UI uiManager;
 
-//     public Text guyDialogue;
-//     public Text girlDialogue;
+    public TextMeshProUGUI dialogue;
 
-//     public Animator girlAnimator;
+    public Animator driverAnimator;
 
-//     public Text response;
+    public AudioClip driverSound, playerSound;
+    public AudioSource audioSource;
 
-//     public AudioClip driverSound;
-//     public AudioClip playerSound;
-//     public AudioSource audioSource;
+    void Start()
+    {
 
-//     private List<Text> optionTextBoxes = null;
-//     private List<bool> optionBoxFinished;
+        dialogue.text = "";
 
-//     private bool populatingOptions = false;
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Stop();
 
-//     void Start()
-//     {
-//         optionTextBoxes = new List<Text>();
-//         optionTextBoxes.Add(option1);
+        StartCoroutine(introDialogue());
+    }
 
-//         optionBoxFinished = new List<bool>();
+    void Update()
+    {
+        // if (populatingOptions)
+        // {
+        //     if (!optionBoxFinished.Any(x => x == false))
+        //     {
+        //         populatingOptions = false;
+        //         stateManager.setIdle(true);
+        //     }
+        // }
+    }
 
-//         guyDialogue.text = "";
-//         girlDialogue.text = "";
-//         EmptyOptions();
+    public void Converse(string guySentence, string girlSentence)
+    {
+        StartCoroutine(StartConversation(guySentence, girlSentence));
+    }
 
-//         audioSource = GetComponent<AudioSource>();
-//         audioSource.Stop();
+    private float waitTime(char letter)
+    {
+        switch (letter)
+        {
+            case '.':
+                return 0.75f;
+            case ',':
+                return 0.5f;
+            case '!':
+                return 1.0f;
+            case '?':
+                return 0.75f;
+            case '\n':
+                return 0.2f;
+            default:
+                return 0.05f;
+        }
+    }
 
-//         StartCoroutine(introDialogue());
-//     }
+    IEnumerator StartConversation(string playerSentence, string driverSentence)
+    {
+        yield return new WaitForSecondsRealtime(0.2f);
 
-//     void Update()
-//     {
-//         if (populatingOptions)
-//         {
-//             if (!optionBoxFinished.Any(x => x == false))
-//             {
-//                 populatingOptions = false;
-//                 stateManager.setIdle(true);
-//             }
-//         }
-//     }
+        playText(playerSentence, false);
 
-//     public void endGame(string guySentence, string girlSentence, string endReason)
-//     {
-//         StartCoroutine(badEnd(guySentence, girlSentence, endReason));
-//     }
+        playText(driverSentence, true);
+    }
 
-//     private IEnumerator badEnd(string guySentence, string girlSentence, string endReason)
-//     {
-//         yield return new WaitForSecondsRealtime(0.2f);
-//         guyDialogue.text = "";
-//         audioSource.clip = playerSound;
-//         audioSource.Play();
-//         foreach (char letter in guySentence.ToCharArray())
-//         {
-//             guyDialogue.text += letter;
-//             if (letter == ',' || letter == '.' || letter == '\n' || letter == '!' || letter == '?')
-//             {
-//                 audioSource.Play();
-//                 audioSource.Stop();
-//             }
-//             else
-//             {
-//                 audioSource.Play();
-//             }
-//             yield return new WaitForSecondsRealtime(waitTime(letter));
-//         }
+    public IEnumerator GiveVerdict(bool isGuilty)
+    {
+        string playerSentence = "hmm...";
+        yield return StartCoroutine(playText(playerSentence, false));
 
-//         audioSource.Stop();
-//         yield return new WaitForSecondsRealtime(1.0f);
-//         girlDialogue.text = "";
-//         girlAnimator.SetBool("upset", true);
-//         audioSource.clip = driverSound;
-//         audioSource.Play();
-//         foreach (char letter in girlSentence.ToCharArray())
-//         {
-//             if (letter == ',' || letter == '.' || letter == '\n' || letter == '!' || letter == '?')
-//             {
-//                 audioSource.Play();
-//                 audioSource.Stop();
-//             }
-//             else
-//             {
-//                 audioSource.Play();
-//             }
-//             girlDialogue.text += letter;
-//             yield return new WaitForSecondsRealtime(waitTime(letter));
-//         }
+        if (isGuilty) yield return StartCoroutine(GuiltyVerdict());
+        else  yield return StartCoroutine(InnocentVerdict());
 
-//         girlAnimator.SetBool("upset", false);
-//         audioSource.Stop();
-//         yield return new WaitForSecondsRealtime(1.0f);
-//         stateManager.endGame(false, endReason);
-//     }
+        //end conv
+    }
 
-//     public void populateOptions(List<OptionsManager.Option> options)
-//     {
-//         uiManager.disableTalk();
-//         uiManager.disableLeave();
-//         uiManager.enableBoxes(options.Count);
-//         optionBoxFinished = Enumerable.Repeat(false, options.Count).ToList();
+    public IEnumerator GuiltyVerdict() {
+        yield return new WaitForSecondsRealtime(1.0f);
 
-//         for (int i = 0; i < options.Count; ++i)
-//         {
-//             Text box = optionTextBoxes[i];
-//             StartCoroutine(FillOption(box, options[i].option, i));
-//         }
+        string playerSentence = "hmm......";
+        yield return StartCoroutine(playText(playerSentence, false));
 
-//         populatingOptions = true;
-//     }
+        playerSentence = "Ini surat tilang anda";
+        yield return StartCoroutine(playText(playerSentence, false));
+    }
+    public IEnumerator InnocentVerdict() {
+        yield return new WaitForSecondsRealtime(1.0f);
 
-//     public void Converse(string guySentence, string girlSentence)
-//     {
-//         uiManager.disableBoxes(8);
-//         StartCoroutine(StartConversation(guySentence, girlSentence));
-//     }
+        string playerSentence = "Silahkan melanjutkan perjalanan anda";
+        yield return StartCoroutine(playText(playerSentence, false));
 
-//     private void Reset()
-//     {
-//         stateManager.setIdle(true);
-//         guyDialogue.text = "";
-//         girlDialogue.text = "";
-//         EmptyOptions();
-//         uiManager.enableTalk();
-//         uiManager.enableLeave();
-//         uiManager.disableBoxes(8);
-//         uiManager.incrementTime();
-//     }
+    }
 
-//     public void EmptyOptions()
-//     {
-//         foreach (Text box in optionTextBoxes)
-//         {
-//             box.text = "";
-//         }
-//     }
+    public void Win()
+    {
+        // uiManager.disableTalk();
+        // uiManager.disableLeave();
+    }
+    private IEnumerator playText(string s, bool isSpeakerDriver) {
 
-//     private float waitTime(char letter)
-//     {
-//         switch (letter)
-//         {
-//             case '.':
-//                 return 0.75f;
-//             case ',':
-//                 return 0.5f;
-//             case '!':
-//                 return 1.0f;
-//             case '?':
-//                 return 0.75f;
-//             case '\n':
-//                 return 0.2f;
-//             default:
-//                 return 0.05f;
-//         }
-//     }
+        dialogue.text = "";
+        if (isSpeakerDriver) {
+            // driverAnimator?.SetBool("talking", true);
+            audioSource.clip = driverSound;
+        } else {
+            audioSource.clip = playerSound;
+        }
 
-//     IEnumerator StartConversation(string guySentence, string girlSentence)
-//     {
-//         yield return new WaitForSecondsRealtime(0.2f);
+        audioSource.Play();
 
-//         guyDialogue.text = "";
-//         audioSource.clip = playerSound;
-//         audioSource.Play();
-//         foreach (char letter in guySentence.ToCharArray())
-//         {
-//             if (letter == ',' || letter == '.' || letter == '\n' || letter == '!' || letter == '?')
-//             {
-//                 audioSource.Play();
-//                 audioSource.Stop();
-//             }
-//             else
-//             {
-//                 audioSource.Play();
-//             }
-//             guyDialogue.text += letter;
-//             yield return new WaitForSecondsRealtime(waitTime(letter));
-//         }
+        foreach (char c in s.ToCharArray()) {
+            if (c == ',' || c == '.' || c == '\n' || c == '!' || c == '?') {
+                audioSource.Play();
+                audioSource.Stop();
+            } else {
+                audioSource.Play();
+            }
+            dialogue.text += c;
+            yield return new WaitForSecondsRealtime(waitTime(c));
+        }
 
-//         audioSource.Stop();
-//         yield return new WaitForSecondsRealtime(1f);
+        // if (isSpeakerDriver) driverAnimator?.SetBool("talking", false);
+        audioSource.Stop();
 
-//         girlDialogue.text = "";
-//         // girlAnimator.SetBool("talking", true);
-//         audioSource.clip = driverSound;
-//         audioSource.Play();
-//         foreach (char letter in girlSentence.ToCharArray())
-//         {
-//             if (letter == ',' || letter == '.' || letter == '\n' || letter == '!' || letter == '?')
-//             {
-//                 audioSource.Play();
-//                 audioSource.Stop();
-//             }
-//             else
-//             {
-//                 audioSource.Play();
-//             }
-//             girlDialogue.text += letter;
-//             yield return new WaitForSecondsRealtime(waitTime(letter));
-//         }
+        yield return new WaitForSecondsRealtime(1.0f);
+    }
+    private IEnumerator introDialogue()
+    {
+        yield return new WaitForSecondsRealtime(1.0f);
+        string playerSentence = " Selamat siang pengemudi";
+        yield return StartCoroutine(playText(playerSentence, false));
+        
+        string driverSentence = "Selamat siang..";
+        yield return StartCoroutine(playText(driverSentence, true));
 
-//         girlAnimator.SetBool("talking", false);
-//         audioSource.Stop();
-//         yield return new WaitForSecondsRealtime(1.0f);
-//         Reset();
-//     }
-
-//     IEnumerator FillOption(Text optionBox, string optionText, int optionNum)
-//     {
-//         optionBox.text = "";
-//         float fillTime = 1.0f / optionText.Length;
-//         foreach (char letter in optionText.ToCharArray())
-//         {
-//             optionBox.text += letter;
-//             yield return new WaitForSecondsRealtime(fillTime);
-//         }
-
-//         optionBoxFinished[optionNum] = true;
-//     }
-
-//     public void Leave()
-//     {
-//         uiManager.disableTalk();
-//         uiManager.disableLeave();
-//         StartCoroutine(LeaveConvo());
-//     }
-
-//     private IEnumerator LeaveConvo()
-//     {
-//         string yourSentence = "Alright, I think I'm going to leave.";
-//         string girlSentence = "Oh... okay.";
-
-//         yield return new WaitForSecondsRealtime(0.2f);
-//         guyDialogue.text = "";
-//         audioSource.clip = playerSound;
-//         audioSource.Play();
-//         foreach (char letter in yourSentence.ToCharArray())
-//         {
-//             if (letter == ',' || letter == '.' || letter == '\n' || letter == '!' || letter == '?')
-//             {
-//                 audioSource.Play();
-//                 audioSource.Stop();
-//             }
-//             else
-//             {
-//                 audioSource.Play();
-//             }
-//             guyDialogue.text += letter;
-//             yield return new WaitForSecondsRealtime(0.05f);
-//         }
-
-//         yield return new WaitForSecondsRealtime(1.0f);
-
-//         girlDialogue.text = "";
-//         girlAnimator.SetBool("talking", true);
-//         audioSource.clip = driverSound;
-//         audioSource.Play();
-//         foreach (char letter in girlSentence.ToCharArray())
-//         {
-//             if (letter == ',' || letter == '.' || letter == '\n' || letter == '!' || letter == '?')
-//             {
-//                 audioSource.Play();
-//                 audioSource.Stop();
-//             }
-//             else
-//             {
-//                 audioSource.Play();
-//             }
-//             girlDialogue.text += letter;
-//             yield return new WaitForSecondsRealtime(waitTime(letter));
-//         }
-
-//         girlAnimator.SetBool("talking", false);
-//         audioSource.Stop();
-//         yield return new WaitForSecondsRealtime(2.0f);
-//         Application.Quit();
-//     }
-
-//     public void Win()
-//     {
-//         uiManager.disableTalk();
-//         uiManager.disableLeave();
-//         StartCoroutine(WinConvo());
-//     }
-
-//     private IEnumerator WinConvo()
-//     {
-//         string girlSentence = "Well, the restaurant is about to close. We should probably get going..";
-
-//         girlDialogue.text = "";
-//         girlAnimator.SetBool("talking", true);
-//         audioSource.clip = driverSound;
-//         audioSource.Play();
-//         foreach (char letter in girlSentence.ToCharArray())
-//         {
-//             if (letter == ',' || letter == '.' || letter == '\n' || letter == '!' || letter == '?')
-//             {
-//                 audioSource.Play();
-//                 audioSource.Stop();
-//             }
-//             else
-//             {
-//                 audioSource.Play();
-//             }
-//             girlDialogue.text += letter;
-//             yield return new WaitForSecondsRealtime(waitTime(letter));
-//         }
-
-//         girlAnimator.SetBool("talking", false);
-//         audioSource.Stop();
-//         yield return new WaitForSecondsRealtime(1.0f);
-
-//         string girlSentence2 = "I had a great time! We should do this again.";
-
-//         girlDialogue.text = "";
-//         girlAnimator.SetBool("talking", true);
-//         audioSource.clip = driverSound;
-//         audioSource.Play();
-//         foreach (char letter in girlSentence2.ToCharArray())
-//         {
-//             if (letter == ',' || letter == '.' || letter == '\n' || letter == '!' || letter == '?')
-//             {
-//                 audioSource.Play();
-//                 audioSource.Stop();
-//             }
-//             else
-//             {
-//                 audioSource.Play();
-//             }
-//             girlDialogue.text += letter;
-//             yield return new WaitForSecondsRealtime(waitTime(letter));
-//         }
-
-//         girlAnimator.SetBool("talking", false);
-//         audioSource.Stop();
-
-//         yield return new WaitForSecondsRealtime(1.0f);
-//         stateManager.endGame(true, "Victory!");
-//     }
-
-//     private IEnumerator introDialogue()
-//     {
-//         yield return new WaitForSecondsRealtime(1.0f);
-//         string girlSentence = "Hey! Thanks for coming.";
-
-//         girlDialogue.text = "";
-//         girlAnimator.SetBool("talking", true);
-//         audioSource.clip = playerSound;
-//         audioSource.Play();
-//         foreach (char letter in girlSentence.ToCharArray())
-//         {
-//             if (letter == ',' || letter == '.' || letter == '\n' || letter == '!' || letter == '?')
-//             {
-//                 audioSource.Play();
-//                 audioSource.Stop();
-//             }
-//             else
-//             {
-//                 audioSource.Play();
-//             }
-//             girlDialogue.text += letter;
-//             yield return new WaitForSecondsRealtime(waitTime(letter));
-//         }
-
-//         girlAnimator.SetBool("talking", false);
-//         audioSource.Stop();
-//         yield return new WaitForSecondsRealtime(1.0f);
-
-//         string girlSentence2 = "This place closes at 08:00, so we can talk until then.";
-
-//         girlDialogue.text = "";
-//         girlAnimator.SetBool("talking", true);
-//         audioSource.clip = driverSound;
-//         audioSource.Play();
-//         foreach (char letter in girlSentence2.ToCharArray())
-//         {
-//             if (letter == ',' || letter == '.' || letter == '\n' || letter == '!' || letter == '?')
-//             {
-//                 audioSource.Play();
-//                 audioSource.Stop();
-//             }
-//             else
-//             {
-//                 audioSource.Play();
-//             }
-//             girlDialogue.text += letter;
-//             yield return new WaitForSecondsRealtime(waitTime(letter));
-//         }
-
-//         girlAnimator.SetBool("talking", false);
-//         audioSource.Stop();
-
-//         yield return new WaitForSecondsRealtime(1.0f);
-//         stateManager.setIdle(true);
-//         guyDialogue.text = "";
-//         girlDialogue.text = "";
-//         EmptyOptions();
-//         uiManager.enableTalk();
-//         uiManager.enableLeave();
-//         uiManager.disableBoxes(8);
-//     }
-// }
+        // uiManager.enableTalk();
+        // uiManager.enableLeave();
+    }
+}
