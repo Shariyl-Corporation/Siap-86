@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 
 
@@ -81,6 +82,11 @@ public class Car : MonoBehaviour
             do_astar_step();
         }
 
+    }
+    void OnMouseDown()
+    {
+        Debug.Log("Clicked");
+        SceneManager.LoadScene("Interact", LoadSceneMode.Additive);
     }
 
     private void MoveTowardsTargetPosition()
