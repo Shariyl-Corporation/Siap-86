@@ -57,8 +57,14 @@ TagManager:
   - name: Building Between
     uniqueID: 832462911
     locked: 0
+  - name: FencesSpec
+    uniqueID: 1373070657
+    locked: 0
   - name: Building Front
     uniqueID: 2529321183
+    locked: 0
+  - name: Fences
+    uniqueID: 880022783
     locked: 0
   - name: Misc
     uniqueID: 1375814207
