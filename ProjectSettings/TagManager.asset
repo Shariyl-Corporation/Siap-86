@@ -48,6 +48,9 @@ TagManager:
   - name: Road
     uniqueID: 1977679813
     locked: 0
+  - name: Park
+    uniqueID: 2228893231
+    locked: 0
   - name: Sidewalk
     uniqueID: 16675335
     locked: 0
