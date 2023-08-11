@@ -83,11 +83,11 @@ public class Car : MonoBehaviour
         }
 
     }
-    void OnMouseDown()
-    {
-        Debug.Log("Clicked");
-        SceneManager.LoadScene("Interact", LoadSceneMode.Additive);
-    }
+    // void OnMouseDown()
+    // {
+    //     Debug.Log("Clicked");
+    //     SceneManager.LoadScene("Interact", LoadSceneMode.Additive);
+    // }
 
     private void MoveTowardsTargetPosition()
     {

@@ -7,7 +7,7 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-
+    private GlobalControl globalControl;
     public UI uiManager;
 
     public TextMeshPro dialogue;
@@ -19,7 +19,7 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
-
+        globalControl = FindObjectOfType<GlobalControl>();
         dialogue.text = "";
 
         audioSource = GetComponent<AudioSource>();
@@ -30,14 +30,7 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-        // if (populatingOptions)
-        // {
-        //     if (!optionBoxFinished.Any(x => x == false))
-        //     {
-        //         populatingOptions = false;
-        //         stateManager.setIdle(true);
-        //     }
-        // }
+
     }
 
     public void Converse(string guySentence, string girlSentence)
@@ -101,11 +94,6 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    public void Win()
-    {
-        // uiManager.disableTalk();
-        // uiManager.disableLeave();
-    }
     private IEnumerator playText(string s, bool isSpeakerDriver) {
 
         dialogue.text = "";
