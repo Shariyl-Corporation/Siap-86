@@ -67,8 +67,8 @@ public class PedestrianManager : MonoBehaviour
             destinationPosition = Random.Range(0, spawnPoints.Count);
         } while (destinationPosition == spawnPosition);
         ped.setDestination(spawnPoints[destinationPosition]);
-        Debug.Log("Spawn Capsule: " + spawnPoints[spawnPosition].x + " " + spawnPoints[spawnPosition].y);
-        Debug.Log("Destination Capsule: " + spawnPoints[destinationPosition].x + " " + spawnPoints[destinationPosition].y);
+        // Debug.Log("Spawn Capsule: " + spawnPoints[spawnPosition].x + " " + spawnPoints[spawnPosition].y);
+        // Debug.Log("Destination Capsule: " + spawnPoints[destinationPosition].x + " " + spawnPoints[destinationPosition].y);
 
         ped.transform.parent = gameObject.transform;
         pedestrians.Add(ped);

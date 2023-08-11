@@ -59,8 +59,8 @@ public class Car : MonoBehaviour
 
         prevCell = transform.position;
         targetPosition = decision;
-        Debug.Log("Move Towards: " + targetPosition.x + " " + targetPosition.y);
-        Debug.Log("From: " + transform.position.x + " " + transform.position.y);
+        // Debug.Log("Move Towards: " + targetPosition.x + " " + targetPosition.y);
+        // Debug.Log("From: " + transform.position.x + " " + transform.position.y);
     }
     void Awake()
     {

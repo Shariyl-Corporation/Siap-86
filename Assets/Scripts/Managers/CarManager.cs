@@ -145,8 +145,8 @@ public class CarManager : MonoBehaviour
         int destinationPosition = Random.Range(0, endPoints.Count);
         ped.setDestination(endPoints[destinationPosition]);
 
-        Debug.Log("Spawn Capsule: " + spawnPoints[spawnPosition].x + " " + spawnPoints[spawnPosition].y);
-        Debug.Log("Destination Capsule: " + spawnPoints[destinationPosition].x + " " + spawnPoints[destinationPosition].y);
+        // Debug.Log("Spawn Capsule: " + spawnPoints[spawnPosition].x + " " + spawnPoints[spawnPosition].y);
+        // Debug.Log("Destination Capsule: " + spawnPoints[destinationPosition].x + " " + spawnPoints[destinationPosition].y);
 
         ped.transform.parent = gameObject.transform;
         cars.Add(ped);

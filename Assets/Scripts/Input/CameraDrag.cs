@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class CameraDrag : MonoBehaviour
 {
@@ -12,8 +13,8 @@ public class CameraDrag : MonoBehaviour
     private bool isDragging = false;
     
 
-    [SerializeField] private Vector2 minCameraPos = new Vector3(-10, -10, 0);
-    [SerializeField] private Vector2 maxCameraPos = new Vector3(10, 10, 0);
+    [SerializeField] private Vector2 minPos;// = new Vector3(-19.5f, -67.5f, 0);
+    [SerializeField] private Vector2 maxPos;// = new Vector3(42, -35, 0);
     [SerializeField] private float minCameraSize = 1;
     [SerializeField] private float maxCameraSize = 10;
 
@@ -28,24 +29,24 @@ public class CameraDrag : MonoBehaviour
         {
             dragEnd = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             Vector3 diff = dragEnd - transform.position;
-            Vector3 camera_pos = dragOrigin - diff;
-            mainCamera.transform.position = new Vector3(
-                                                Mathf.Clamp(camera_pos.x, minCameraPos.x, maxCameraPos.x), 
-                                                Mathf.Clamp(camera_pos.y, minCameraPos.y, maxCameraPos.y),
-                                                camera_pos.z);
+            Vector3 point_pos = dragOrigin - diff;
+            transform.position = new Vector3(
+                                        Mathf.Clamp(point_pos.x, minPos.x, maxPos.x),
+                                        Mathf.Clamp(point_pos.y, minPos.y, maxPos.y),
+                                        transform.position.z);
         }
     }
 
     public void OnDrag(InputAction.CallbackContext context)
     {
         Debug.Log("Drag");
-        if (context.started) 
+        if (context.started)
             dragOrigin = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         isDragging = context.started || context.performed;
     }
 
     public void OnScroll(InputAction.CallbackContext context)
-    {   
+    {
         Debug.Log("Scroll");
 
         if (context.performed)
