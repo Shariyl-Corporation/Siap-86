@@ -32,18 +32,6 @@ public class CameraDrag : MonoBehaviour
         if (context.started) 
             dragOrigin = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         isDragging = context.started || context.performed;
-
-
-        // if (context.performed)
-        // {
-        //     dragOrigin = mainCamera.ScreenToWorldPoint(context.ReadValue<Vector2>());
-        // }
-        // else if (context.canceled)
-        // {
-        //     dragEnd = mainCamera.ScreenToWorldPoint(context.ReadValue<Vector2>());
-        //     Vector3 diff = dragEnd - dragOrigin;
-        //     mainCamera.transform.position -= diff;
-        // }
     }
 
     public void OnScroll(InputAction.CallbackContext context)
@@ -54,9 +42,9 @@ public class CameraDrag : MonoBehaviour
         {
             float z = context.ReadValue<float>();
             if (z > 0)
-                Debug.Log("Scroll UP");
+                mainCamera.orthographicSize -= 1;
             else if (z < 0)
-                Debug.Log("Scroll DOWN");
+                mainCamera.orthographicSize += 1;
         }
     }
 }
