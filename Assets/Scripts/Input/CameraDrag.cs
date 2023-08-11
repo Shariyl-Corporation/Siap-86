@@ -10,6 +10,12 @@ public class CameraDrag : MonoBehaviour
     private Vector3 dragOrigin;
     private Vector3 dragEnd;
     private bool isDragging = false;
+    
+
+    [SerializeField] private Vector2 minCameraPos = new Vector3(-10, -10, 0);
+    [SerializeField] private Vector2 maxCameraPos = new Vector3(10, 10, 0);
+    [SerializeField] private float minCameraSize = 1;
+    [SerializeField] private float maxCameraSize = 10;
 
     void Awake()
     {
@@ -22,7 +28,11 @@ public class CameraDrag : MonoBehaviour
         {
             dragEnd = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             Vector3 diff = dragEnd - transform.position;
-            mainCamera.transform.position = dragOrigin - diff;
+            Vector3 camera_pos = dragOrigin - diff;
+            mainCamera.transform.position = new Vector3(
+                                                Mathf.Clamp(camera_pos.x, minCameraPos.x, maxCameraPos.x), 
+                                                Mathf.Clamp(camera_pos.y, minCameraPos.y, maxCameraPos.y),
+                                                camera_pos.z);
         }
     }
 
@@ -46,5 +56,7 @@ public class CameraDrag : MonoBehaviour
             else if (z < 0)
                 mainCamera.orthographicSize += 1;
         }
+        mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize, minCameraSize, maxCameraSize);
     }
+
 }
