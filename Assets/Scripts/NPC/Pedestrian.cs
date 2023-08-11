@@ -21,7 +21,7 @@ public class Pedestrian : MonoBehaviour
     }
 
     private void do_astar_step()
-    {
+    {   
         Vector3Int decision = new Vector3Int();
         float min_heuristic = float.PositiveInfinity;
         var dict = pedestrianManager.get_neighbor_tiles_world(transform.position);
@@ -52,8 +52,8 @@ public class Pedestrian : MonoBehaviour
         else if (targetPosition.x < transform.position.x)
             npcSpriteRenderer.flipX = true; 
 
-        Debug.Log("Move Towards: " + targetPosition.x + " " + targetPosition.y);
-        Debug.Log("From: " + transform.position.x + " " + transform.position.y);
+        // Debug.Log("Move Towards: " + targetPosition.x + " " + targetPosition.y);
+        // Debug.Log("From: " + transform.position.x + " " + transform.position.y);
     }
 
     void Awake()

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Chat : MonoBehaviour
 {
-
+    public AudioManager audioManager;
     public Texture2D defaultTex, hoverTex, disabledTex;
 
     private bool isEnabled = false;
@@ -32,6 +32,11 @@ public class Chat : MonoBehaviour
             material.SetTexture("_MainTex", defaultTex);
             UI.changeCursor(false);
         }
+    }
+
+    void OnMouseDown() {
+        Debug.Log("Chat clicked");
+        audioManager.Click();
     }
 
     public void SetDisabled() {

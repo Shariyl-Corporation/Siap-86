@@ -10,7 +10,7 @@ public class DialogueManager : MonoBehaviour
 
     public UI uiManager;
 
-    public TextMeshProUGUI dialogue;
+    public TextMeshPro dialogue;
 
     public Animator driverAnimator;
 

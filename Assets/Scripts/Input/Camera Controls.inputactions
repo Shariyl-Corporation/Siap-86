@@ -1,0 +1,54 @@
+{
+    "name": "Camera Controls",
+    "maps": [
+        {
+            "name": "Camera Drag",
+            "id": "8c752da6-f080-4413-96ee-6b36427817b8",
+            "actions": [
+                {
+                    "name": "Drag",
+                    "type": "Button",
+                    "id": "f54e2556-0b98-4c2b-9149-bf1b7f35f35e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Zoom",
+                    "type": "PassThrough",
+                    "id": "44354506-e003-4226-959a-6eee24f6b515",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9686c54b-fef0-41ce-a41b-75102b21bccb",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "91b0b630-75dc-40bb-bad1-736fbb002986",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

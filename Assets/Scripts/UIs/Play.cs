@@ -21,6 +21,7 @@ public class Play : MonoBehaviour
     void OnMouseOver()
     {
         material.SetTexture("_MainTex", hoverTex);
+        Debug.Log("Change Cursor");
         MainMenu.changeCursor(true);
     }
 

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Experimental/Testing_AI.unity
     guid: 0581d0aec3565624689c49ba0536b03e
+  - enabled: 1
+    path: Assets/Scenes/Experimental/Interact.unity
+    guid: 87320d62583328e4b9d0370a3027c58f
   m_configObjects: {}
