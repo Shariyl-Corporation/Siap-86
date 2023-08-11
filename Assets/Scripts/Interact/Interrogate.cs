@@ -24,7 +24,6 @@ public class Interrogate : MonoBehaviour
     void OnMouseOver()
     {
         material.SetTexture("_MainTex", hoverTex);
-        // Debug.Log("Hover interrogate");
         MainMenu.changeCursor(true);
     }
 
