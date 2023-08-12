@@ -78,3 +78,6 @@ TagManager:
   - name: Interact HUD
     uniqueID: 808279869
     locked: 0
+  - name: Interrogate
+    uniqueID: 2426151389
+    locked: 0
