@@ -8,13 +8,22 @@ using UnityEngine.SceneManagement;
 public class GlobalControl : MonoBehaviour
 {
     private Camera mainCamera;
-    private CinemachineVirtualCamera vcam;
+    private CinemachineVirtualCamera vcam;  
+
+    public int PlayerPublicOpinion = 0;
+    public int PlayerHealth = 0;
+    public int PlayerMental = 0;
+    public int PlayerMoney = 0;
+    public int PlayerCorrectCount = 0;
+    public int PlayerIncorrectCount = 0;
+
+    public Car ActiveCar;
 
     private Vector3 dragOrigin;
     private Vector3 dragEnd;
     private float dragTime;
+
     private bool isDragging = false;
-    
     private bool canInterrogate = true;
 
     [SerializeField] private Vector2 minPos;// = new Vector3(-19.5f, -67.5f, 0);
@@ -57,8 +66,10 @@ public class GlobalControl : MonoBehaviour
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
             Car selectedCar = GetCar(ray);
             if (selectedCar != null) {
-                DisableInterrogate();
+                ActiveCar = selectedCar;
                 Time.timeScale = 0.75f;
+                DisableInterrogate();
+
                 SceneManager.LoadScene("Interact", LoadSceneMode.Additive);
             }
         }

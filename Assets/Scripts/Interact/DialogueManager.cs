@@ -10,6 +10,9 @@ public class DialogueManager : MonoBehaviour
     private GlobalControl globalControl;
     public UI uiManager;
 
+    private Car activeCar;
+    private Driver activeDriver;
+
     public TextMeshPro dialogue;
 
     public Animator driverAnimator;
@@ -20,6 +23,8 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         globalControl = FindObjectOfType<GlobalControl>();
+        activeCar = globalControl.ActiveCar;
+        activeDriver = activeCar.driver;
         dialogue.text = "";
 
         audioSource = GetComponent<AudioSource>();

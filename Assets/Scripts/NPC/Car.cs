@@ -15,6 +15,8 @@ public class Car : MonoBehaviour
     [SerializeField] private CarManager carManager;
     [SerializeField] private float speed = 1;
 
+    public Driver driver;
+
     private HashSet<TileBase> visited2;
     private Vector3 targetPosition;
     private Vector3 destinationCell;
