@@ -22,7 +22,34 @@ public class Car : MonoBehaviour
     private Vector3 destinationCell;
     private Vector3 prevCell;
 
-    // calculating cell to the destination, BOTH using the local coordinate (grid)
+
+    void Start()
+    {
+        targetPosition = transform.position;
+
+        driver = generateGuiltyDriver();
+    }
+    void Update()
+    {
+        if (transform.position != targetPosition)
+        {
+            MoveTowardsTargetPosition();
+        }
+        else
+        {
+            do_astar_step();
+        }
+
+    }
+
+    Driver generateGuiltyDriver() {
+        Driver d = new Driver();
+        d.hasKTP = false;
+        d.hasSIM = false;
+        d.hasSTNK = false;
+        return d;
+    }
+        // calculating cell to the destination, BOTH using the local coordinate (grid)
     private float calculate_heuristic_at(Vector3Int cell)
     {
         return Vector3.Distance(cell, destinationCell);
@@ -64,33 +91,7 @@ public class Car : MonoBehaviour
         // Debug.Log("Move Towards: " + targetPosition.x + " " + targetPosition.y);
         // Debug.Log("From: " + transform.position.x + " " + transform.position.y);
     }
-    void Awake()
-    {
-    }
-    void Start()
-    {
-        targetPosition = transform.position;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (transform.position != targetPosition)
-        {
-            MoveTowardsTargetPosition();
-        }
-        else
-        {
-            do_astar_step();
-        }
-
-    }
-    // void OnMouseDown()
-    // {
-    //     Debug.Log("Clicked");
-    //     SceneManager.LoadScene("Interact", LoadSceneMode.Additive);
-    // }
-
+    
     private void MoveTowardsTargetPosition()
     {
 

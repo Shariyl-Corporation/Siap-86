@@ -50000,6 +50000,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2a06568c40d44fa3f58fec30abc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerPublicOpinion: 0
+  PlayerHealth: 0
+  PlayerMental: 0
+  PlayerMoney: 0
+  PlayerCorrectCount: 0
+  PlayerIncorrectCount: 0
+  ActiveCar: {fileID: 0}
   minPos: {x: -19.5, y: -67.5}
   maxPos: {x: 42, y: -35}
   minCameraSize: 10
@@ -50118,7 +50125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1083639817560945864, guid: 63c7bb5305c10a547a03da91951b65a8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1083639817560945865, guid: 63c7bb5305c10a547a03da91951b65a8, type: 3}
       propertyPath: m_RootOrder
@@ -75151,7 +75158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1692091909517678681, guid: ecd95eb2e9a7e74439d14b4cf2c81745, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1692091909517678695, guid: ecd95eb2e9a7e74439d14b4cf2c81745, type: 3}
       propertyPath: m_RootOrder

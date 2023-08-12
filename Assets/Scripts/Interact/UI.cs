@@ -8,8 +8,8 @@ public class UI : MonoBehaviour
 
     public static Texture2D mouseCursor, hoverCursor;
 
-    public Chat chatButton;
-    public Interrogate interrogateButton;
+    public BaseButton chatButton;
+    public BaseButton interrogateButton;
 
     public Text dateBox, timeBox;
 
@@ -40,45 +40,6 @@ public class UI : MonoBehaviour
     public static void changeCursor(bool hover)
     {
         Cursor.SetCursor(hover ? hoverCursor : mouseCursor, hover ? new Vector2(0.5f, 0.5f) : new Vector2(0, 0), CursorMode.Auto);
-    }
-
-    // public void enableBoxes(int count)
-    // {
-    //     for (int i = 0; i < count; ++i)
-    //     {
-    //         optionBoxes[i].SetEnabled();
-    //     }
-    // }
-
-    // public void disableBoxes(int count)
-    // {
-    //     for (int i = 0; i < count; ++i)
-    //     {
-    //         optionBoxes[i].SetDisabled();
-    //     }
-    //     changeCursor(false);
-    // }
-
-    public void enableTalk()
-    {
-        chatButton.SetEnabled();
-    }
-
-    public void disableTalk()
-    {
-        chatButton.SetDisabled();
-        changeCursor(false);
-    }
-
-    public void enableLeave()
-    {
-        interrogateButton.SetEnabled();
-    }
-
-    public void disableLeave()
-    {
-        interrogateButton.SetDisabled();
-        changeCursor(false);
     }
 
     public void incrementTime()

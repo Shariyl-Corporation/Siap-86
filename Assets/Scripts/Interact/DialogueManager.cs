@@ -33,10 +33,37 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(introDialogue());
     }
 
-    void Update()
+    private IEnumerator introDialogue()
     {
+        string playerSentence = "Selamat siang pengemudi";
+        yield return StartCoroutine(playText(playerSentence, false));
+        
+        string driverSentence = "Selamat siang..";
+        yield return StartCoroutine(playText(driverSentence, true));
 
     }
+    public IEnumerator StrikeConversation(){
+        dialogue.text = "";
+        yield return new WaitForSecondsRealtime(1.0f);
+
+        string playerSentence = "Selamat siang pak, saya dari kepolisian";
+        yield return StartCoroutine(playText(playerSentence, false));
+
+        string driverSentence = "Selamat siang..";
+        yield return StartCoroutine(playText(driverSentence, true));
+    }
+
+    public IEnumerator AskDocumentKTP(bool hasKTP){
+        dialogue.text = "";
+        yield return new WaitForSecondsRealtime(1.0f);
+
+        string playerSentence = "Boleh saya lihat KTP nya?";
+        yield return StartCoroutine(playText(playerSentence, false));
+
+        string driverSentence = "Selamat siang..";
+        yield return StartCoroutine(playText(driverSentence, true));
+    }
+
 
     public void Converse(string guySentence, string girlSentence)
     {
@@ -127,16 +154,5 @@ public class DialogueManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1.0f);
     }
-    private IEnumerator introDialogue()
-    {
-        yield return new WaitForSecondsRealtime(1.0f);
-        string playerSentence = " Selamat siang pengemudi";
-        yield return StartCoroutine(playText(playerSentence, false));
-        
-        string driverSentence = "Selamat siang..";
-        yield return StartCoroutine(playText(driverSentence, true));
 
-        // uiManager.enableTalk();
-        // uiManager.enableLeave();
-    }
 }

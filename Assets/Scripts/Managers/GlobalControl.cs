@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class GlobalControl : MonoBehaviour
 {
+    public static GlobalControl Instance;
+
     private Camera mainCamera;
     private CinemachineVirtualCamera vcam;  
 
@@ -33,8 +35,27 @@ public class GlobalControl : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        } 
         mainCamera = Camera.main;
         vcam = FindObjectOfType<CinemachineVirtualCamera>();
+    }
+
+
+    void Update () {
+        Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Car selectedCar = GetCar(ray);
+        if (selectedCar != null) {
+            Time.timeScale = 0.2f;
+        } else {
+            Time.timeScale = 1f;
+        }
     }
 
     void LateUpdate()
@@ -55,7 +76,7 @@ public class GlobalControl : MonoBehaviour
 
     public void OnDrag(InputAction.CallbackContext context)
     {
-        Debug.Log("Drag");
+        // Debug.Log("Drag");
         if (context.started) {
             dragOrigin = getMousePosition();
             dragTime = 0;
@@ -77,7 +98,7 @@ public class GlobalControl : MonoBehaviour
 
     public void OnScroll(InputAction.CallbackContext context)
     {
-        Debug.Log("Scroll");
+        // Debug.Log("Scroll");
 
         if (context.performed)
         {
