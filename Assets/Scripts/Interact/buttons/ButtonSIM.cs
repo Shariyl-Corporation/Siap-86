@@ -9,7 +9,10 @@ public class ButtonSIM: BaseButton
         if (!isAsked) {
             spriteRenderer.sprite = askedSprite;
             audioManager.Click();
-            dialogueManager.StrikeConversation();
+            StartCoroutine(
+                dialogueManager.AskDocumentSIM(
+                    GlobalControl.Instance.ActiveCar.driver.hasSIM
+                ));
         }
     }
 }

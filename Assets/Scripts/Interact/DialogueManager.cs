@@ -8,12 +8,14 @@ using TMPro;
 public class DialogueManager : MonoBehaviour
 {
     private GlobalControl globalControl;
+    private ConvoPair convoPair;
     public UI uiManager;
 
     private Car activeCar;
     private Driver activeDriver;
 
-    public TextMeshPro dialogue;
+    public TextMeshPro t_dialogue;
+    public TextMeshPro t_speaker;
 
     public Animator driverAnimator;
 
@@ -23,9 +25,10 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         globalControl = FindObjectOfType<GlobalControl>();
+        convoPair = globalControl.convoPair;
         activeCar = globalControl.ActiveCar;
         activeDriver = activeCar.driver;
-        dialogue.text = "";
+        t_dialogue.text = "";
 
         audioSource = GetComponent<AudioSource>();
         audioSource.Stop();
@@ -34,49 +37,54 @@ public class DialogueManager : MonoBehaviour
     }
 
     public IEnumerator StrikeConversation() {
-        List<Convo> ConvoFlow = ConvoPair.ConvGreetings[Random.Range(0, ConvoPair.ConvGreetings.Count)];
+        ConvoFlow convoFlow = convoPair.ConvGreetings[Random.Range(0, convoPair.ConvGreetings.Count)];
         
-        yield return StartCoroutine(PlayConvo(ConvoFlow));
+        yield return StartCoroutine(PlayConvo(convoFlow));
     }
 
-    public IEnumerator AskDocumentKTP(bool hasKTP) {
-        List<Convo> ConvoFlow;
-        if (hasKTP)
-            ConvoFlow = ConvoPair.ConvKTP[Random.Range(0, ConvoPair.ConvKTP.Count)];
-        else
-            ConvoFlow = ConvoPair.ConvNoKTP[Random.Range(0, ConvoPair.ConvNoKTP.Count)];
+    public IEnumerator BasicChat() {
+        ConvoFlow convoFlow = convoPair.ConvBasicChat[Random.Range(0, convoPair.ConvGreetings.Count)];
         
-        yield return StartCoroutine(PlayConvo(ConvoFlow));
+        yield return StartCoroutine(PlayConvo(convoFlow));
+    }
+    public IEnumerator AskDocumentKTP(bool hasKTP) {
+        ConvoFlow convoFlow;
+        if (hasKTP)
+            convoFlow = convoPair.ConvKTP[Random.Range(0, convoPair.ConvKTP.Count)];
+        else
+            convoFlow = convoPair.ConvNoKTP[Random.Range(0, convoPair.ConvNoKTP.Count)];
+        
+        yield return StartCoroutine(PlayConvo(convoFlow));
     }
 
     public IEnumerator AskDocumentSIM(bool hasSIM) {
-        List<Convo> ConvoFlow;
+        ConvoFlow convoFlow;
         if (hasSIM)
-            ConvoFlow = ConvoPair.ConvSIM[Random.Range(0, ConvoPair.ConvSIM.Count)];
+            convoFlow = convoPair.ConvSIM[Random.Range(0, convoPair.ConvSIM.Count)];
         else
-            ConvoFlow = ConvoPair.ConvNoSIM[Random.Range(0, ConvoPair.ConvNoSIM.Count)];
+            convoFlow = convoPair.ConvNoSIM[Random.Range(0, convoPair.ConvNoSIM.Count)];
         
-        yield return StartCoroutine(PlayConvo(ConvoFlow));
+        yield return StartCoroutine(PlayConvo(convoFlow));
     }
 
     public IEnumerator AskDocumentSTNK(bool hasSTNK) {
-        List<Convo> ConvoFlow;
+        ConvoFlow convoFlow;
         if (hasSTNK)
-            ConvoFlow = ConvoPair.ConvSTNK[Random.Range(0, ConvoPair.ConvSTNK.Count)];
+            convoFlow = convoPair.ConvSTNK[Random.Range(0, convoPair.ConvSTNK.Count)];
         else
-            ConvoFlow = ConvoPair.ConvNoSTNK[Random.Range(0, ConvoPair.ConvNoSTNK.Count)];
+            convoFlow = convoPair.ConvNoSTNK[Random.Range(0, convoPair.ConvNoSTNK.Count)];
         
-        yield return StartCoroutine(PlayConvo(ConvoFlow));
+        yield return StartCoroutine(PlayConvo(convoFlow));
     }
 
     public IEnumerator GiveVerdict(bool isGuilty) {
-        List<Convo> ConvoFlow;
+        ConvoFlow convoFlow;
         if (isGuilty)
-            ConvoFlow = ConvoPair.ConvVerdictGuilty[Random.Range(0, ConvoPair.ConvVerdictGuilty.Count)];
+            convoFlow    = convoPair.ConvVerdictGuilty[Random.Range(0, convoPair.ConvVerdictGuilty.Count)];
         else
-            ConvoFlow = ConvoPair.ConvVerdictInnocent[Random.Range(0, ConvoPair.ConvVerdictInnocent.Count)];
+            convoFlow    = convoPair.ConvVerdictInnocent[Random.Range(0, convoPair.ConvVerdictInnocent.Count)];
     
-        yield return StartCoroutine(PlayConvo(ConvoFlow));
+        yield return StartCoroutine(PlayConvo(convoFlow ));
     }
 
     private float waitTime(char letter) {
@@ -99,7 +107,9 @@ public class DialogueManager : MonoBehaviour
     
     private IEnumerator PlayText(string s, string speaker) {
 
-        dialogue.text = "";
+        t_dialogue.text = "";
+        t_speaker.text = speaker;
+
         if (speaker == "You") {
             // driverAnimator?.SetBool("talking", true);
             audioSource.clip = driverSound;
@@ -116,7 +126,7 @@ public class DialogueManager : MonoBehaviour
             } else {
                 audioSource.Play();
             }
-            dialogue.text += c;
+            t_dialogue.text += c;
             yield return new WaitForSecondsRealtime(waitTime(c));
         }
 
@@ -126,8 +136,8 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.0f);
     }
 
-    private IEnumerator PlayConvo(List<Convo> convoFlow) {
-        foreach(var convo in convoFlow){
+    private IEnumerator PlayConvo(ConvoFlow convoFlow) {
+        foreach(var convo in convoFlow.flow){
             yield return StartCoroutine(PlayText(convo.text, convo.speaker));
             yield return new WaitForSecondsRealtime(1.0f);
         }

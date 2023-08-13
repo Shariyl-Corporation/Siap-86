@@ -9,7 +9,10 @@ public class ButtonSTNK : BaseButton
         if (!isAsked) {
             spriteRenderer.sprite = askedSprite;
             audioManager.Click();
-            dialogueManager.StrikeConversation();
+            StartCoroutine(
+                dialogueManager.AskDocumentSTNK(
+                    GlobalControl.Instance.ActiveCar.driver.hasSTNK
+                ));
         }
     }
 }
