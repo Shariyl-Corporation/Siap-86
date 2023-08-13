@@ -11,7 +11,7 @@ public class ButtonChat : BaseButton
             spriteRenderer.sprite = askedSprite;
             audioManager.Click();
             StartCoroutine(
-                dialogueManager.StrikeConversation());
+                dialogueManager.BasicChat());
         }
     }
 }

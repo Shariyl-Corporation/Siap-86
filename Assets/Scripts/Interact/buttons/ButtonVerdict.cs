@@ -9,7 +9,10 @@ public class ButtonVerdict : BaseButton
         if (!isAsked) {
             spriteRenderer.sprite = askedSprite;
             audioManager.Click();
-            dialogueManager.StrikeConversation();
+            // StartCoroutine(
+            //     dialogueManager.GiveVerdict(
+            //         GlobalControl.Instance.ActiveCar.driver.hasKTP
+            //     ));
         }
     }
 }

@@ -9,6 +9,7 @@ public class GlobalControl : MonoBehaviour
 {
     public static GlobalControl Instance;
 
+    public ConvoPair convoPair;
     private Camera mainCamera;
     private CinemachineVirtualCamera vcam;  
 
@@ -45,6 +46,7 @@ public class GlobalControl : MonoBehaviour
         } 
         mainCamera = Camera.main;
         vcam = FindObjectOfType<CinemachineVirtualCamera>();
+        convoPair = GetComponent<ConvoPair>();
     }
 
 
@@ -126,12 +128,12 @@ public class GlobalControl : MonoBehaviour
         Car selectedCar = null;
         if (hit.collider == null)
         {
-            Debug.Log("nothing hit");
+            // Debug.Log("nothing hit");
         }
         else
         {
-            print(hit.collider.name);
-            print(hit.collider.gameObject);
+            // print(hit.collider.name);
+            // print(hit.collider.gameObject);
             GameObject gohit = hit.collider.gameObject;
             if (gohit.GetComponent<Car>() != null) {
                 selectedCar = gohit.GetComponent<Car>();
