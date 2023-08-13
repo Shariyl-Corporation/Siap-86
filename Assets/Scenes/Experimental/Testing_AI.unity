@@ -52832,7 +52832,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1352859585}
   - component: {fileID: 1352859586}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Boundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85758,7 +85758,7 @@ PrefabInstance:
       objectReference: {fileID: 126403189}
     - target: {fileID: 2559120407020749954, guid: e5038c266498814908cb272365dd1c3d, type: 3}
       propertyPath: spawnDelay
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2559120407020750012, guid: e5038c266498814908cb272365dd1c3d, type: 3}
       propertyPath: m_Name

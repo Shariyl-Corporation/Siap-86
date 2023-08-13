@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carManager: {fileID: 2559120407020749954, guid: e5038c266498814908cb272365dd1c3d, type: 3}
   speed: 3
+  driver: {fileID: 0}
 --- !u!61 &5725384363399048875
 BoxCollider2D:
   m_ObjectHideFlags: 0

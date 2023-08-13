@@ -98,6 +98,20 @@ public class Car : MonoBehaviour
         var targetDirection = targetPosition - transform.position;
         var angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        
+        Vector3Int straight_vector = Vector3Int.RoundToInt(transform.rotation * Vector3.right);
+        Debug.Log(straight_vector);
+        var check_collision = transform.position + straight_vector*3;
+        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(1, 2), angle);
+        Debug.Log(check_collision);
+        foreach (var c in collision)
+        {
+            if(c != null && c.gameObject.GetInstanceID() != GetInstanceID()) {
+                Debug.Log(c);
+                return;
+            }
+        }
+        
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         // transform.position += transform.forward * speed * Time.deltaTime;
     }
