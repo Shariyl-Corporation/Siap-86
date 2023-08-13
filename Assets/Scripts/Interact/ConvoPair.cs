@@ -5,6 +5,10 @@ public class Convo {
     public string text;
 }
 
+public class ConvoFlow {
+    public List<Convo> convoFlow;
+}
+
 public static class ConvoPair {
     public static List<List<Convo>> ConvGreetings;
     public static List<List<Convo>> ConvKTP;
@@ -15,34 +19,122 @@ public static class ConvoPair {
     public static List<List<Convo>> ConvNoSTNK;
     public static List<List<Convo>> ConvVerdictGuilty;
     public static List<List<Convo>> ConvVerdictInnocent;
-    
-    public static void Init() {
-        string you = "You";
-        string driver = "???";
 
+    const string you = "You";
+    const string driver = "???";
+
+    public static void Init() {
+        InitGreetings();
+
+        InitKTP();
+        InitNoKTP();
+
+        InitSIM();
+        InitNoSIM();
+
+        InitSTNK();
+        InitNoSTNK();
+    }
+
+    public static void InitGreetings(){
         ConvGreetings = new (){
-            new() {
+            new() { // basic convo
+                new() { speaker = you,    text = "Sample striking conv 1" },
+                new() { speaker = driver, text = "Responding striking conv 1" }
+            },
+            new() { // 
+                new() { speaker = you,    text = "" },
+                new() { speaker = driver, text = ""}
+            },
+        };
+    }
+
+    public static void InitKTP(){
+        ConvKTP = new (){
+            new() { // basic convo
+                new() { speaker = you,    text = "KTP?" },
+                new() { speaker = driver, text = "Ini, Pak"}
+            },
+            new() { // 
+                new() { speaker = you,    text = "KTP?" },
+                new() { speaker = driver, text = "Mmm.. ini, Pak"}
+            },
+        };
+    }
+
+    public static void InitNoKTP(){
+        ConvNoKTP = new (){
+            new() { // basic convo
+                new() { speaker = you,    text = "KTP?" },
+                new() { speaker = driver, text = "Mmmm..."},
+                new() { speaker = driver, text = "Mmmm...mmm...."},
+                new() { speaker = driver, text = "Maaf pak, dompet saya hilang"},
+            },
+            new() { // 
+                new() { speaker = you,    text = "KTP?"},
+                new() { speaker = driver, text = "Hahaha, saya lupa bawa pak"}
+            },
+        };
+    }
+
+    public static void InitSIM(){
+        ConvSIM = new (){
+            new() { // basic convo
+                new() { speaker = you,    text = "SIM?" },
+                new() { speaker = driver, text = ""}
+            },
+            new() { // 
+                new() { speaker = you,    text = "SIM?" },
+                new() { speaker = driver, text = ""}
+            },
+        };
+    }
+
+    public static void InitNoSIM(){
+        ConvNoSIM = new (){
+            new() { // basic convo
+                new() { speaker = you,    text = "SIM?" },
+                new() { speaker = driver, text = ""}
+            },
+            new() { // 
+                new() { speaker = you,    text = "SIM?" },
+                new() { speaker = driver, text = ""}
+            },
+        };
+    }
+
+    public static void InitSTNK(){
+        ConvSTNK = new (){
+            new() { // basic convo
                 new() { speaker = you, text = "" },
                 new() { speaker = driver, text = ""}
-            }
+            },
+            new() { // 
+                new() { speaker = you, text = "" },
+                new() { speaker = driver, text = ""}
+            },
         };
-        ConvKTP = new List<List<Convo>>();
-        ConvNoKTP = new List<List<Convo>>();
-        ConvSIM = new List<List<Convo>>();
-        ConvNoSIM = new List<List<Convo>>();
-        ConvSTNK = new List<List<Convo>>();
-        ConvNoSTNK = new List<List<Convo>>();
-        ConvVerdictGuilty = new List<List<Convo>>();
-        ConvVerdictInnocent = new List<List<Convo>>();
+    }
 
-
-        // ConvGreetings
-        List<Convo> conv = new()
-        {
-            new() { speaker = you, text = "" },
-            new() { speaker = driver, text = ""}
+    public static void InitNoSTNK(){
+        ConvNoSTNK = new (){
+            new() { // basic convo
+                new() { speaker = you, text = "" },
+                new() { speaker = driver, text = ""}
+            },
+            new() { // 
+                new() { speaker = you, text = "" },
+                new() { speaker = driver, text = ""}
+            },
         };
-        ConvGreetings.Add(conv);
+    }
 
-    }    
+    public static void InitVerdictGuilty() {
+
+    }
+
+    public static void InitVerdictInnocent() {
+
+    }
+
 }
