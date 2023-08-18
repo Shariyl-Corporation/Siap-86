@@ -113,6 +113,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -9295,18 +9307,18 @@ TextureImporter:
       Hospital_53: 1015619495
       Hospital_283: 357367304
       Hospital_68: -911103971
-      Hospital_226: 508492674
       Hospital_277: -608057068
+      Hospital_389: -358525664
+      Hospital_226: 508492674
       Hospital_109: -2048139726
       Hospital_370: -89521025
-      Hospital_389: -358525664
       Hospital_392: 1208106270
       Hospital_286: -1088717665
       Hospital_35: 695782035
-      Hospital_316: 485222293
-      Hospital_33: 978619719
-      Hospital_77: 1075099841
       Hospital_80: 1456005795
+      Hospital_33: 978619719
+      Hospital_316: 485222293
+      Hospital_77: 1075099841
       Hospital_67: 365260981
       Hospital_368: 339044232
       Hospital_96: -862780747
@@ -9375,9 +9387,9 @@ TextureImporter:
       Hospital_403: -1589233258
       Hospital_84: 306879432
       Hospital_322: -522525705
+      Hospital_379: -1603930841
       Hospital_43: 1084547094
       Hospital_212: 373275567
-      Hospital_379: -1603930841
       Hospital_220: 812196060
       Hospital_62: -596048852
       Hospital_155: -1200622917

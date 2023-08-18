@@ -222,7 +222,6 @@ GameObject:
   - component: {fileID: 278174068}
   - component: {fileID: 278174067}
   - component: {fileID: 278174066}
-  - component: {fileID: 278174069}
   - component: {fileID: 278174070}
   m_Layer: 0
   m_Name: Main Camera
@@ -299,7 +298,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -320,7 +319,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1087
+    m_Bits: 1215
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -329,32 +328,9 @@ Camera:
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 0
+  m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &278174069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 278174064}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ComponentVersion: 1
-  m_AssetsPPU: 9
-  m_RefResolutionX: 320
-  m_RefResolutionY: 180
-  m_CropFrame: 0
-  m_GridSnapping: 1
-  m_UpscaleRT: 0
-  m_PixelSnapping: 0
-  m_CropFrameX: 0
-  m_CropFrameY: 0
-  m_StretchFill: 0
 --- !u!114 &278174070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59519,7 +59495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1692091909517678681, guid: ecd95eb2e9a7e74439d14b4cf2c81745, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1692091909517678695, guid: ecd95eb2e9a7e74439d14b4cf2c81745, type: 3}
       propertyPath: m_RootOrder
@@ -60106,6 +60082,10 @@ PrefabInstance:
       propertyPath: tilemap
       value: 
       objectReference: {fileID: 1893689001}
+    - target: {fileID: 2559120407020749954, guid: e5038c266498814908cb272365dd1c3d, type: 3}
+      propertyPath: laneTile
+      value: 
+      objectReference: {fileID: 11400000, guid: 49bcda0cae44ec0498e77f0b189cf642, type: 2}
     - target: {fileID: 2559120407020749954, guid: e5038c266498814908cb272365dd1c3d, type: 3}
       propertyPath: spawnDelay
       value: 1
@@ -85695,7 +85675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4435951172525156536, guid: 430f61014fd1c791689c628dae4af088, type: 3}
       propertyPath: m_TagString
-      value: EditorOnly
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4435951172525156537, guid: 430f61014fd1c791689c628dae4af088, type: 3}
       propertyPath: m_RootOrder
@@ -85711,7 +85691,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4435951172525156537, guid: 430f61014fd1c791689c628dae4af088, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4435951172525156537, guid: 430f61014fd1c791689c628dae4af088, type: 3}
       propertyPath: m_LocalRotation.w
@@ -87719,6 +87699,10 @@ PrefabInstance:
     - target: {fileID: 1083639817560945864, guid: 63c7bb5305c10a547a03da91951b65a8, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083639817560945864, guid: 63c7bb5305c10a547a03da91951b65a8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1083639817560945865, guid: 63c7bb5305c10a547a03da91951b65a8, type: 3}
       propertyPath: m_RootOrder

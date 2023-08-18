@@ -113,6 +113,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -4790,8 +4802,8 @@ TextureImporter:
       street misc_85: 585054225
       street misc_155: 1761775147
       street misc_146: 1861063516
-      street misc_178: -1309568138
       street misc_193: -185973976
+      street misc_178: -1309568138
       street misc_90: -636739644
       street misc_49: 847897903
       street misc_203: -1272846566
@@ -4804,9 +4816,9 @@ TextureImporter:
       street misc_20: -2050889434
       street misc_43: -878791999
       street misc_167: 584428938
-      street misc_21: 2022378028
-      street misc_65: -284124792
       street misc_57: 633198767
+      street misc_65: -284124792
+      street misc_21: 2022378028
       street misc_99: -139638204
       street misc_196: 374511127
       street misc_153: 1144190734

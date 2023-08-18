@@ -113,6 +113,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -5963,12 +5975,12 @@ TextureImporter:
       Building_30: 65024815
       Building_124: -607984967
       Building_34: -1326709558
-      Building_40: -1716418924
       Building_93: -375963509
-      Building_139: -1690765035
+      Building_40: -1716418924
       Building_186: -1840088952
-      Building_217: 594658430
+      Building_139: -1690765035
       Building_17: 3116496
+      Building_217: 594658430
       Building_53: 816881525
       Building_227: 1925820733
       Building_225: 289649107

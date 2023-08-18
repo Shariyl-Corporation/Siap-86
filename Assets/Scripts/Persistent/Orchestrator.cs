@@ -70,7 +70,9 @@ public class Orchestrator : MonoBehaviour
     }
 
     public IEnumerator GoToGame(){
-        asyncOperation = SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive);
+        asyncOperation = SceneManager.UnloadSceneAsync("Menu");
+        asyncOperation = SceneManager.UnloadSceneAsync("World");
+        asyncOperation = SceneManager.LoadSceneAsync("GameMaster", LoadSceneMode.Additive);
         while (!asyncOperation.isDone) {
             yield return null;
         }
