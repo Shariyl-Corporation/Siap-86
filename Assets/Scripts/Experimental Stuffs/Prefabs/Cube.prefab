@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6178382256221334744}
   - component: {fileID: 6178382256221334740}
   - component: {fileID: 5725384363399048875}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,6 +99,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carManager: {fileID: 2559120407020749954, guid: e5038c266498814908cb272365dd1c3d, type: 3}
   speed: 3
+  carLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  trafficLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   driver: {fileID: 0}
 --- !u!61 &5725384363399048875
 BoxCollider2D:

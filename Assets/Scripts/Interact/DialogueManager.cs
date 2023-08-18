@@ -7,7 +7,7 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    private GlobalControl globalControl;
+    private WorldControl control;
     private ConvoPair convoPair;
     public UI uiManager;
 
@@ -24,9 +24,9 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
-        globalControl = FindObjectOfType<GlobalControl>();
-        convoPair = globalControl.convoPair;
-        activeCar = globalControl.ActiveCar;
+        control = FindObjectOfType<WorldControl>();
+        convoPair = control.convoPair;
+        activeCar = control.ActiveCar;
         activeDriver = activeCar.driver;
         t_dialogue.text = "";
 

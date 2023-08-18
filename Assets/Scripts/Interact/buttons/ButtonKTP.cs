@@ -11,7 +11,7 @@ public class ButtonKTP : BaseButton
             audioManager.Click();
             StartCoroutine(
                 dialogueManager.AskDocumentKTP(
-                    GlobalControl.Instance.ActiveCar.driver.hasKTP
+                    WorldControl.Instance.ActiveCar.driver.hasKTP
                 ));
         }
     }

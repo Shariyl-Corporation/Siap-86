@@ -11,7 +11,7 @@ public class ButtonSTNK : BaseButton
             audioManager.Click();
             StartCoroutine(
                 dialogueManager.AskDocumentSTNK(
-                    GlobalControl.Instance.ActiveCar.driver.hasSTNK
+                    WorldControl.Instance.ActiveCar.driver.hasSTNK
                 ));
         }
     }

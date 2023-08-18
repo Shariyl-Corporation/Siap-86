@@ -14,6 +14,8 @@ public class Car : MonoBehaviour
     */
     [SerializeField] private CarManager carManager;
     [SerializeField] private float speed = 1;
+    [SerializeField] private LayerMask carLayerMask;
+    [SerializeField] private LayerMask trafficLayerMask;
 
     public Driver driver;
 
@@ -43,7 +45,7 @@ public class Car : MonoBehaviour
     }
 
     Driver generateGuiltyDriver() {
-        Driver d = new Driver();
+        Driver d = gameObject.AddComponent(typeof(Driver)) as Driver;
         d.hasKTP = false;
         d.hasSIM = false;
         d.hasSTNK = false;
@@ -100,20 +102,34 @@ public class Car : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         
         Vector3Int straight_vector = Vector3Int.RoundToInt(transform.rotation * Vector3.right);
-        Debug.Log(straight_vector);
+        // Debug.Log(straight_vector);
         var check_collision = transform.position + straight_vector*3;
-        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(1, 2), angle);
-        Debug.Log(check_collision);
+        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(1, 2), angle, carLayerMask);
+        // Debug.Log(check_collision);
         foreach (var c in collision)
         {
             if(c != null && c.gameObject.GetInstanceID() != GetInstanceID()) {
-                Debug.Log(c);
+                // Debug.Log(c);
                 return;
             }
         }
         
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         // transform.position += transform.forward * speed * Time.deltaTime;
+    }
+
+    private Collider2D check_car_collision(Vector3Int dir)
+    {
+        var check_collision = transform.position + dir;
+        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(1, 2), 0, carLayerMask);
+        foreach (var c in collision)
+        {
+            if (c != null && c.gameObject.GetInstanceID() != GetInstanceID())
+            {
+                return c;
+            }
+        }
+        return null;
     }
     private void step(Vector3Int dir)
     {

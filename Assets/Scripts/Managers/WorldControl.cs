@@ -5,20 +5,13 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.SceneManagement;
 
-public class GlobalControl : MonoBehaviour
+public class WorldControl : MonoBehaviour
 {
-    public static GlobalControl Instance;
+    public static WorldControl Instance;
 
     public ConvoPair convoPair;
     private Camera mainCamera;
     private CinemachineVirtualCamera vcam;  
-
-    public int PlayerPublicOpinion = 0;
-    public int PlayerHealth = 0;
-    public int PlayerMental = 0;
-    public int PlayerMoney = 0;
-    public int PlayerCorrectCount = 0;
-    public int PlayerIncorrectCount = 0;
 
     public Car ActiveCar;
 
@@ -26,6 +19,7 @@ public class GlobalControl : MonoBehaviour
     private Vector3 dragEnd;
     private float dragTime;
 
+    private bool isControlEnabled = false;
     private bool isDragging = false;
     private bool canInterrogate = true;
 
@@ -34,14 +28,11 @@ public class GlobalControl : MonoBehaviour
     [SerializeField] private float minCameraSize = 1;
     [SerializeField] private float maxCameraSize = 10;
 
-    void Awake()
-    {
-        if (Instance != null && Instance != this) 
-        { 
+    void Awake() {
+        if (Instance != null && Instance != this) { 
             Destroy(this); 
         } 
-        else 
-        { 
+        else { 
             Instance = this; 
         } 
         mainCamera = Camera.main;
@@ -49,8 +40,9 @@ public class GlobalControl : MonoBehaviour
         convoPair = GetComponent<ConvoPair>();
     }
 
-
     void Update () {
+        if (!isControlEnabled) return;
+
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         Car selectedCar = GetCar(ray);
         if (selectedCar != null) {
@@ -60,8 +52,8 @@ public class GlobalControl : MonoBehaviour
         }
     }
 
-    void LateUpdate()
-    {
+    void LateUpdate() {
+
         if (isDragging)
         {
             dragEnd = getMousePosition();
@@ -76,9 +68,15 @@ public class GlobalControl : MonoBehaviour
         dragTime += Time.unscaledDeltaTime;
     }
 
-    public void OnDrag(InputAction.CallbackContext context)
-    {
-        // Debug.Log("Drag");
+    private void OnDestroy() {
+        if (Instance == this) {
+            Instance = null;
+        }
+    }
+
+    public void OnDrag(InputAction.CallbackContext context) {
+        if (!isControlEnabled) return;
+
         if (context.started) {
             dragOrigin = getMousePosition();
             dragTime = 0;
@@ -98,9 +96,8 @@ public class GlobalControl : MonoBehaviour
         }
     }
 
-    public void OnScroll(InputAction.CallbackContext context)
-    {
-        // Debug.Log("Scroll");
+    public void OnScroll(InputAction.CallbackContext context) {
+        if (!isControlEnabled) return;
 
         if (context.performed)
         {
@@ -122,16 +119,21 @@ public class GlobalControl : MonoBehaviour
         canInterrogate = true;
     }
 
-    public Car GetCar(Ray ray)
-    {
+    public void DisableControl() {
+        isControlEnabled = false;
+    }
+    
+    public void EnableControl() {
+        isControlEnabled = true;
+    }
+
+    public Car GetCar(Ray ray) {
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
         Car selectedCar = null;
-        if (hit.collider == null)
-        {
+        if (hit.collider == null) {
             // Debug.Log("nothing hit");
         }
-        else
-        {
+        else {
             // print(hit.collider.name);
             // print(hit.collider.gameObject);
             GameObject gohit = hit.collider.gameObject;

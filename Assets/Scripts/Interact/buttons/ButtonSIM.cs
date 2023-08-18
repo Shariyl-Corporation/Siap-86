@@ -11,7 +11,7 @@ public class ButtonSIM: BaseButton
             audioManager.Click();
             StartCoroutine(
                 dialogueManager.AskDocumentSIM(
-                    GlobalControl.Instance.ActiveCar.driver.hasSIM
+                    WorldControl.Instance.ActiveCar.driver.hasSIM
                 ));
         }
     }

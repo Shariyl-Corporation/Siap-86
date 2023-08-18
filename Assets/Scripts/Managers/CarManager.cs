@@ -18,8 +18,7 @@ public class CarManager : MonoBehaviour
     public Grid grid;
     public Tilemap tilemap;
     public TileBase spawnTile;
-    public TileBase leftTile;
-    public TileBase rightTile;
+    public TileBase laneTile;
     public TileBase crossTile;
     public TileBase endTile;
 

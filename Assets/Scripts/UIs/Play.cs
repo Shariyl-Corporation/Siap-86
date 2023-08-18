@@ -21,25 +21,18 @@ public class Play : MonoBehaviour
     void OnMouseOver()
     {
         material.SetTexture("_MainTex", hoverTex);
-        Debug.Log("Change Cursor");
-        MainMenu.changeCursor(true);
+        MainMenu.Instance.changeCursor(true);
     }
 
     void OnMouseExit()
     {
         material.SetTexture("_MainTex", defaultTex);
-        MainMenu.changeCursor(false);
+        MainMenu.Instance.changeCursor(false);
     }
 
     void OnMouseDown()
     {
         // audioSource.Play();
-        StartCoroutine(play());
-    }
-
-    IEnumerator play()
-    {
-        yield return new WaitForSecondsRealtime(0.5f);
-        SceneManager.LoadScene("Testing_AI");
+        MainMenu.Instance.OnClickPlay();
     }
 }
