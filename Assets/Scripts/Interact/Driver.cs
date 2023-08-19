@@ -7,6 +7,4 @@ public class Driver : MonoBehaviour
     public bool hasKTP;
     public bool hasSIM;
     public bool hasSTNK;
-
-    
 }

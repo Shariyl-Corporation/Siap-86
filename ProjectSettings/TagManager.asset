@@ -88,3 +88,6 @@ TagManager:
   - name: Interrogate
     uniqueID: 2426151389
     locked: 0
+  - name: Building
+    uniqueID: 4149666207
+    locked: 0

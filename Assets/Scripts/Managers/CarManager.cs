@@ -31,19 +31,13 @@ public class CarManager : MonoBehaviour
         cars = new List<Car>();
         dataFromTiles = new Dictionary<Vector3Int, TileBase>();
         BoundsInt bounds = tilemap.cellBounds;
-        TileBase[] Tiles = tilemap.GetTilesBlock(bounds);
 
-        // filling Dictionary
-        for (int x = 0; x < bounds.size.x; x++)
-        {
-            for (int y = 0; y < bounds.size.y; y++)
-            {
-                TileBase tile = Tiles[x + y * bounds.size.x];
-                var vec = new Vector3Int(x - bounds.size.x / 2, y - bounds.size.y / 2);
-                var vecgrid = grid.WorldToCell(vec + transform.position);
+        foreach (Vector3Int position in bounds.allPositionsWithin) {
+            Vector3Int cellWorldPos = Vector3Int.FloorToInt(tilemap.GetCellCenterWorld(position));
+            cellWorldPos.z = 0;
+            TileBase tile = tilemap.GetTile(position);
 
-                dataFromTiles.Add(grid.WorldToCell(vecgrid), tile);
-            }
+            dataFromTiles.Add(cellWorldPos, tile);
         }
 
         spawnPoints = get_all_position_for_tile(spawnTile);
@@ -128,7 +122,7 @@ public class CarManager : MonoBehaviour
         return get_neighbor_tiles(gridPosition);
     }
 
-    public List<Vector3Int> get_all_position_for_tile(TileBase tile)
+    public static List<Vector3Int> get_all_position_for_tile(TileBase tile)
     {
         return dataFromTiles.Where(pair => pair.Value == tile)
                             .Select(pair => pair.Key)

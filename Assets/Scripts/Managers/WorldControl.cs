@@ -11,7 +11,8 @@ public class WorldControl : MonoBehaviour
 
     public ConvoPair convoPair;
     private Camera mainCamera;
-    private CinemachineVirtualCamera vcam;  
+    private CinemachineVirtualCamera vcam;
+    private Animator animator;
 
     public Car ActiveCar;
 
@@ -19,7 +20,7 @@ public class WorldControl : MonoBehaviour
     private Vector3 dragEnd;
     private float dragTime;
 
-    private bool isControlEnabled = false;
+    public bool isControlEnabled = false;
     private bool isDragging = false;
     private bool canInterrogate = true;
 
@@ -38,6 +39,7 @@ public class WorldControl : MonoBehaviour
         mainCamera = Camera.main;
         vcam = FindObjectOfType<CinemachineVirtualCamera>();
         convoPair = GetComponent<ConvoPair>();
+        animator = GetComponent<Animator>();
     }
 
     void Update () {
@@ -121,21 +123,18 @@ public class WorldControl : MonoBehaviour
 
     public void DisableControl() {
         isControlEnabled = false;
+        animator.Play("Phase1");
     }
     
     public void EnableControl() {
         isControlEnabled = true;
+        animator.enabled = false;
     }
 
     public Car GetCar(Ray ray) {
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
         Car selectedCar = null;
-        if (hit.collider == null) {
-            // Debug.Log("nothing hit");
-        }
-        else {
-            // print(hit.collider.name);
-            // print(hit.collider.gameObject);
+        if (hit.collider != null) {
             GameObject gohit = hit.collider.gameObject;
             if (gohit.GetComponent<Car>() != null) {
                 selectedCar = gohit.GetComponent<Car>();
