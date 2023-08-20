@@ -24,7 +24,6 @@ public class Car : MonoBehaviour
     private Vector3 destinationCell;
     private Vector3 prevCell;
 
-
     void Start()
     {
         targetPosition = transform.position;
@@ -33,15 +32,17 @@ public class Car : MonoBehaviour
     }
     void Update()
     {
-        if (transform.position != targetPosition)
-        {
+        if (transform.position != targetPosition) {
             MoveTowardsTargetPosition();
         }
-        else
-        {
+        else {
             do_astar_step();
         }
 
+    }
+
+    void OnDestroy(){
+        CarManager.RemoveCar(this);
     }
 
     Driver generateGuiltyDriver() {
@@ -51,7 +52,7 @@ public class Car : MonoBehaviour
         d.hasSTNK = false;
         return d;
     }
-        // calculating cell to the destination, BOTH using the local coordinate (grid)
+    // calculating cell to the destination, BOTH using the local coordinate (grid)
     private float calculate_heuristic_at(Vector3Int cell)
     {
         return Vector3.Distance(cell, destinationCell);
@@ -66,8 +67,7 @@ public class Car : MonoBehaviour
         if (carManager.tileAt(transform.position) == carManager.crossTile) {
             dict = carManager.get_turn_end_tiles(transform.position, transform.rotation);
         }
-        else
-        {
+        else {
             dict = carManager.get_neighbor_tiles_world(transform.position);
         }
         foreach (var kp in dict)
@@ -100,16 +100,16 @@ public class Car : MonoBehaviour
         var targetDirection = targetPosition - transform.position;
         var angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        
+        // transform.forward
         Vector3Int straight_vector = Vector3Int.RoundToInt(transform.rotation * Vector3.right);
         // Debug.Log(straight_vector);
-        var check_collision = transform.position + straight_vector*3;
-        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(1, 2), angle, carLayerMask);
+        var check_collision = transform.position + straight_vector*2;
+        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(2, 2), angle, carLayerMask);
         // Debug.Log(check_collision);
         foreach (var c in collision)
         {
             if(c != null && c.gameObject.GetInstanceID() != GetInstanceID()) {
-                // Debug.Log(c);
+                Debug.Log(c.gameObject);
                 return;
             }
         }
@@ -118,19 +118,18 @@ public class Car : MonoBehaviour
         // transform.position += transform.forward * speed * Time.deltaTime;
     }
 
-    private Collider2D check_car_collision(Vector3Int dir)
-    {
-        var check_collision = transform.position + dir;
-        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(1, 2), 0, carLayerMask);
-        foreach (var c in collision)
-        {
-            if (c != null && c.gameObject.GetInstanceID() != GetInstanceID())
-            {
-                return c;
-            }
-        }
-        return null;
-    }
+    // private Collider2D check_car_collision(Vector3Int dir)
+    // {
+    //     var check_collision = transform.position + dir;
+    //     var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(1, 2), 0, carLayerMask);
+    //     foreach (var c in collision) {
+    //         if (c != null && c.gameObject.GetInstanceID() != GetInstanceID()){
+    //             Debug.Log(c);
+    //             return c;
+    //         }
+    //     }
+    //     return null;
+    // }
     private void step(Vector3Int dir)
     {
         targetPosition = transform.position + dir;

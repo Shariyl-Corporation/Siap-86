@@ -44,11 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bc243300ba4347fbbaa5e4cf33f2dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carGO: {fileID: 6178382256221334740, guid: 1d0beee0e78f7d855ad4ebde5a2b3355, type: 3}
+  carGO: {fileID: 6242664850747427611, guid: 1d0beee0e78f7d855ad4ebde5a2b3355, type: 3}
   spawnDelay: 3
   grid: {fileID: 6497469210920357676, guid: 03410802900da564691acca2f66c5ec9, type: 3}
   tilemap: {fileID: 4435951172525156539, guid: 430f61014fd1c791689c628dae4af088, type: 3}
   spawnTile: {fileID: 11400000, guid: 7a0f26c576067c247ad8cd8ec1238013, type: 2}
-  leftTile: {fileID: 11400000, guid: 49bcda0cae44ec0498e77f0b189cf642, type: 2}
-  rightTile: {fileID: 11400000, guid: f84de16466f2fb9498791a53d3142e36, type: 2}
+  laneTile: {fileID: 0}
   crossTile: {fileID: 11400000, guid: 375c83b55e344bc4fbb5736b4c715bf4, type: 2}
+  endTile: {fileID: 0}

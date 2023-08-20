@@ -10,9 +10,10 @@ public class CarManager : MonoBehaviour
 
     private List<Vector3Int> spawnPoints;
     private List<Vector3Int> endPoints;
-    private List<Car> cars;
+    private static HashSet<int> cars;
     [SerializeField] private Car carGO;
     [SerializeField] private float spawnDelay = 3;
+    [SerializeField] private int limitCar = 25;
     private float timer = 0;
     // ------------------------------------
     public Grid grid;
@@ -28,7 +29,7 @@ public class CarManager : MonoBehaviour
 
     private void Awake()
     {
-        cars = new List<Car>();
+        cars = new HashSet<int>();
         dataFromTiles = new Dictionary<Vector3Int, TileBase>();
         BoundsInt bounds = tilemap.cellBounds;
 
@@ -54,7 +55,8 @@ public class CarManager : MonoBehaviour
         if (timer > spawnDelay)
         {
             timer = 0;
-            spawnRandomCar();
+            if (cars.Count < limitCar)
+                spawnRandomCar();
         }
     }
 
@@ -134,12 +136,17 @@ public class CarManager : MonoBehaviour
     public void spawnRandomCar()
     {
         int spawnPosition = Random.Range(0, spawnPoints.Count);
-        Car ped = Instantiate(carGO, spawnPoints[spawnPosition], transform.rotation);
+        Car car = Instantiate(carGO, spawnPoints[spawnPosition], transform.rotation);
 
         int destinationPosition = Random.Range(0, endPoints.Count);
-        ped.setDestination(endPoints[destinationPosition]);
+        car.setDestination(endPoints[destinationPosition]);
 
-        ped.transform.parent = gameObject.transform;
-        cars.Add(ped);
+        car.transform.parent = gameObject.transform;
+        cars.Add(car.GetInstanceID());
+    }
+
+    public static void RemoveCar(Car car){
+        cars.Remove(car.GetInstanceID());
+        Destroy(car.gameObject);
     }
 }

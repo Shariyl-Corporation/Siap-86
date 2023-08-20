@@ -44,7 +44,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -131,3 +131,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dd65b9c032108bb45a0cc9d520adddba, type: 3}
   - {fileID: 21300000, guid: 2acf809ad14e1254980f3528fd11d3e5, type: 3}
   crossTile: {fileID: 11400000, guid: 375c83b55e344bc4fbb5736b4c715bf4, type: 2}
+  phase: 0
