@@ -13,6 +13,7 @@ public class TrafficLightController : MonoBehaviour {
     public Sprite[] phasesSprite;
     public TileBase crossTile;
     public int phase;
+    public static bool firstPrint = true;
 
     private SpriteRenderer spriteRenderer;
     public enum State {
@@ -46,11 +47,13 @@ public class TrafficLightController : MonoBehaviour {
     }
 
     void changePhase() {
+        traffic_light[(DirectionFrom)phase] = State.red;
         for (int i = 0; i < 4; i++) {
             phase = (phase + 1) % 4;
-            var state = (State)phase;
-            if (traffic_light.ContainsValue(state)) {
+            var dir = (DirectionFrom)phase;
+            if (traffic_light.ContainsKey(dir)) {
                 spriteRenderer.sprite = phasesSprite[phase];
+                traffic_light[dir] = State.green;
                 break;
             }
         }
@@ -60,28 +63,39 @@ public class TrafficLightController : MonoBehaviour {
     void build_traffic_light() {
         var turn_tiles = CarManager.get_all_position_for_tile(crossTile);
 
-        var right_tile = Vector3Int.RoundToInt(transform.position + new Vector3(7, -2, 0));
-        var left_tile = Vector3Int.RoundToInt(transform.position + new Vector3(-7, 2, 0));
-        var up_tile = Vector3Int.RoundToInt(transform.position + new Vector3(2, 7, 0));
-        var down_tile = Vector3Int.RoundToInt(transform.position + new Vector3(-2, -7, 0));
+        var right_tile = Vector3Int.RoundToInt(transform.position + new Vector3(6, -2, 0));
+        var left_tile = Vector3Int.RoundToInt(transform.position + new Vector3(-6, 2, 0));
+        var up_tile = Vector3Int.RoundToInt(transform.position + new Vector3(2, 6, 0));
+        var down_tile = Vector3Int.RoundToInt(transform.position + new Vector3(-2, -6, 0));
 
         if (turn_tiles.Contains(right_tile)){
             traffic_light.Add(DirectionFrom.right, State.red);
+            Debug.Log("right");
         }
         if (turn_tiles.Contains(left_tile)){
             traffic_light.Add(DirectionFrom.left, State.red);
+            Debug.Log("left");
         }
         if (turn_tiles.Contains(up_tile)){
             traffic_light.Add(DirectionFrom.up, State.red);
+            Debug.Log("up");
         }
         if (turn_tiles.Contains(down_tile)){
             traffic_light.Add(DirectionFrom.down, State.red);
+            Debug.Log("down");
         }
 
         Debug.Log(right_tile + " " + left_tile + " " + up_tile + " " + down_tile);
-        foreach(var traffic in traffic_light) {
-            Debug.Log(traffic.Key + " " + traffic.Value);
+        // foreach(var traffic in traffic_light) {
+        //     Debug.Log(traffic.Key + " " + traffic.Value);
+        // }
+        if (firstPrint) {
+            foreach(var tile in turn_tiles) {
+                Debug.Log(tile);
+            }
+            firstPrint = false;
         }
+        
         // pls fix
         traffic_light[DirectionFrom.right] = State.green;
         phase = (int)DirectionFrom.right;
