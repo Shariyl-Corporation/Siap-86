@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2162093382497443213}
   - component: {fileID: 6925854782992226058}
   - component: {fileID: 6664993346739731135}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Traffic Light
-  m_TagString: Untagged
+  m_TagString: traffic lights
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,7 +51,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 11, y: 11}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -101,7 +101,7 @@ SpriteRenderer:
   m_SortingLayerID: 107091685
   m_SortingLayer: 13
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2ee04611c6318ce45998df35bd1c3e7f, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0515be6c488ad2749ba4517b5fcb3284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phaseDuration: 5
+  phaseDuration: 15
   phasesSprite:
   - {fileID: 21300000, guid: 45dbbf70db1cc0247b4a4576f082f85e, type: 3}
   - {fileID: 21300000, guid: 2b532e2fb8e286049884484c8acf18ae, type: 3}

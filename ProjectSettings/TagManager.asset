@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interrogate
   - traffic lights
+  - car
   layers:
   - Default
   - TransparentFX

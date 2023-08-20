@@ -24,15 +24,24 @@ public class Car : MonoBehaviour
     private Vector3 destinationCell;
     private Vector3 prevCell;
 
-    void Start()
-    {
+    private bool isInTurnTile = false;
+    private TrafficLightController trafficLight;
+    private Vector3Int dir_vector;
+
+    void Start() {
         targetPosition = transform.position;
 
         driver = generateGuiltyDriver();
     }
-    void Update()
-    {
+    void Update(){
         if (transform.position != targetPosition) {
+            if (isInTurnTile) {
+                var state = trafficLight.traffic_light[TrafficLightController.VectorToDirection[dir_vector]];
+                if (state == TrafficLightController.State.red || state == TrafficLightController.State.yellow){
+                    return;
+                }
+                isInTurnTile = false;
+            }
             MoveTowardsTargetPosition();
         }
         else {
@@ -53,8 +62,7 @@ public class Car : MonoBehaviour
         return d;
     }
     // calculating cell to the destination, BOTH using the local coordinate (grid)
-    private float calculate_heuristic_at(Vector3Int cell)
-    {
+    private float calculate_heuristic_at(Vector3Int cell) {
         return Vector3.Distance(cell, destinationCell);
     }
 
@@ -66,27 +74,26 @@ public class Car : MonoBehaviour
         Dictionary<Vector3Int, TileBase> dict;
         if (carManager.tileAt(transform.position) == carManager.crossTile) {
             dict = carManager.get_turn_end_tiles(transform.position, transform.rotation);
+            isInTurnTile = true;
+            trafficLight = Percept()[0].GetComponent<TrafficLightController>();
+            dir_vector = GetForwardVector();
         }
         else {
             dict = carManager.get_neighbor_tiles_world(transform.position);
         }
-        foreach (var kp in dict)
-            {
-                if (kp.Value != null && (Vector3)kp.Key != prevCell)
-                {
-                    float heuristic = calculate_heuristic_at(kp.Key);
-                    if (heuristic < min_heuristic)
-                    {
-                        decision = kp.Key;
-                        min_heuristic = heuristic;
-                    }
+
+        foreach (var kp in dict) {
+            if (kp.Value != null && (Vector3)kp.Key != prevCell) {
+                float heuristic = calculate_heuristic_at(kp.Key);
+                if (heuristic < min_heuristic) {
+                    decision = kp.Key;
+                    min_heuristic = heuristic;
                 }
             }
-        // cant go anywhere
-        if (min_heuristic == float.PositiveInfinity)
-        {
-            Destroy(gameObject);
         }
+
+        // cant go anywhere
+        if (min_heuristic == float.PositiveInfinity) Destroy(gameObject);
 
         prevCell = transform.position;
         targetPosition = decision;
@@ -94,44 +101,41 @@ public class Car : MonoBehaviour
         // Debug.Log("From: " + transform.position.x + " " + transform.position.y);
     }
     
-    private void MoveTowardsTargetPosition()
-    {
+    private void MoveTowardsTargetPosition() {
+        var angle = angle_towards(targetPosition);
+        var straight_vector = Vector3Int.RoundToInt(transform.rotation * Vector3.right);
+        var collision = Percept();
 
-        var targetDirection = targetPosition - transform.position;
-        var angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        // transform.forward
-        Vector3Int straight_vector = Vector3Int.RoundToInt(transform.rotation * Vector3.right);
-        // Debug.Log(straight_vector);
-        var check_collision = transform.position + straight_vector*2;
-        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(2, 2), angle, carLayerMask);
-        // Debug.Log(check_collision);
-        foreach (var c in collision)
-        {
-            if(c != null && c.gameObject.GetInstanceID() != GetInstanceID()) {
-                Debug.Log(c.gameObject);
+        foreach (var c in collision){
+            var go = c.gameObject;
+            if (go.CompareTag("car"))
                 return;
-            }
         }
         
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-        // transform.position += transform.forward * speed * Time.deltaTime;
     }
 
-    // private Collider2D check_car_collision(Vector3Int dir)
-    // {
-    //     var check_collision = transform.position + dir;
-    //     var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(1, 2), 0, carLayerMask);
-    //     foreach (var c in collision) {
-    //         if (c != null && c.gameObject.GetInstanceID() != GetInstanceID()){
-    //             Debug.Log(c);
-    //             return c;
-    //         }
-    //     }
-    //     return null;
-    // }
-    private void step(Vector3Int dir)
-    {
+    private Collider2D[] Percept() {
+        var angle = angle_towards(targetPosition);
+        var forwardVector = GetForwardVector();
+        var check_collision = transform.position + forwardVector*2;
+        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(2, 2), angle, carLayerMask);
+
+        return collision;
+    }
+
+    private Vector3Int GetForwardVector(){
+        return Vector3Int.RoundToInt(transform.rotation * Vector3.right);
+    }
+
+    private float angle_towards(Vector3 dir) {
+        var targetDirection = dir - transform.position;
+        var angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+        return angle;
+    }
+
+    private void step(Vector3Int dir) {
         targetPosition = transform.position + dir;
     }
 
