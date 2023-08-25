@@ -29,6 +29,8 @@ public class WorldControl : MonoBehaviour
     [SerializeField] private float minCameraSize = 1;
     [SerializeField] private float maxCameraSize = 10;
 
+    public float testing_deadzone;
+
     void Awake() {
         if (Instance != null && Instance != this) { 
             Destroy(this); 
@@ -81,6 +83,10 @@ public class WorldControl : MonoBehaviour
 
         if (context.started) {
             dragOrigin = getMousePosition();
+            if (!canInterrogate && 
+                dragOrigin.x > transform.position.x + testing_deadzone*vcam.m_Lens.OrthographicSize) {
+                return;
+            }
             dragTime = 0;
         }
         isDragging = context.started || context.performed;

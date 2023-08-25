@@ -32,19 +32,23 @@ public class IntroductionScene : MonoBehaviour
     }
 
     void Update(){
-        if (Input.GetMouseButtonDown(0) || !isAnimating){
+        if (Input.GetMouseButtonDown(0) || !isAnimating){               // skip one frame 
             StopCoroutine(currentCoroutine);
             currentFrame++;
             if (currentFrame < frames.Count){
+                StopAllCoroutines();
                 currentCoroutine = ChangeFrame(frames[currentFrame]);
                 StartCoroutine(currentCoroutine);
             } else {
                 UnloadScene();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape)){                          // skip all frames
+            UnloadScene();
+        }
     }
 
-    private void OnDestroy(){
+    private void OnDestroy(){                                           // inform orchestrator that this scene is unloaded
         OnSceneUnloaded?.Invoke();
         OnSceneUnloaded = null;
     }
