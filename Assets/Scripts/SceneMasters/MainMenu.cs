@@ -19,11 +19,10 @@ public class MainMenu : MonoBehaviour {
         else { 
             Instance = this; 
         }
-
+        mainCamera = Camera.main;
     }
 
     void Start(){
-        mainCamera = Camera.main;
     }
 
     void Update(){}
@@ -44,7 +43,7 @@ public class MainMenu : MonoBehaviour {
         SceneManager.LoadScene("Credits", LoadSceneMode.Additive);
     }
 
-    public static void OnClickQuit() {
+    public void OnClickQuit() {
         Application.Quit();
     }
 }
