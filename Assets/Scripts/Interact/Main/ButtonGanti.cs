@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class ButtonGanti: BaseInterrogateButton {
     void OnMouseDown() {
+        if (!dialogueManager.allowAction) return;
+        dialogueManager.allowAction = false;
+
         Debug.Log("Button clicked");
         audioManager.Click();
         
-        dialogueManager.SwapCard(); 
+        dialogueManager.OnClickGanti();
     }
 }

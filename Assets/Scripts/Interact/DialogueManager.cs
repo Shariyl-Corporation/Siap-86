@@ -17,11 +17,13 @@ public class DialogueManager : MonoBehaviour {
     public TextMeshPro t_speaker;
 
     public Animator driverAnimator;
-    public Animator animator;
 
-    public bool isRedCard = true;
+    public GameObject card;
+    private SpriteRenderer cardRenderer;
     public Sprite redCard, blueCard;
-    public SpriteRenderer cardRenderer;
+    public bool isRedCard = true;
+
+    public bool allowAction = true;
 
     public AudioClip driverSound, playerSound;
     public AudioSource audioSource;
@@ -38,76 +40,93 @@ public class DialogueManager : MonoBehaviour {
         activeDriver = activeCar.driver;
         t_dialogue.text = "";
 
+        cardRenderer = card.GetComponent<SpriteRenderer>();
+
         audioSource = GetComponent<AudioSource>();
         audioSource.Stop();
+
 
         StartCoroutine(StrikeConversation());
     }
 
     // UI related
     // basic disable enable
-    public void DisableAllChoices() {
+    private void DisableAllChoices() {
         ChoicesMain.SetActive(false);
         ChoicesAsk.SetActive(false);
         ChoicesSanksi.SetActive(false);
         ChoicesVerdict.SetActive(false);
     }
 
-    public void ShowChoicesMain() {
+    private void ShowChoicesMain() {
         DisableAllChoices();
         ChoicesMain.SetActive(true);
     }
 
-    public void ShowChoicesAsk() {
+    private void ShowChoicesAsk() {
         DisableAllChoices();
         ChoicesAsk.SetActive(true);
     }
 
-    public void ShowChoicesSanksi() {
+    private void ShowChoicesSanksi() {
         DisableAllChoices();
         ChoicesSanksi.SetActive(true);
     }
 
-    public void ShowChoicesVerdict() {
+    private void ShowChoicesVerdict() {
         DisableAllChoices();
         ChoicesVerdict.SetActive(true);
     }
     // animation related
 
-    public void SwapCard() {
+    private IEnumerator SwapCard() {           // weird behaviour
         DisableAllChoices();
+        yield return MoveObject(card, Vector3.down, 8f, 1);
 
-        MoveCardDown();
         if (isRedCard) {
             cardRenderer.sprite = blueCard;
         } else {
             cardRenderer.sprite = redCard;
         }
-        MoveCardUp();
+
+        yield return MoveObject(card, Vector3.up, 8f, 1);
 
         isRedCard = !isRedCard;
+        allowAction = true;
+
         ShowChoicesMain();
+        yield return null;
     }
 
-    public void MoveCardUp() {
-        StartCoroutine(PlayAnimationWaitUntilComplete("moveup"));
+    private float EaseInOutQuad(float t) {
+        return t < 0.5f ? 2.0f * t * t : -1.0f + (4.0f - 2.0f * t) * t;
     }
 
-    public void MoveCardDown() {
-        StartCoroutine(PlayAnimationWaitUntilComplete("movedown"));
-    }
+    private IEnumerator MoveObject(GameObject obj, Vector3 direction, float distance, float duration) {
+        Vector3 startPosition = obj.transform.position;
+        Vector3 targetPosition = startPosition + direction * distance;
 
-    private IEnumerator PlayAnimationWaitUntilComplete(string animationName){
-        animator.SetTrigger(animationName);
-        while (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
+        float elapsedTime = 0.0f;
+
+        while (elapsedTime < duration) {
+            float t = elapsedTime / duration;
+            float easedT = EaseInOutQuad(t);
+
+            obj.transform.position = Vector3.Lerp(startPosition, targetPosition, easedT);
+
+            elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
 
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1) {
-            yield return null;
-        }
+        // Ensure the object reaches the target position exactly
+        obj.transform.position = targetPosition;
     }
-    
+
+    // button coro starter
+    public void OnClickGanti() {
+        allowAction = false;
+        StartCoroutine(SwapCard());
+    }
 
     // convo related
 
