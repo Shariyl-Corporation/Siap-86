@@ -128,6 +128,46 @@ public class DialogueManager : MonoBehaviour {
         StartCoroutine(SwapCard());
     }
 
+    public void OnClickObrol() {
+        StartCoroutine(BasicChat());
+    }
+
+    public void OnClickTanya() {
+        ShowChoicesAsk();
+    }
+        public void OnClickKTP() {
+            StartCoroutine(AskDocumentKTP(activeDriver.hasKTP));
+        }
+
+        public void OnClickSIM() {
+            StartCoroutine(AskDocumentSIM(activeDriver.hasSIM));
+        }
+
+        public void OnClickSTNK() {
+            StartCoroutine(AskDocumentSTNK(activeDriver.hasSTNK));
+        }
+
+    public void OnClickSanksi() {
+        ShowChoicesSanksi();
+    }
+        public void OnClickPasal281() {
+
+        }
+
+        public void OnClickPasal288() {
+
+        }
+
+    public void OnClickAkhiri(){ 
+        ShowChoicesVerdict();
+    }
+        public void OnClickLepas() {
+
+        }
+
+        public void OnClickTilang() {
+
+        }
     // convo related
 
     public IEnumerator StrikeConversation() {

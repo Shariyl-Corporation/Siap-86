@@ -9,9 +9,6 @@ public class ButtonAkhiri : BaseInterrogateButton {
         Debug.Log("Button clicked");
         audioManager.Click();
 
-        StartCoroutine(
-            dialogueManager.GiveVerdict(
-                WorldControl.Instance.ActiveCar.driver.hasKTP
-            ));
+        dialogueManager.OnClickAkhiri();
     }
 }
