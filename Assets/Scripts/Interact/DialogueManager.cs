@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DialogueManager : MonoBehaviour
-{
+public class DialogueManager : MonoBehaviour {
     private WorldControl control;
     private ConvoPair convoPair;
     public UI uiManager;
@@ -18,12 +17,21 @@ public class DialogueManager : MonoBehaviour
     public TextMeshPro t_speaker;
 
     public Animator driverAnimator;
+    public Animator animator;
+
+    public bool isRedCard = true;
+    public Sprite redCard, blueCard;
+    public SpriteRenderer cardRenderer;
 
     public AudioClip driverSound, playerSound;
     public AudioSource audioSource;
 
-    void Start()
-    {
+    [SerializeField] private GameObject ChoicesMain;
+    [SerializeField] private GameObject ChoicesAsk;
+    [SerializeField] private GameObject ChoicesSanksi;
+    [SerializeField] private GameObject ChoicesVerdict;
+
+    void Start() {
         control = FindObjectOfType<WorldControl>();
         convoPair = control.convoPair;
         activeCar = control.ActiveCar;
@@ -35,6 +43,73 @@ public class DialogueManager : MonoBehaviour
 
         StartCoroutine(StrikeConversation());
     }
+
+    // UI related
+    // basic disable enable
+    public void DisableAllChoices() {
+        ChoicesMain.SetActive(false);
+        ChoicesAsk.SetActive(false);
+        ChoicesSanksi.SetActive(false);
+        ChoicesVerdict.SetActive(false);
+    }
+
+    public void ShowChoicesMain() {
+        DisableAllChoices();
+        ChoicesMain.SetActive(true);
+    }
+
+    public void ShowChoicesAsk() {
+        DisableAllChoices();
+        ChoicesAsk.SetActive(true);
+    }
+
+    public void ShowChoicesSanksi() {
+        DisableAllChoices();
+        ChoicesSanksi.SetActive(true);
+    }
+
+    public void ShowChoicesVerdict() {
+        DisableAllChoices();
+        ChoicesVerdict.SetActive(true);
+    }
+    // animation related
+
+    public void SwapCard() {
+        DisableAllChoices();
+
+        MoveCardDown();
+        if (isRedCard) {
+            cardRenderer.sprite = blueCard;
+        } else {
+            cardRenderer.sprite = redCard;
+        }
+        MoveCardUp();
+
+        isRedCard = !isRedCard;
+        ShowChoicesMain();
+    }
+
+    public void MoveCardUp() {
+        StartCoroutine(PlayAnimationWaitUntilComplete("moveup"));
+    }
+
+    public void MoveCardDown() {
+        StartCoroutine(PlayAnimationWaitUntilComplete("movedown"));
+    }
+
+    private IEnumerator PlayAnimationWaitUntilComplete(string animationName){
+        animator.SetTrigger(animationName);
+        while (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
+            yield return null;
+        }
+
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1) {
+            yield return null;
+        }
+    }
+    
+
+    // convo related
 
     public IEnumerator StrikeConversation() {
         ConvoFlow convoFlow = convoPair.ConvGreetings[Random.Range(0, convoPair.ConvGreetings.Count)];

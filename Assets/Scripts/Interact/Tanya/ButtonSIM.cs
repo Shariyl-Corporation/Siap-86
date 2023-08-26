@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonSTNK : BaseButton
-{
+public class ButtonSIM : BaseInterrogateButton {
     void OnMouseDown() {
         Debug.Log("Chat clicked");
         if (!isAsked) {
             spriteRenderer.sprite = askedSprite;
             audioManager.Click();
             StartCoroutine(
-                dialogueManager.AskDocumentSTNK(
-                    WorldControl.Instance.ActiveCar.driver.hasSTNK
+                dialogueManager.AskDocumentSIM(
+                    WorldControl.Instance.ActiveCar.driver.hasSIM
                 ));
         }
     }
