@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI : MonoBehaviour
-{
-
+public class UI : MonoBehaviour {
     public static Texture2D mouseCursor, hoverCursor;
 
     public BaseButton chatButton;
@@ -15,8 +13,7 @@ public class UI : MonoBehaviour
 
     int hour, minute;
 
-    void Start()
-    {
+    void Start() {
         mouseCursor = Resources.Load("Cursor") as Texture2D;
         hoverCursor = Resources.Load("CursorHover") as Texture2D;
         Cursor.SetCursor(mouseCursor, new Vector2(0, 0), CursorMode.Auto);

@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class ButtonSTNK : BaseInterrogateButton {
     void OnMouseDown() {
-        Debug.Log("Chat clicked");
-        if (!isAsked) {
-            spriteRenderer.sprite = askedSprite;
+        if (!dialogueManager.allowAction) return;
+        OnMouseExit();
+
+        // if (!isAsked) {
+        //     SetAsked();
             audioManager.Click();
-            StartCoroutine(
-                dialogueManager.AskDocumentSTNK(
-                    WorldControl.Instance.ActiveCar.driver.hasSTNK
-                ));
-        }
+            dialogueManager.OnClickSTNK();
+        // }
     }
 }
+
+
+

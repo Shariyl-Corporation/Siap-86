@@ -25,13 +25,16 @@ public class DialogueManager : MonoBehaviour {
 
     public bool allowAction = true;
 
+    public bool sanksiP288A1, sanksiP288A2, sanksiP281, sanksiP283, sanksiP287A2, sanksiP287A5;
+
     public AudioClip driverSound, playerSound;
     public AudioSource audioSource;
 
-    [SerializeField] private GameObject ChoicesMain;
-    [SerializeField] private GameObject ChoicesAsk;
-    [SerializeField] private GameObject ChoicesSanksi;
-    [SerializeField] private GameObject ChoicesVerdict;
+    [SerializeField] private GameObject ChoicesMain,
+                                        ChoicesAsk,
+                                        ChoicesSanksi,
+                                        ChoicesVerdict,
+                                        ButtonKembali;
 
     void Start() {
         control = FindObjectOfType<WorldControl>();
@@ -45,6 +48,7 @@ public class DialogueManager : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         audioSource.Stop();
 
+        ShowChoicesMain();
 
         StartCoroutine(StrikeConversation());
     }
@@ -56,6 +60,7 @@ public class DialogueManager : MonoBehaviour {
         ChoicesAsk.SetActive(false);
         ChoicesSanksi.SetActive(false);
         ChoicesVerdict.SetActive(false);
+        ButtonKembali.SetActive(false);
     }
 
     private void ShowChoicesMain() {
@@ -66,17 +71,29 @@ public class DialogueManager : MonoBehaviour {
     private void ShowChoicesAsk() {
         DisableAllChoices();
         ChoicesAsk.SetActive(true);
+        ButtonKembali.SetActive(true);
     }
 
     private void ShowChoicesSanksi() {
         DisableAllChoices();
         ChoicesSanksi.SetActive(true);
+        ButtonKembali.SetActive(true);
     }
 
     private void ShowChoicesVerdict() {
         DisableAllChoices();
         ChoicesVerdict.SetActive(true);
+        ButtonKembali.SetActive(true);
     }
+    
+    private void DisableAction() {
+        allowAction = false;
+    }
+
+    private void EnableAction() {
+        allowAction = true;
+    }
+
     // animation related
 
     private IEnumerator SwapCard() {           // weird behaviour
@@ -92,7 +109,7 @@ public class DialogueManager : MonoBehaviour {
         yield return MoveObject(card, Vector3.up, 8f, 1);
 
         isRedCard = !isRedCard;
-        allowAction = true;
+        EnableAction();
 
         ShowChoicesMain();
         yield return null;
@@ -124,52 +141,94 @@ public class DialogueManager : MonoBehaviour {
 
     // button coro starter
     public void OnClickGanti() {
-        allowAction = false;
+        DisableAction();
         StartCoroutine(SwapCard());
     }
 
     public void OnClickObrol() {
+        DisableAction();
         StartCoroutine(BasicChat());
     }
 
     public void OnClickTanya() {
+        DisableAction();
         ShowChoicesAsk();
     }
         public void OnClickKTP() {
+            DisableAction();
             StartCoroutine(AskDocumentKTP(activeDriver.hasKTP));
         }
 
         public void OnClickSIM() {
+            DisableAction();
             StartCoroutine(AskDocumentSIM(activeDriver.hasSIM));
         }
 
         public void OnClickSTNK() {
+            DisableAction();
             StartCoroutine(AskDocumentSTNK(activeDriver.hasSTNK));
         }
 
     public void OnClickSanksi() {
+        DisableAction();
         ShowChoicesSanksi();
     }
-        public void OnClickPasal281() {
-
+        // Tidak bawa STNK
+        public void OnClickP288A1() {
+            sanksiP281 = !sanksiP281;
         }
 
-        public void OnClickPasal288() {
+        // Tidak bawa SIM
+        public void OnClickP288A2() {
+            sanksiP288A2 = !sanksiP288A2;
+        }
 
+        // Tidak punya SIM
+        public void OnClickP281() {
+            sanksiP281 = !sanksiP281;
+        }
+
+        // Mengemudi tidak wajar  (terlalu lambat, belok belok (mungkin semacam break check))
+        public void OnClickP283() {
+            sanksiP283 = !sanksiP283;
+        }
+
+        // Menerobos lampu merah
+        public void OnClickP287A2() {
+            sanksiP287A2 = !sanksiP287A2;
+        }
+
+        // Melampaui batas kecepatan
+        public void OnClickP287A5(){
+            sanksiP287A5 = !sanksiP287A5;
         }
 
     public void OnClickAkhiri(){ 
+        DisableAction();
         ShowChoicesVerdict();
     }
         public void OnClickLepas() {
+            DisableAction();
+            // call end conversation (no tilang)
+            StartCoroutine(GiveVerdict(false));
+
+            // call destroy self & enable control
 
         }
 
         public void OnClickTilang() {
+            DisableAction();
+            // call end conversation
+            StartCoroutine(GiveVerdict(true));
+
+            // call destroy self & enable control
 
         }
-    // convo related
-
+    
+    public void OnClickKembali(){ 
+        ShowChoicesMain();
+    }
+    
     public IEnumerator StrikeConversation() {
         ConvoFlow convoFlow = convoPair.ConvGreetings[Random.Range(0, convoPair.ConvGreetings.Count)];
         

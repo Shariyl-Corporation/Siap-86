@@ -5,7 +5,8 @@ using UnityEngine;
 public class ButtonAkhiri : BaseInterrogateButton {
     void OnMouseDown() {
         if (!dialogueManager.allowAction) return;
-
+        OnMouseExit();
+        
         Debug.Log("Button clicked");
         audioManager.Click();
 

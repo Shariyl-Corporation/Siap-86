@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class ButtonKTP : BaseInterrogateButton {
     void OnMouseDown() {
-        Debug.Log("Chat clicked");
-        if (!isAsked) {
-            spriteRenderer.sprite = askedSprite;
-            audioManager.Click();
-            StartCoroutine(
-                dialogueManager.AskDocumentKTP(
-                    WorldControl.Instance.ActiveCar.driver.hasKTP
-                ));
-        }
+        if (!dialogueManager.allowAction) return;
+        OnMouseExit();
+
+        audioManager.Click();
+        dialogueManager.OnClickKTP();
     }
 
 }

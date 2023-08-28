@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class ButtonLepas : BaseInterrogateButton {
     void OnMouseDown() {
+        if (!dialogueManager.allowAction) return;
+        OnMouseExit();
+        
         audioManager.Click();
-        dialogueManager.OnClickGanti();
+        dialogueManager.OnClickLepas();
     }
 }

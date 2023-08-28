@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class ButtonChat : BaseInterrogateButton {
     void OnMouseDown() {
-        Debug.Log("Chat clicked");
-            audioManager.Click();
-            StartCoroutine(
-                dialogueManager.BasicChat());
+        if (!dialogueManager.allowAction) return;
+        OnMouseExit();
+        
+        audioManager.Click();
+        dialogueManager.OnClickObrol();
     }
 }

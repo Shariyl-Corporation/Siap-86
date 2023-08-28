@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonSIM : BaseInterrogateButton {
+public class ButtonP288A1 : BaseInterrogateButtonSanksi  {
     void OnMouseDown() {
         if (!dialogueManager.allowAction) return;
         OnMouseExit();
@@ -10,7 +10,9 @@ public class ButtonSIM : BaseInterrogateButton {
         // if (!isAsked) {
         //     SetAsked();
             audioManager.Click();
-            dialogueManager.OnClickSIM();
+            ToggleState();
+            dialogueManager.OnClickP288A1();
         // }
     }
+
 }

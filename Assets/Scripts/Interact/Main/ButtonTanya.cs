@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class ButtonTanya : BaseInterrogateButton {
     void OnMouseDown() {
-        Debug.Log("Chat clicked");
+        if (!dialogueManager.allowAction) return;
+        OnMouseExit();
+        
         audioManager.Click();
-        StartCoroutine(
-            dialogueManager.BasicChat());
+        dialogueManager.OnClickTanya();
     }
 }
