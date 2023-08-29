@@ -840,31 +840,34 @@ MonoBehaviour:
   figureRenderer: {fileID: 589740540}
   caption: {fileID: 1683210621}
   frames:
-  - sprite: {fileID: 21300000, guid: 768c417d078b85c498cb58bad9e0059d, type: 3}
-    text: Ini Jono di kelas 2 SD, menjalani hidup damainya sehari hari di sekolah
-  - sprite: {fileID: 21300000, guid: 768c417d078b85c498cb58bad9e0059d, type: 3}
-    text: Diantara hari harinya disekolah, tiba tiba ibu Jono datang ke sekolah untuk
-      menjemput Jono
-  - sprite: {fileID: 21300000, guid: 768c417d078b85c498cb58bad9e0059d, type: 3}
-    text: Jono menurut dan di dalam mobil sudah ada kakaknya
-  - sprite: {fileID: 21300000, guid: 768c417d078b85c498cb58bad9e0059d, type: 3}
-    text: Suasana di mobil begitu tegang, jono ingin bertanya ada apa sebenarnya
-      terburu buru seperti ini
-  - sprite: {fileID: 21300000, guid: 768c417d078b85c498cb58bad9e0059d, type: 3}
-    text: Jono bertanya dan Ibunda menjawab dengan gelisah "Ayahmu kecelakaan nak..."
-  - sprite: {fileID: 21300000, guid: 768c417d078b85c498cb58bad9e0059d, type: 3}
-    text: Seoran pria paruh baya meninggal dunia setelah menjadi korban tabrak lari
-      Selasa jam 1 siang tadi...
-  - sprite: {fileID: 21300000, guid: 768c417d078b85c498cb58bad9e0059d, type: 3}
-    text: ...Menurut kapolsek, kejadian bermula saat korban ingin menyebrang jalan.
-      Namun, sebuah motor yang dikendarai oleh anak SMA melaju dengan kecepatan tinggi
-      dan menabrak korban hingga meninggal dunia...
-  - sprite: {fileID: 21300000, guid: 768c417d078b85c498cb58bad9e0059d, type: 3}
-    text: Aku tidak ingat begitu ingat kejadian setelah itu
-  - sprite: {fileID: 21300000, guid: 768c417d078b85c498cb58bad9e0059d, type: 3}
-    text: Aku ingin mengurangi kecelakaan seperti ini...
-  - sprite: {fileID: 21300000, guid: 768c417d078b85c498cb58bad9e0059d, type: 3}
-    text: Dan saat ini aku sedang menjalani cita cita ku
+  - sprite: {fileID: 21300000, guid: 908e232dae6e942408f1b32ffcbfb58b, type: 3}
+    text: Namaku X, aku telah tinggal di kota Y sejak aku kecil
+  - sprite: {fileID: 21300000, guid: 908e232dae6e942408f1b32ffcbfb58b, type: 3}
+    text: Saat aku duduk di bangku SMP, aku pernah terlibat dalam kecelakan lalu
+      lintas
+  - sprite: {fileID: 21300000, guid: 0b941ba7ed5c7d643b9790aa839c2c7c, type: 3}
+    text: Sebuah mobil yang menerobos lalu lintas menabrak kendaraan umum yang aku
+      naiki
+  - sprite: {fileID: 21300000, guid: bf898d4e9fb7de84a8729908462b37e0, type: 3}
+    text: Di dalam kekacauan tersebut, aku dan penumpang lain kesulitan untuk keluar
+      dari kendaraan tersebut
+  - sprite: {fileID: 21300000, guid: 1dbd026241ff18946bba5746ee62c05f, type: 3}
+    text: Bantuan segera dikerahkan untuk membantu korban kecelakaan
+  - sprite: {fileID: 21300000, guid: 3075449f4bc1cdd4dbb31f78d5680c6b, type: 3}
+    text: Badanku ditarik keluar dari rongsokan mobil oleh seorang polisi, untungnya
+      aku hanya mengalami luka ringan
+  - sprite: {fileID: 21300000, guid: 3075449f4bc1cdd4dbb31f78d5680c6b, type: 3}
+    text: Setelah membantu para penumpang, polisi tadi langsung melanjutkan pekerjaan
+      dengan mengatur lalu lintas yang kacau
+  - sprite: {fileID: 21300000, guid: 1ccba75c9d8ead544877e81addc855e5, type: 3}
+    text: Aku merasa kagum dengan petugas tersebut, dedikasinya begitu kuat dalam
+      menjalankan tugas
+  - sprite: {fileID: 21300000, guid: 69eadc38899b8924abcedce9d0252f9a, type: 3}
+    text: Semenjak itu aku bercita-cita untuk menjadi polisi lalu lintas, aku sadar
+      seberapa pentingnya peran polisi lalu lintas
+  - sprite: {fileID: 21300000, guid: 69eadc38899b8924abcedce9d0252f9a, type: 3}
+    text: Setelah melewati perjalanan panjang, akhirnya hari ini adalah tugas pertamaku
+      sebagai polisi lalu lintas
 --- !u!4 &2068150334
 Transform:
   m_ObjectHideFlags: 0
