@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -96,6 +97,7 @@ public class DialogueManager : MonoBehaviour {
 
     // animation related
 
+    // WIP
     private IEnumerator SwapCard() {           // weird behaviour
         DisableAllChoices();
         yield return MoveObject(card, Vector3.down, 8f, 1);
@@ -140,93 +142,146 @@ public class DialogueManager : MonoBehaviour {
     }
 
     // button coro starter
-    public void OnClickGanti() {
+    public void OnClickGanti() { // WIP
         DisableAction();
         StartCoroutine(SwapCard());
     }
 
-    public void OnClickObrol() {
+    public void OnClickObrol() { // WIP
         DisableAction();
         StartCoroutine(BasicChat());
     }
 
-    public void OnClickTanya() {
-        DisableAction();
+    public void OnClickTanya() { // WIP
         ShowChoicesAsk();
     }
-        public void OnClickKTP() {
+        public void OnClickKTP() { // WIP
             DisableAction();
             StartCoroutine(AskDocumentKTP(activeDriver.hasKTP));
         }
 
-        public void OnClickSIM() {
+        public void OnClickSIM() { // WIP
             DisableAction();
             StartCoroutine(AskDocumentSIM(activeDriver.hasSIM));
         }
 
-        public void OnClickSTNK() {
+        public void OnClickSTNK() { // WIP
             DisableAction();
             StartCoroutine(AskDocumentSTNK(activeDriver.hasSTNK));
         }
 
-    public void OnClickSanksi() {
-        DisableAction();
+    public void OnClickSanksi() { // WIP
+        // DisableAction();
         ShowChoicesSanksi();
     }
         // Tidak bawa STNK
-        public void OnClickP288A1() {
+        public void OnClickP288A1() { // WIP
             sanksiP281 = !sanksiP281;
         }
 
         // Tidak bawa SIM
-        public void OnClickP288A2() {
+        public void OnClickP288A2() { // WIP
             sanksiP288A2 = !sanksiP288A2;
         }
 
-        // Tidak punya SIM
-        public void OnClickP281() {
+        // Tidak punya SIM / dibawah umur
+        public void OnClickP281() { // WIP
             sanksiP281 = !sanksiP281;
         }
 
         // Mengemudi tidak wajar  (terlalu lambat, belok belok (mungkin semacam break check))
-        public void OnClickP283() {
+        public void OnClickP283() { // WIP
             sanksiP283 = !sanksiP283;
         }
 
         // Menerobos lampu merah
-        public void OnClickP287A2() {
+        public void OnClickP287A2() { // WIP
             sanksiP287A2 = !sanksiP287A2;
         }
 
         // Melampaui batas kecepatan
-        public void OnClickP287A5(){
+        public void OnClickP287A5(){ // WIP
             sanksiP287A5 = !sanksiP287A5;
         }
 
-    public void OnClickAkhiri(){ 
+    public void OnClickAkhiri(){ // WIP
         DisableAction();
         ShowChoicesVerdict();
     }
-        public void OnClickLepas() {
+        public void OnClickLepas() { // WIP
             DisableAction();
+
             // call end conversation (no tilang)
             StartCoroutine(GiveVerdict(false));
 
-            // call destroy self & enable control
-
+            // calculate, call destroy self & enable control
+            CalculateResult();
+            UnloadScene();
         }
 
-        public void OnClickTilang() {
+        public void OnClickTilang() { // WIP
             DisableAction();
+
             // call end conversation
             StartCoroutine(GiveVerdict(true));
 
-            // call destroy self & enable control
-
+            // calculate, call destroy self & enable control
+            CalculateResult();
+            UnloadScene();
         }
     
-    public void OnClickKembali(){ 
+    public void OnClickKembali(){ // WIP
         ShowChoicesMain();
+    }
+
+    private void CalculateResult() { // WIP
+        var State = StateManager.Instance;
+
+        bool verdictP288A1 = sanksiP288A1 == !activeDriver.hasSTNK;
+        bool verdictP288A2 = sanksiP288A2 == !activeDriver.hasSIM == activeDriver.Age >= 17;
+        bool verdictP281 = sanksiP281 == !activeDriver.hasSIM == activeDriver.Age < 17;
+        bool verdictP283 = sanksiP283 == activeDriver.isDrunk;
+        bool verdictP287A2 = sanksiP287A2 == activeDriver.hasDoneTerobosLampuMerah;
+        bool verdictP287A5 = sanksiP287A5 == activeDriver.hasDoneSpeedLimit;
+
+        // bool falseAccusedP288A1 = sanksiP288A1 == activeDriver.hasSTNK;
+        // bool falseAccusedP288A2 = sanksiP288A2 == activeDriver.hasSIM;
+        // bool falseAccusedP281 = sanksiP281 == (activeDriver.Age >= 17);
+        // bool falseAccusedP283 = sanksiP283 == !activeDriver.isDrunk;
+        // bool falseAccusedP287A2 = sanksiP287A2 == !activeDriver.hasDoneTerobosLampuMerah;
+        // bool falseAccusedP287A5 = sanksiP287A5 == !activeDriver.hasDoneSpeedLimit;
+
+
+        if (!activeDriver.hasSTNK) {
+            State.ModifySpawnRate("STNK", verdictP288A1);
+        }
+
+        if (!activeDriver.hasSIM) {
+            State.ModifySpawnRate("SIM", verdictP288A2);
+        }
+
+        if (activeDriver.Age < 17) {
+            State.ModifySpawnRate("UA", verdictP281);
+        }
+        
+        if (activeDriver.isDrunk) {
+            State.ModifySpawnRate("DR", verdictP283);
+        }
+
+        if (activeDriver.hasDoneTerobosLampuMerah) {
+            State.ModifySpawnRate("RL", verdictP287A2);
+        }
+
+        if (activeDriver.hasDoneSpeedLimit) {
+            State.ModifySpawnRate("SL", verdictP287A5);
+        }
+
+        bool verdictCorrect = verdictP288A1 && verdictP288A2 && verdictP281 && verdictP283 && verdictP287A2 && verdictP287A5;
+        if (verdictCorrect) {
+            State.PlayerCorrectCountDay++;
+        } else {
+            State.PlayerIncorrectCountDay++;
+        }
     }
     
     public IEnumerator StrikeConversation() {
@@ -334,6 +389,10 @@ public class DialogueManager : MonoBehaviour {
             yield return StartCoroutine(PlayText(convo.text, convo.speaker));
             yield return new WaitForSecondsRealtime(1.0f);
         }
+        EnableAction();
     }
 
+    public void UnloadScene() {
+        SceneManager.UnloadSceneAsync(gameObject.scene);
+    }
 }

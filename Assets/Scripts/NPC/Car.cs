@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
-
-
-public class Car : MonoBehaviour
-{
+public class Car : MonoBehaviour {
     /*
     Post-fix -Loc means it use the local grid coordinate instead of the world coordinate
     */
@@ -31,7 +29,7 @@ public class Car : MonoBehaviour
     void Start() {
         targetPosition = transform.position;
 
-        driver = generateGuiltyDriver();
+        driver = generateRandomDriver();
     }
     void Update(){
         if (transform.position != targetPosition) {
@@ -52,6 +50,30 @@ public class Car : MonoBehaviour
 
     void OnDestroy(){
         CarManager.RemoveCar(this);
+    }
+
+    Driver generateRandomDriver() {
+        Driver d = gameObject.AddComponent(typeof(Driver)) as Driver;
+        d.hasKTP = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["KTP"];
+        d.hasSIM = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["SIM"];
+        d.hasSTNK = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["STNK"];
+
+        if (StateManager.Instance.DayCount >= 2){
+            d.isDrunk = Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["DR"];
+        } else {
+            d.isDrunk = true;
+        }
+
+        if (StateManager.Instance.DayCount >= 3){
+            if (Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["UA"]){
+                d.Age = Random.Range(14, 17);
+            } else {
+                d.Age = Random.Range(17, 53);
+            }
+        }
+
+            
+        return d;
     }
 
     Driver generateGuiltyDriver() {
