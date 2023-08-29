@@ -71,7 +71,6 @@ public class Car : MonoBehaviour {
                 d.Age = Random.Range(17, 53);
             }
         }
-
             
         return d;
     }

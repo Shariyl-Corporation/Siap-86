@@ -98,6 +98,7 @@ public class WorldControl : MonoBehaviour
                 ActiveCar = selectedCar;
                 Time.timeScale = 0.75f;
                 DisableInterrogate();
+                Debug.Log("Interacted with " + ActiveCar);
 
                 SceneManager.LoadScene("Interact", LoadSceneMode.Additive);
             }
