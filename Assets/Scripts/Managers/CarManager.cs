@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using UnityEditor.PackageManager;
+using System.Threading.Tasks;
 
 public class CarManager : MonoBehaviour
 {
@@ -27,18 +28,16 @@ public class CarManager : MonoBehaviour
     [HideInInspector] private static Dictionary<Vector3Int, TileBase> dataFromTiles;
 
 
-    private void Awake()
-    {
+    private void Awake() {
         cars = new HashSet<int>();
         dataFromTiles = new Dictionary<Vector3Int, TileBase>();
         BoundsInt bounds = tilemap.cellBounds;
-
+        var positions = bounds.allPositionsWithin;
+        
         foreach (Vector3Int position in bounds.allPositionsWithin) {
-            Vector3Int cellWorldPos = Vector3Int.FloorToInt(tilemap.GetCellCenterWorld(position));
-            cellWorldPos.z = 0;
             TileBase tile = tilemap.GetTile(position);
-
-            dataFromTiles.Add(cellWorldPos, tile);
+            if (tile != null) Debug.Log(position);
+            dataFromTiles.Add(new Vector3Int(position.x, position.y, 0), tile);
         }
 
         spawnPoints = get_all_position_for_tile(spawnTile);
@@ -133,8 +132,7 @@ public class CarManager : MonoBehaviour
 
     // ------------------------------------
     [ContextMenu("spawn")]
-    public void spawnRandomCar()
-    {
+    public void spawnRandomCar() {
         int spawnPosition = Random.Range(0, spawnPoints.Count);
         Car car = Instantiate(carGO, spawnPoints[spawnPosition], transform.rotation);
 

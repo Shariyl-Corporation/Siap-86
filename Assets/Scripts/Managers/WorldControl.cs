@@ -5,8 +5,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.SceneManagement;
 
-public class WorldControl : MonoBehaviour
-{
+public class WorldControl : MonoBehaviour {
     public static WorldControl Instance;
 
     public ConvoPair convoPair;
@@ -24,15 +23,15 @@ public class WorldControl : MonoBehaviour
     private bool isDragging = false;
     private bool canInterrogate = true;
 
-    [SerializeField] private Vector2 minPos;// = new Vector3(-19.5f, -67.5f, 0);
-    [SerializeField] private Vector2 maxPos;// = new Vector3(42, -35, 0);
+    [SerializeField] private Vector2 minPos; // = new Vector3(-19.5f, -67.5f, 0);
+    [SerializeField] private Vector2 maxPos; // = new Vector3(42, -35, 0);
     [SerializeField] private float minCameraSize = 1;
     [SerializeField] private float maxCameraSize = 10;
 
     public float testing_deadzone;
 
     void Awake() {
-        if (Instance != null && Instance != this) { 
+        if (Instance != null && Instance != this) {
             Destroy(this); 
         } 
         else { 
@@ -42,6 +41,11 @@ public class WorldControl : MonoBehaviour
         vcam = FindObjectOfType<CinemachineVirtualCamera>();
         convoPair = GetComponent<ConvoPair>();
         animator = GetComponent<Animator>();
+    }
+
+    IEnumerator Start() {
+        Debug.Log(Time.timeScale);
+        yield return FastForward();
     }
 
     void Update () {
@@ -56,10 +60,10 @@ public class WorldControl : MonoBehaviour
         }
     }
 
+
     void LateUpdate() {
 
-        if (isDragging)
-        {
+        if (isDragging) {
             dragEnd = getMousePosition();
             Vector3 diff = dragEnd - transform.position;
             Vector3 point_pos = dragOrigin - diff;
@@ -70,6 +74,17 @@ public class WorldControl : MonoBehaviour
         }
 
         dragTime += Time.unscaledDeltaTime;
+    }
+
+    public void FastForwardRunner() {
+        StartCoroutine(FastForward());
+    }
+    private IEnumerator FastForward(){
+        Time.timeScale = 40;
+        Debug.Log(Time.timeScale);
+        yield return new WaitForSecondsRealtime(3);
+        Debug.Log(Time.timeScale);
+        Time.timeScale = 1;
     }
 
     private void OnDestroy() {

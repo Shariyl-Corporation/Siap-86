@@ -205,33 +205,26 @@ public class DialogueManager : MonoBehaviour {
         }
 
     public void OnClickAkhiri(){ // WIP
-        DisableAction();
         ShowChoicesVerdict();
     }
         public void OnClickLepas() { // WIP
             DisableAction();
-
-            // call end conversation (no tilang)
-            StartCoroutine(GiveVerdict(false));
-
-            // calculate, call destroy self & enable control
-            CalculateResult();
-            UnloadScene();
+            EndInterrogate(false);
         }
 
         public void OnClickTilang() { // WIP
             DisableAction();
-
-            // call end conversation
-            StartCoroutine(GiveVerdict(true));
-
-            // calculate, call destroy self & enable control
-            CalculateResult();
-            UnloadScene();
+            EndInterrogate(true);
         }
     
     public void OnClickKembali(){ // WIP
         ShowChoicesMain();
+    }
+
+    private IEnumerator EndInterrogate(bool tilang) {
+        yield return StartCoroutine(GiveVerdict(tilang));
+        CalculateResult();
+            UnloadScene();
     }
 
     private void CalculateResult() { // WIP

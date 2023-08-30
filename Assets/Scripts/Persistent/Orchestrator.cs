@@ -4,8 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Orchestrator : MonoBehaviour
-{
+public class Orchestrator : MonoBehaviour {
     public static Orchestrator Instance;
     public static Texture2D mouseCursor, hoverCursor;
 
@@ -14,8 +13,7 @@ public class Orchestrator : MonoBehaviour
     void Awake() {
         if (Instance != null && Instance != this) { 
             Destroy(this); 
-        } 
-        else { 
+        } else { 
             Instance = this; 
         }
 
@@ -23,15 +21,11 @@ public class Orchestrator : MonoBehaviour
         hoverCursor = Resources.Load("CursorHover") as Texture2D;
         Cursor.SetCursor(mouseCursor, new Vector2(0, 0), CursorMode.Auto);
     }
-    void Start()
-    {
+    void Start(){
         GoToIntro();
     }
 
-    void Update()
-    {
-        
-    }
+    void Update(){}
 
     public void GoToIntro(){
         SceneManager.LoadScene("Introduction", LoadSceneMode.Additive);
@@ -57,10 +51,6 @@ public class Orchestrator : MonoBehaviour
 
     public IEnumerator LoadMenu(){
         yield return LoadScene("Menu");
-    }
-
-    public IEnumerator LoadGame(){
-        yield return LoadScene("Game");
     }
 
     public IEnumerator LoadScene(string sceneName){

@@ -11,8 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Introduction.unity
     guid: fa6012667687a7441ab17edf2b7cc0f8
-  - enabled: 1
-    path: Assets/Scenes/World.unity
+  - enabled: 0
+    path: Assets/Scenes/World_old.unity
     guid: c5c0749581437fc439aa9b94f746e5ec
   - enabled: 1
     path: Assets/Scenes/Menu.unity
@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Experimental/Testing_AI.unity
     guid: 0581d0aec3565624689c49ba0536b03e
+  - enabled: 1
+    path: Assets/Scenes/World.unity
+    guid: a34b68ede1fd5d44cb34d7072089c262
   m_configObjects: {}

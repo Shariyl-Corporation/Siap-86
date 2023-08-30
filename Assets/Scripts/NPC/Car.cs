@@ -82,6 +82,11 @@ public class Car : MonoBehaviour {
         d.hasSTNK = false;
         return d;
     }
+
+    public void Minggir() {
+
+    }
+
     // calculating cell to the destination, BOTH using the local coordinate (grid)
     private float calculate_heuristic_at(Vector3Int cell) {
         return Vector3.Distance(cell, destinationCell);
@@ -114,7 +119,10 @@ public class Car : MonoBehaviour {
         }
 
         // cant go anywhere
-        if (min_heuristic == float.PositiveInfinity) Destroy(gameObject);
+        if (min_heuristic == float.PositiveInfinity) {
+            Debug.Log("Cant go anywhere! " + gameObject.transform.position);
+            Destroy(gameObject);
+        }
 
         prevCell = transform.position;
         targetPosition = decision;

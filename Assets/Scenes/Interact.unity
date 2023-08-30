@@ -434,6 +434,7 @@ GameObject:
   - component: {fileID: 90769100}
   - component: {fileID: 90769102}
   - component: {fileID: 90769101}
+  - component: {fileID: 90769103}
   m_Layer: 0
   m_Name: Tanya
   m_TagString: Untagged
@@ -535,6 +536,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &90769103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90769099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b064f01faec5d48a677199b83b4c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSprite: {fileID: 21300000, guid: 5cee0ed845c029244916ed8870342ba5, type: 3}
+  hoverSprite: {fileID: 21300000, guid: 15c19ee92eaa68f47b106c0a56bbde35, type: 3}
+  askedSprite: {fileID: 0}
 --- !u!1 &114587930
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,6 +2113,7 @@ GameObject:
   - component: {fileID: 647652984}
   - component: {fileID: 647652983}
   - component: {fileID: 647652982}
+  - component: {fileID: 647652985}
   m_Layer: 0
   m_Name: STNK
   m_TagString: Untagged
@@ -2213,6 +2230,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &647652985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647652980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c28309dc3aefdac4db8ccf3ac3bed198, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSprite: {fileID: 21300000, guid: 5cee0ed845c029244916ed8870342ba5, type: 3}
+  hoverSprite: {fileID: 21300000, guid: 15c19ee92eaa68f47b106c0a56bbde35, type: 3}
+  askedSprite: {fileID: 0}
 --- !u!1 &653493917
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,6 +2452,7 @@ GameObject:
   - component: {fileID: 910957574}
   - component: {fileID: 910957576}
   - component: {fileID: 910957575}
+  - component: {fileID: 910957577}
   m_Layer: 0
   m_Name: SIM
   m_TagString: Untagged
@@ -2521,6 +2554,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &910957577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910957573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325ac751a9464a84aa2578c077638f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSprite: {fileID: 21300000, guid: 5cee0ed845c029244916ed8870342ba5, type: 3}
+  hoverSprite: {fileID: 21300000, guid: 15c19ee92eaa68f47b106c0a56bbde35, type: 3}
+  askedSprite: {fileID: 0}
 --- !u!1 &942157156
 GameObject:
   m_ObjectHideFlags: 0
@@ -4308,7 +4356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1464149860
 Transform:
   m_ObjectHideFlags: 0
@@ -4581,7 +4629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1537445652
 Transform:
   m_ObjectHideFlags: 0
@@ -4696,6 +4744,7 @@ GameObject:
   - component: {fileID: 1656323184}
   - component: {fileID: 1656323183}
   - component: {fileID: 1656323182}
+  - component: {fileID: 1656323185}
   m_Layer: 0
   m_Name: KTP
   m_TagString: Untagged
@@ -4812,6 +4861,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1656323185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656323180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed98adf6f44bb96428a84c000821f25c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSprite: {fileID: 21300000, guid: 5cee0ed845c029244916ed8870342ba5, type: 3}
+  hoverSprite: {fileID: 21300000, guid: 15c19ee92eaa68f47b106c0a56bbde35, type: 3}
+  askedSprite: {fileID: 0}
 --- !u!1 &1692015509
 GameObject:
   m_ObjectHideFlags: 0

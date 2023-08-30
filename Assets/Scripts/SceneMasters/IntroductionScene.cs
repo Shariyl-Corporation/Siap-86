@@ -53,31 +53,37 @@ public class IntroductionScene : MonoBehaviour
         OnSceneUnloaded = null;
     }
 
-    IEnumerator ChangeFrame(Frame frame) {
+    IEnumerator ChangeFrame(Frame frame) { // possible issue on second frame 
+        currentFrame++;
+        bool onlyText = currentFrame == 1 || currentFrame == 6 || currentFrame == 9;
+
         figureRenderer.sprite = frame.sprite;
         caption.text = frame.text;
         isAnimating = true;
-        yield return StartCoroutine(RaiseOpacity());
+
+        yield return StartCoroutine(RaiseOpacity(onlyText));
         yield return new WaitForSeconds(2);
-        yield return StartCoroutine(LowerOpacity());
+        yield return StartCoroutine(LowerOpacity(onlyText));
         yield return new WaitForSeconds(1);
         isAnimating = false;
     }
 
-    IEnumerator LowerOpacity(){
-        yield return StartCoroutine(LerpOpacity(1, 0, 2, .1f));
+    IEnumerator LowerOpacity(bool onlyText){
+        yield return StartCoroutine(LerpOpacity(1, 0, 2, .1f, onlyText));
     }
-    IEnumerator RaiseOpacity(){
-        yield return StartCoroutine(LerpOpacity(0, 1, 2, .1f));
+    IEnumerator RaiseOpacity(bool onlyText){
+        yield return StartCoroutine(LerpOpacity(0, 1, 2, .1f, onlyText));
     }
-    IEnumerator LerpOpacity(float col1, float col2, float duration, float step_duration)
+    IEnumerator LerpOpacity(float col1, float col2, float duration, float step_duration, bool onlyText)
     {
         float start = Time.time;
         float end = start + duration;
         Color figColor = figureRenderer.color;
         Color textColor = caption.color;
         while (Time.time < end) {
-                figColor.a = Mathf.Lerp(col1, col2, (Time.time - start) / duration);
+                if (!onlyText){
+                    figColor.a = Mathf.Lerp(col1, col2, (Time.time - start) / duration);
+                }
                 textColor.a = Mathf.Lerp(col1, col2, (Time.time - start) / duration);
                 figureRenderer.color = figColor;
                 caption.color = textColor;
