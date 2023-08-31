@@ -12,7 +12,7 @@ public class TrafficLightController : MonoBehaviour {
     public float phaseDuration = 20f;
     public Sprite[] phasesSprite;
     public TileBase crossTile;
-    public int phase;
+    public int CurrentPhase;
     public static bool firstPrint = true;
 
     private SpriteRenderer spriteRenderer;
@@ -24,11 +24,21 @@ public class TrafficLightController : MonoBehaviour {
     };
 
     public enum DirectionFrom {
-        right,
         left,
-        up,
-        down
+        down,
+        right,
+        up
     };
+
+    private Dictionary<DirectionFrom, float> PhaseTime;
+    
+    [SerializeField] private float PhaseLeft = 15;
+    [SerializeField] private float PhaseDown = 15;
+    [SerializeField] private float PhaseRight = 15;
+    [SerializeField] private float PhaseUp = 15;
+
+    [SerializeField] private float PhaseYellow = 5;
+    private bool isYellow = false;
 
     public static Dictionary<DirectionFrom, Vector3> DirectionToVector = new Dictionary<DirectionFrom, Vector3>() {
         {DirectionFrom.right, new Vector3(-1, 0, 0)},
@@ -48,34 +58,52 @@ public class TrafficLightController : MonoBehaviour {
 
     public Dictionary<DirectionFrom, State> traffic_light;
 
+    [ContextMenu("Update Time")]
+    void UpdatePhaseTime() {
+        PhaseTime = new Dictionary<DirectionFrom, float>{
+            {DirectionFrom.left, PhaseLeft},
+            {DirectionFrom.down, PhaseDown},
+            {DirectionFrom.right, PhaseRight},
+            {DirectionFrom.up, PhaseUp},
+        };
+    }
+
     void Start() {
         spriteRenderer = GetComponent<SpriteRenderer>();
         traffic_light =  new Dictionary<DirectionFrom, State>();
         build_traffic_light();
+        UpdatePhaseTime();
     }
 
     void Update() {
+        if (isYellow) return;
         phaseTimer += Time.deltaTime;
-        if (phaseTimer >= phaseDuration) {
+        if (phaseTimer >= PhaseTime[(DirectionFrom)CurrentPhase]) {
             phaseTimer = 0f;
-            changePhase();
+            StartCoroutine(ChangePhase());
         }
     }
 
-    void changePhase() {
-        traffic_light[(DirectionFrom)phase] = State.red;
+    IEnumerator ChangePhase() {
+        traffic_light[(DirectionFrom)CurrentPhase] = State.red;
+        DirectionFrom dir = new();
         for (int i = 0; i < 4; i++) {
-            phase = (phase + 1) % 4;
-            var dir = (DirectionFrom)phase;
+            CurrentPhase = (CurrentPhase + 1) % 4;
+            dir = (DirectionFrom)CurrentPhase;
             if (traffic_light.ContainsKey(dir)) {
-                spriteRenderer.sprite = phasesSprite[phase];
-                var color = spriteRenderer.color;
-                color.a = 0.3f;
-                spriteRenderer.color = color;
-                traffic_light[dir] = State.green;
                 break;
             }
         }
+        spriteRenderer.sprite = phasesSprite[4];
+        isYellow = true;
+        yield return new WaitForSeconds(PhaseYellow);
+        isYellow = false;
+        spriteRenderer.sprite = phasesSprite[CurrentPhase];
+        traffic_light[dir] = State.green;
+        // var color = spriteRenderer.color;
+        // color.a = 0.3f;
+        // spriteRenderer.color = color;
+        yield return null;
     }
 
 
@@ -117,7 +145,7 @@ public class TrafficLightController : MonoBehaviour {
         
         // pls fix
         traffic_light[DirectionFrom.right] = State.green;
-        phase = (int)DirectionFrom.right;
+        CurrentPhase = (int)DirectionFrom.right;
     }
 
 }

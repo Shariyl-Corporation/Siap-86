@@ -2112,7 +2112,6 @@ GameObject:
   - component: {fileID: 647652981}
   - component: {fileID: 647652984}
   - component: {fileID: 647652983}
-  - component: {fileID: 647652982}
   - component: {fileID: 647652985}
   m_Layer: 0
   m_Name: STNK
@@ -2137,21 +2136,6 @@ Transform:
   m_Father: {fileID: 1537445652}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &647652982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 647652980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efb8ed48c94a1b4a9b43b6cb614d3a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultSprite: {fileID: 21300000, guid: 5cee0ed845c029244916ed8870342ba5, type: 3}
-  hoverSprite: {fileID: 21300000, guid: 15c19ee92eaa68f47b106c0a56bbde35, type: 3}
-  askedSprite: {fileID: 0}
 --- !u!61 &647652983
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4743,7 +4727,6 @@ GameObject:
   - component: {fileID: 1656323181}
   - component: {fileID: 1656323184}
   - component: {fileID: 1656323183}
-  - component: {fileID: 1656323182}
   - component: {fileID: 1656323185}
   m_Layer: 0
   m_Name: KTP
@@ -4768,21 +4751,6 @@ Transform:
   m_Father: {fileID: 1537445652}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1656323182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1656323180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efb8ed48c94a1b4a9b43b6cb614d3a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultSprite: {fileID: 21300000, guid: 5cee0ed845c029244916ed8870342ba5, type: 3}
-  hoverSprite: {fileID: 21300000, guid: 15c19ee92eaa68f47b106c0a56bbde35, type: 3}
-  askedSprite: {fileID: 0}
 --- !u!61 &1656323183
 BoxCollider2D:
   m_ObjectHideFlags: 0

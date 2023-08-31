@@ -7,11 +7,8 @@ public class ButtonSTNK : BaseInterrogateButton {
         if (!dialogueManager.allowAction) return;
         OnMouseExit();
 
-        // if (!isAsked) {
-        //     SetAsked();
-            audioManager.Click();
-            dialogueManager.OnClickSTNK();
-        // }
+        audioManager.Click();
+        dialogueManager.OnClickSTNK();
     }
 }
 

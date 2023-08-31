@@ -7,10 +7,7 @@ public class ButtonSIM : BaseInterrogateButton {
         if (!dialogueManager.allowAction) return;
         OnMouseExit();
 
-        // if (!isAsked) {
-        //     SetAsked();
-            audioManager.Click();
-            dialogueManager.OnClickSIM();
-        // }
+        audioManager.Click();
+        dialogueManager.OnClickSIM();
     }
 }
