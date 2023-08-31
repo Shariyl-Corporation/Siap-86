@@ -89,31 +89,31 @@ public class TrafficLightController : MonoBehaviour {
 
         if (turn_tiles.Contains(right_tile)){
             traffic_light.Add(DirectionFrom.right, State.red);
-            Debug.Log("right");
+            //Debug.Log("right");
         }
         if (turn_tiles.Contains(left_tile)){
             traffic_light.Add(DirectionFrom.left, State.red);
-            Debug.Log("left");
+            //Debug.Log("left");
         }
         if (turn_tiles.Contains(up_tile)){
             traffic_light.Add(DirectionFrom.up, State.red);
-            Debug.Log("up");
+            //Debug.Log("up");
         }
         if (turn_tiles.Contains(down_tile)){
             traffic_light.Add(DirectionFrom.down, State.red);
-            Debug.Log("down");
+            //Debug.Log("down");
         }
 
-        Debug.Log(right_tile + " " + left_tile + " " + up_tile + " " + down_tile);
+        // Debug.Log(right_tile + " " + left_tile + " " + up_tile + " " + down_tile);
         // foreach(var traffic in traffic_light) {
         //     Debug.Log(traffic.Key + " " + traffic.Value);
         // }
-        if (firstPrint) {
-            foreach(var tile in turn_tiles) {
-                Debug.Log(tile);
-            }
-            firstPrint = false;
-        }
+        // if (firstPrint) {
+        //     foreach(var tile in turn_tiles) {
+        //         Debug.Log(tile);
+        //     }
+        //     firstPrint = false;
+        // }
         
         // pls fix
         traffic_light[DirectionFrom.right] = State.green;

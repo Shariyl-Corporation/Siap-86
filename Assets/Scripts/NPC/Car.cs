@@ -120,7 +120,7 @@ public class Car : MonoBehaviour {
 
         // cant go anywhere
         if (min_heuristic == float.PositiveInfinity) {
-            Debug.Log("Cant go anywhere! " + gameObject.transform.position);
+            // Debug.Log("Cant go anywhere! " + gameObject.transform.position);
             Destroy(gameObject);
         }
 

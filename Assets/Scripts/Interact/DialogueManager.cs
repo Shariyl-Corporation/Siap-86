@@ -224,7 +224,7 @@ public class DialogueManager : MonoBehaviour {
     private IEnumerator EndInterrogate(bool tilang) {
         yield return StartCoroutine(GiveVerdict(tilang));
         CalculateResult();
-            UnloadScene();
+        UnloadScene();
     }
 
     private void CalculateResult() { // WIP

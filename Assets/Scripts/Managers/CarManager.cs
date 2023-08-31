@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEditor.PackageManager;
-using System.Threading.Tasks;
 
 public class CarManager : MonoBehaviour
 {
@@ -32,11 +30,10 @@ public class CarManager : MonoBehaviour
         cars = new HashSet<int>();
         dataFromTiles = new Dictionary<Vector3Int, TileBase>();
         BoundsInt bounds = tilemap.cellBounds;
-        var positions = bounds.allPositionsWithin;
-        
+
         foreach (Vector3Int position in bounds.allPositionsWithin) {
             TileBase tile = tilemap.GetTile(position);
-            if (tile != null) Debug.Log(position);
+            // if (tile != null) Debug.Log(position);
             dataFromTiles.Add(new Vector3Int(position.x, position.y, 0), tile);
         }
 
