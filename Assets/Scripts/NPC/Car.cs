@@ -26,12 +26,15 @@ public class Car : MonoBehaviour {
     private TrafficLightController trafficLight;
     private Vector3Int dir_vector;
 
+    private bool isTilang;
+
     void Start() {
         targetPosition = transform.position;
 
         driver = generateRandomDriver();
     }
     void Update(){
+        if (isTilang) return;
         if (transform.position != targetPosition) {
             if (isInTurnTile) {
                 var state = trafficLight.traffic_light[TrafficLightController.VectorToDirection[dir_vector]];
@@ -84,6 +87,13 @@ public class Car : MonoBehaviour {
     }
 
     public void Minggir() {
+        // jika posisi dekat turn tile
+        
+        // posisi aman
+
+    }
+
+    public void Kembali() {
 
     }
 

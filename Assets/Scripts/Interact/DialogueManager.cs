@@ -100,7 +100,7 @@ public class DialogueManager : MonoBehaviour {
     // WIP
     private IEnumerator SwapCard() {           // weird behaviour
         DisableAllChoices();
-        yield return MoveObject(card, Vector3.down, 8f, 1);
+        yield return MoveObject(card, Vector3.down, 8f, 0.75f);
 
         if (isRedCard) {
             cardRenderer.sprite = blueCard;
@@ -108,7 +108,7 @@ public class DialogueManager : MonoBehaviour {
             cardRenderer.sprite = redCard;
         }
 
-        yield return MoveObject(card, Vector3.up, 8f, 1);
+        yield return MoveObject(card, Vector3.up, 8f, 0.75f);
 
         isRedCard = !isRedCard;
         EnableAction();
@@ -209,12 +209,14 @@ public class DialogueManager : MonoBehaviour {
     }
         public void OnClickLepas() { // WIP
             DisableAction();
-            EndInterrogate(false);
+            Debug.Log("End on lepas");
+            StartCoroutine(EndInterrogate(false));
         }
 
         public void OnClickTilang() { // WIP
             DisableAction();
-            EndInterrogate(true);
+            Debug.Log("End on tilang");
+            StartCoroutine(EndInterrogate(true));
         }
     
     public void OnClickKembali(){ // WIP
@@ -222,12 +224,14 @@ public class DialogueManager : MonoBehaviour {
     }
 
     private IEnumerator EndInterrogate(bool tilang) {
-        yield return StartCoroutine(GiveVerdict(tilang));
+        yield return GiveVerdict(tilang);
         CalculateResult();
         UnloadScene();
+        yield return null;
     }
 
     private void CalculateResult() { // WIP
+        Debug.Log("Calculating result");
         var State = StateManager.Instance;
 
         bool verdictP288A1 = sanksiP288A1 == !activeDriver.hasSTNK;
@@ -321,9 +325,9 @@ public class DialogueManager : MonoBehaviour {
     public IEnumerator GiveVerdict(bool isGuilty) {
         ConvoFlow convoFlow;
         if (isGuilty)
-            convoFlow    = convoPair.ConvVerdictGuilty[Random.Range(0, convoPair.ConvVerdictGuilty.Count)];
+            convoFlow = convoPair.ConvVerdictGuilty[Random.Range(0, convoPair.ConvVerdictGuilty.Count)];
         else
-            convoFlow    = convoPair.ConvVerdictInnocent[Random.Range(0, convoPair.ConvVerdictInnocent.Count)];
+            convoFlow = convoPair.ConvVerdictInnocent[Random.Range(0, convoPair.ConvVerdictInnocent.Count)];
     
         yield return StartCoroutine(PlayConvo(convoFlow ));
     }
@@ -380,7 +384,7 @@ public class DialogueManager : MonoBehaviour {
     private IEnumerator PlayConvo(ConvoFlow convoFlow) {
         foreach(var convo in convoFlow.flow){
             yield return StartCoroutine(PlayText(convo.text, convo.speaker));
-            yield return new WaitForSecondsRealtime(1.0f);
+            yield return new WaitForSecondsRealtime(0.75f);
         }
         EnableAction();
     }

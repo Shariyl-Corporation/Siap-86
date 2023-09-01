@@ -39,11 +39,14 @@ public class ConvoPair : MonoBehaviour {
 
         InitSTNK();
         InitNoSTNK();
+
+        InitVerdictGuilty();
+        InitVerdictInnocent();
     }
 
     public void InitGreetings() {
         ConvGreetings = new (){
-            new () { // basic convo
+            new () {
                 flow = new (){
                     new (){ speaker = you,    text = "Sample Greetings" },
                     new (){ speaker = driver, text = "Responding to sample greetings" }
@@ -54,7 +57,7 @@ public class ConvoPair : MonoBehaviour {
 
     public void InitBasicChat(){
         ConvBasicChat = new (){
-            new () { // basic convo
+            new () {
                 flow = new (){
                     new (){ speaker = you,    text = "Sample striking basic conv 1" },
                     new (){ speaker = driver, text = "Responding striking basic conv 1" }
@@ -69,7 +72,7 @@ public class ConvoPair : MonoBehaviour {
 
     public void InitKTP(){
         ConvKTP = new (){
-            new () { // basic convo
+            new () {
                 flow = new (){
                     new (){ speaker = you,    text = "KTP?" },
                     new (){ speaker = driver, text = "Ini, Pak"}
@@ -86,7 +89,7 @@ public class ConvoPair : MonoBehaviour {
 
     public void InitNoKTP(){
         ConvNoKTP = new (){
-            new () { // basic convo
+            new () {
                 flow = new (){
                     new (){ speaker = you,    text = "KTP?" },
                     new (){ speaker = driver, text = "Mmmm..."},
@@ -105,7 +108,7 @@ public class ConvoPair : MonoBehaviour {
 
     public void InitSIM(){
         ConvSIM = new (){
-            new () { // basic convo
+            new () {
                 flow = new (){
                     new (){ speaker = you,    text = "SIM?" },
                     new (){ speaker = driver, text = ""}
@@ -122,7 +125,7 @@ public class ConvoPair : MonoBehaviour {
 
     public void InitNoSIM(){
         ConvNoSIM = new (){
-            new () { // basic convo
+            new () {
                 flow = new (){
                     new (){ speaker = you,    text = "SIM?" },
                     new (){ speaker = driver, text = ""}
@@ -139,7 +142,7 @@ public class ConvoPair : MonoBehaviour {
 
     public void InitSTNK(){
         ConvSTNK = new (){
-            new () { // basic convo
+            new () {
                 flow = new (){
                     new (){ speaker = you,    text = "STNK?" },
                     new (){ speaker = driver, text = ""}
@@ -156,7 +159,7 @@ public class ConvoPair : MonoBehaviour {
 
     public void InitNoSTNK(){
         ConvNoSTNK = new (){
-            new () { // basic convo
+            new () {
                 flow = new (){
                     new (){ speaker = you,    text = "STNK?" },
                     new (){ speaker = driver, text = ""}
@@ -172,11 +175,37 @@ public class ConvoPair : MonoBehaviour {
     }
 
     public void InitVerdictGuilty() {
-
+        ConvVerdictGuilty = new (){
+            new () {
+                flow = new (){
+                    new (){ speaker = you,    text = "Kesimpulannya" },
+                    new (){ speaker = driver, text = ".."}
+                }
+            },
+            new() {
+                flow = new (){
+                    new (){ speaker = you,    text = "Kesimpullannya" },
+                    new (){ speaker = driver, text = ".."}
+                }
+            },
+        };
     }
 
     public void InitVerdictInnocent() {
-
+        ConvVerdictGuilty = new (){
+            new () {
+                flow = new (){
+                    new (){ speaker = you,    text = "Kesimpulannya" },
+                    new (){ speaker = driver, text = ".."}
+                }
+            },
+            new() {
+                flow = new (){
+                    new (){ speaker = you,    text = "Kesimpullannya" },
+                    new (){ speaker = driver, text = ".."}
+                }
+            },
+        };
     }
 
 }
