@@ -22,21 +22,16 @@ public class Orchestrator : MonoBehaviour {
         Cursor.SetCursor(mouseCursor, new Vector2(0, 0), CursorMode.Auto);
     }
     void Start(){
-        GoToIntro();
+        GoToMenu();
     }
 
     void Update(){}
 
-    public void GoToIntro(){
+    public void RollIntro(){
         SceneManager.LoadScene("Introduction", LoadSceneMode.Additive);
-        IntroductionScene.OnSceneUnloaded += GoToMenu;
     }
 
     public void GoToMenu(){
-        IntroductionScene.OnSceneUnloaded -= GoToMenu;
-        // SceneManager.LoadScene("World", LoadSceneMode.Additive);
-        
-        // SceneManager.LoadScene("Menu", LoadSceneMode.Additive);
         StartCoroutine(LoadWorldThenMenu());
     }
 

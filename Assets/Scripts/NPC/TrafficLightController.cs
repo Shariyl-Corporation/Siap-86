@@ -40,21 +40,19 @@ public class TrafficLightController : MonoBehaviour {
     [SerializeField] private float PhaseYellow = 5;
     private bool isYellow = false;
 
-    public static Dictionary<DirectionFrom, Vector3> DirectionToVector = new Dictionary<DirectionFrom, Vector3>() {
-        {DirectionFrom.right, new Vector3(-1, 0, 0)},
+    public static Dictionary<DirectionFrom, Vector3> DirectionToVector = new () {
         {DirectionFrom.left, new Vector3(1, 0, 0)},
+        {DirectionFrom.down, new Vector3(0, 1, 0)},
+        {DirectionFrom.right, new Vector3(-1, 0, 0)},
         {DirectionFrom.up, new Vector3(0, -1, 0)},
-        {DirectionFrom.down, new Vector3(0, 1, 0)}
     };
 
-    public static Dictionary<Vector3, DirectionFrom> VectorToDirection = new Dictionary<Vector3, DirectionFrom>() {
-        {new Vector3(-1, 0, 0), DirectionFrom.right},
+    public static Dictionary<Vector3, DirectionFrom> VectorToDirection = new () {
         {new Vector3(1, 0, 0), DirectionFrom.left},
+        {new Vector3(0, 1, 0), DirectionFrom.down},
+        {new Vector3(-1, 0, 0), DirectionFrom.right},
         {new Vector3(0, -1, 0), DirectionFrom.up},
-        {new Vector3(0, 1, 0), DirectionFrom.down}
     };
-
-
 
     public Dictionary<DirectionFrom, State> traffic_light;
 
@@ -148,4 +146,13 @@ public class TrafficLightController : MonoBehaviour {
         CurrentPhase = (int)DirectionFrom.right;
     }
 
+    public bool CheckAllowStraightThrough(Vector3Int dir_vector) {
+        int index_left = ((int) VectorToDirection[dir_vector] - 1) % 4;
+        return !traffic_light.ContainsKey((DirectionFrom)index_left);
+    } 
+
+    public bool CheckAllowTurn(Vector3Int dir_vector) {
+        var state = traffic_light[VectorToDirection[dir_vector]];
+        return state == State.green;
+    }
 }

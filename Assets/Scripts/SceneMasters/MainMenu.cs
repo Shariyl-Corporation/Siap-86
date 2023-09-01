@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 public class MainMenu : MonoBehaviour {
     public static MainMenu Instance;
 
+    [SerializeField] private SpriteRenderer fadeSpriteRenderer;
     [SerializeField] private GameObject playButton, settingsButton, creditsButton, quitButton;
     private Camera mainCamera;
     
@@ -23,6 +24,9 @@ public class MainMenu : MonoBehaviour {
     }
 
     void Start(){
+        Color color = Color.black;
+        color.a = 0;
+        fadeSpriteRenderer.color = color;
     }
 
     void Update(){}
@@ -32,7 +36,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void OnClickPlay() {
-        StartCoroutine(Orchestrator.Instance.GoToGame());
+        StartCoroutine(FadeToGame());
     }
 
     public void OnClickSettings() {
@@ -45,5 +49,19 @@ public class MainMenu : MonoBehaviour {
 
     public void OnClickQuit() {
         Application.Quit();
+    }
+
+    public IEnumerator FadeToGame() {
+        yield return FadeOut();
+        yield return Orchestrator.Instance.GoToGame();
+    }
+
+    IEnumerator FadeOut(){
+        Color color = fadeSpriteRenderer.color;
+        while (color.a < 1) {
+            fadeSpriteRenderer.color = color;
+            color.a += .5f * Time.deltaTime;
+            yield return null;
+        }
     }
 }

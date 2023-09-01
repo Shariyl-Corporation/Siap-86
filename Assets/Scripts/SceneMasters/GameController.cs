@@ -5,7 +5,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
     
     void Start() {
-        StartCoroutine(LoadWorldWithControl());
+        Orchestrator.Instance.RollIntro();
+        IntroductionScene.OnSceneUnloaded += LoadWorldWithControlCaller;
     }
 
     // Update is called once per frame
@@ -13,7 +14,11 @@ public class GameController : MonoBehaviour {
         
     }
 
-    private IEnumerator LoadWorldWithControl(){
+    public void LoadWorldWithControlCaller(){
+        StartCoroutine(LoadWorldWithControl());
+    }
+
+    public IEnumerator LoadWorldWithControl(){
         yield return Orchestrator.Instance.LoadWorld();
         WorldControl.Instance.EnableControl();
     }

@@ -32,11 +32,9 @@ public class IntroductionScene : MonoBehaviour
     }
 
     void Update(){
-        if (Input.GetMouseButtonDown(0) || !isAnimating){               // skip one frame 
-            StopCoroutine(currentCoroutine);
+        if (!isAnimating){               // skip one frame 
             currentFrame++;
             if (currentFrame < frames.Count){
-                StopAllCoroutines();
                 currentCoroutine = ChangeFrame(frames[currentFrame]);
                 StartCoroutine(currentCoroutine);
             } else {

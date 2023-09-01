@@ -23,6 +23,7 @@ public class Car : MonoBehaviour {
     private Vector3 prevCell;
 
     private bool isInTurnTile = false;
+    private bool isWantToStraight = false;
     private TrafficLightController trafficLight;
     private Vector3Int dir_vector;
 
@@ -37,11 +38,21 @@ public class Car : MonoBehaviour {
         if (isTilang) return;
         if (transform.position != targetPosition) {
             if (isInTurnTile) {
-                var state = trafficLight.traffic_light[TrafficLightController.VectorToDirection[dir_vector]];
-                if (state == TrafficLightController.State.red || state == TrafficLightController.State.yellow){
-                    return;
+                // if (isWantToStraight) {
+                //     if (trafficLight.CheckAllowStraightThrough(dir_vector))
+                //         isInTurnTile = false;
+                // } else {
+                //     if () {
+                //         isInTurnTile = false;
+                //     }
+
+                // }
+
+                if ((isWantToStraight && trafficLight.CheckAllowStraightThrough(dir_vector)) ||
+                    trafficLight.CheckAllowTurn(dir_vector)) {
+                    isInTurnTile = false;
                 }
-                isInTurnTile = false;
+                if (isInTurnTile) return;
             }
             MoveTowardsTargetPosition();
         }
@@ -57,23 +68,23 @@ public class Car : MonoBehaviour {
 
     Driver generateRandomDriver() {
         Driver d = gameObject.AddComponent(typeof(Driver)) as Driver;
-        d.hasKTP = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["KTP"];
-        d.hasSIM = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["SIM"];
-        d.hasSTNK = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["STNK"];
+        // d.hasKTP = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["KTP"];
+        // d.hasSIM = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["SIM"];
+        // d.hasSTNK = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["STNK"];
 
-        if (StateManager.Instance.DayCount >= 2){
-            d.isDrunk = Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["DR"];
-        } else {
-            d.isDrunk = true;
-        }
+        // if (StateManager.Instance.DayCount >= 2){
+        //     d.isDrunk = Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["DR"];
+        // } else {
+        //     d.isDrunk = true;
+        // }
 
-        if (StateManager.Instance.DayCount >= 3){
-            if (Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["UA"]){
-                d.Age = Random.Range(14, 17);
-            } else {
-                d.Age = Random.Range(17, 53);
-            }
-        }
+        // if (StateManager.Instance.DayCount >= 3){
+        //     if (Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["UA"]){
+        //         d.Age = Random.Range(14, 17);
+        //     } else {
+        //         d.Age = Random.Range(17, 53);
+        //     }
+        // }
             
         return d;
     }
@@ -103,8 +114,7 @@ public class Car : MonoBehaviour {
     }
 
     // it is actually not an a star, cuz it cant backtrack, maybe hill climbing?
-    private void do_astar_step()
-    {
+    private void do_astar_step() {
         Vector3Int decision = new Vector3Int();
         float min_heuristic = float.PositiveInfinity;
         Dictionary<Vector3Int, TileBase> dict;
@@ -136,6 +146,13 @@ public class Car : MonoBehaviour {
 
         prevCell = transform.position;
         targetPosition = decision;
+
+        if (isInTurnTile) {
+            Debug.Log((targetPosition - transform.position).normalized);
+            Debug.Log(dir_vector);
+
+            isWantToStraight = Vector3Int.RoundToInt((targetPosition - transform.position).normalized) == dir_vector;
+        }
         // Debug.Log("Move Towards: " + targetPosition.x + " " + targetPosition.y);
         // Debug.Log("From: " + transform.position.x + " " + transform.position.y);
     }

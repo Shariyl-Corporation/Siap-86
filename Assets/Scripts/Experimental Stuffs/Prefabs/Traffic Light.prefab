@@ -137,4 +137,4 @@ MonoBehaviour:
   PhaseDown: 5
   PhaseRight: 5
   PhaseUp: 5
-  PhaseYellow: 5
+  PhaseYellow: 2.5
