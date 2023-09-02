@@ -140,6 +140,9 @@ MonoBehaviour:
     m_Bits: 1024
   driver: {fileID: 0}
   isInTurnTile: 0
+  isWantToStraight: 0
+  isTilang: 0
+  isMundur: 0
   SpriteSelection:
   - spriteList:
     - {fileID: 1847202650, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
@@ -182,7 +185,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.00000011920929, y: -0.034030855}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -193,5 +196,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.4973571, y: 1.5785242}
   m_EdgeRadius: 0

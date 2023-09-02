@@ -26,7 +26,7 @@ public class TileDebugger : MonoBehaviour
         Vector3Int currentCell = grid.WorldToCell(noZ);
         
         string debugText = "Mouse at cell: " + currentCell.x + " " + currentCell.y + "\n" +
-                                "World Position: " + mousePos.x + " " + mousePos.y + "\n";
+                            "World Position: " + mousePos.x + " " + mousePos.y + "\n";
                                 
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);

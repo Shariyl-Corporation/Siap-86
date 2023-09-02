@@ -59,9 +59,9 @@ public class IntroductionScene : MonoBehaviour
         caption.text = frame.text;
         isAnimating = true;
 
-        yield return StartCoroutine(RaiseOpacity(onlyText));
+        yield return StartCoroutine(RaiseOpacity(false));
         yield return new WaitForSeconds(2);
-        yield return StartCoroutine(LowerOpacity(onlyText));
+        yield return StartCoroutine(LowerOpacity(false));
         yield return new WaitForSeconds(1);
         isAnimating = false;
     }
