@@ -31,6 +31,7 @@ public class Car : MonoBehaviour {
     private bool isInTurnTile = false;
     private bool isWantToStraight = false;
     private bool isTilang;
+    private bool isMundur;
     private TrafficLightController trafficLight;
     private Vector3Int dir_vector;
 
@@ -116,15 +117,123 @@ public class Car : MonoBehaviour {
         return d;
     }
 
-    public void Minggir() {
-        // jika posisi dekat turn tile
-        
-        // posisi aman
-
+    public void PrepareInterrogate() {
+        isTilang = true;
+        StartCoroutine(Minggir());
     }
 
-    public void Kembali() {
+    public IEnumerator Minggir() {
+        if (isInTurnTile) {
+            isMundur = true;
+            yield return MinggirMundur();
+        } else {
+            isMundur = false;
+            yield return MinggirMaju();
+        }
 
+        var collider = GetComponent<Collider2D>();
+        collider.enabled = false;
+
+        yield return null;
+    }
+
+    private IEnumerator MinggirMaju() {
+        float angle = Mathf.Atan2(dir_vector.y, dir_vector.x) * Mathf.Rad2Deg;
+        angle += 45;
+
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = rotation;
+        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation));
+
+        angle -= 45;
+        rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = rotation;
+        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation));
+    }
+
+    private IEnumerator MinggirMundur() {
+        float angle = Mathf.Atan2(dir_vector.y, dir_vector.x) * Mathf.Rad2Deg;
+        angle -= 45;
+
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = rotation;
+        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation));
+
+        angle += 45;
+        rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = rotation;
+        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation));
+    }
+
+    public IEnumerator Kembali() {
+        var collider = GetComponent<Collider2D>();
+        collider.enabled = true;
+
+        if (isMundur) {
+            yield return KembaliMaju();
+        } else {
+            yield return KembaliMundur();
+        }
+    }
+
+    private IEnumerator KembaliMaju() {
+        float angle = Mathf.Atan2(dir_vector.y, dir_vector.x) * Mathf.Rad2Deg;
+
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = rotation;
+        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation));
+
+        angle -= 45;
+        angle += 45;
+        rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = rotation;
+        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation));
+    }
+
+    private IEnumerator KembaliMundur() {
+        float angle = Mathf.Atan2(dir_vector.y, dir_vector.x) * Mathf.Rad2Deg;
+        angle -= 45;
+
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = rotation;
+        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation));
+
+        angle += 45;
+        rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = rotation;
+        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation));
+    }
+
+
+
+    IEnumerator Move(float duration, Vector3 startPosition, Vector3 endPosition){
+        float startTime = Time.time;
+
+        while (Time.time - startTime < duration)
+        {
+            float t = (Time.time - startTime) / duration; // Calculate the interpolation parameter
+
+            // Interpolate the position linearly
+            transform.position = Vector3.Lerp(startPosition, endPosition, t);
+
+            yield return null; // Wait for the next frame
+        }
+
+        // Ensure the final position is exactly the target position
+        transform.position = endPosition;
+    }
+
+    Vector3 QuaternionToVectorZ(Quaternion quaternion) {
+        // Extract the Z-axis rotation angle from the quaternion
+        float angle = quaternion.eulerAngles.z;
+
+        // Convert the angle to radians
+        float angleInRadians = angle * Mathf.Deg2Rad;
+
+        // Calculate the vector using trigonometry
+        Vector3 vector = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians), 0);
+
+        return vector;
     }
 
     // calculating cell to the destination, BOTH using the local coordinate (grid)

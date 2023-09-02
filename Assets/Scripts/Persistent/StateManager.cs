@@ -25,6 +25,8 @@ public class StateManager : MonoBehaviour {
         {"UA",   0.1f},
     };
 
+    public float WorldTick;
+
     void Awake() {
         if (Instance != null && Instance != this) { 
             Destroy(this); 
@@ -78,4 +80,7 @@ public class StateManager : MonoBehaviour {
         else SpawnRate[key] = clamp01015(SpawnRate[key] + 0.01f);
     }
 
+    private void ResetWorldTick() {
+        WorldTick = 0;
+    }
 }

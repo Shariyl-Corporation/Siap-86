@@ -47,7 +47,6 @@ public class WorldControl : MonoBehaviour {
 
     IEnumerator Start() {
         Debug.Log(Time.timeScale);
-        // yield return FastForward();
         yield return FadeIn();
     }
 
@@ -82,6 +81,7 @@ public class WorldControl : MonoBehaviour {
     public void FastForwardRunner() {
         StartCoroutine(FastForward());
     }
+
     private IEnumerator FastForward(){
         Time.timeScale = 40;
         Debug.Log(Time.timeScale);
@@ -114,6 +114,7 @@ public class WorldControl : MonoBehaviour {
             Car selectedCar = GetCar(ray);
             if (selectedCar != null) {
                 ActiveCar = selectedCar;
+                ActiveCar.PrepareInterrogate();
                 Time.timeScale = 0.75f;
                 DisableInterrogate();
                 Debug.Log("Interacted with " + ActiveCar);
@@ -126,18 +127,19 @@ public class WorldControl : MonoBehaviour {
     public void OnScroll(InputAction.CallbackContext context) {
         if (!isControlEnabled) return;
 
-        if (context.performed)
-        {
+        if (context.performed) {
             float z = context.ReadValue<float>();
             if (z > 0)
                 vcam.m_Lens.OrthographicSize -= 1;
             else if (z < 0)
                 vcam.m_Lens.OrthographicSize += 1;
         }
+
         vcam.m_Lens.OrthographicSize = Mathf.Clamp(vcam.m_Lens.OrthographicSize, minCameraSize, maxCameraSize);
     }
     
     public Vector3 getMousePosition() => mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
     public void DisableInterrogate() {
         canInterrogate = false;
     }
@@ -169,6 +171,8 @@ public class WorldControl : MonoBehaviour {
     }
 
     IEnumerator FadeIn(){
+        fadeSpriteRenderer.gameObject.SetActive(true);
+
         Color color = Color.black;
         color.a = 1;
         fadeSpriteRenderer.color = color;
@@ -177,5 +181,9 @@ public class WorldControl : MonoBehaviour {
             color.a -= .5f * Time.deltaTime;
             yield return null;
         }
+
+        fadeSpriteRenderer.gameObject.SetActive(false);
     }
+
+
 }
