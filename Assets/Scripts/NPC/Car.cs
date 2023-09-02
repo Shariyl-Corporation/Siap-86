@@ -28,10 +28,10 @@ public class Car : MonoBehaviour {
     private Vector3 destinationCell;
     private Vector3 prevCell;
 
-    private bool isInTurnTile = false;
-    private bool isWantToStraight = false;
-    private bool isTilang;
-    private bool isMundur;
+    public bool isInTurnTile = false;
+    public bool isWantToStraight = false;
+    public bool isTilang;
+    public bool isMundur;
     private TrafficLightController trafficLight;
     private Vector3Int dir_vector;
 
@@ -56,7 +56,7 @@ public class Car : MonoBehaviour {
 
         driver = generateRandomDriver();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        SpriteSelect = 0; //UnityEngine.Random.Range(0, 3);
+        SpriteSelect = UnityEngine.Random.Range(0, 3);
     }
 
     void Update(){
@@ -143,12 +143,12 @@ public class Car : MonoBehaviour {
 
         Quaternion rotation = Quaternion.Euler(0, 0, angle);
         transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation));
+        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation)*1.2f);
 
         angle -= 45;
         rotation = Quaternion.Euler(0, 0, angle);
         transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation));
+        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation)*1.2f);
     }
 
     private IEnumerator MinggirMundur() {
@@ -157,12 +157,12 @@ public class Car : MonoBehaviour {
 
         Quaternion rotation = Quaternion.Euler(0, 0, angle);
         transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation));
+        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation)*1.2f);
 
         angle += 45;
         rotation = Quaternion.Euler(0, 0, angle);
         transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation));
+        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation)*1.2f);
     }
 
     public IEnumerator Kembali() {

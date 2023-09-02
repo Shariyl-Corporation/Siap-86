@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class CarManager : MonoBehaviour
-{
+public class CarManager : MonoBehaviour {
 
     private List<Vector3Int> spawnPoints;
     private List<Vector3Int> endPoints;
@@ -106,10 +105,20 @@ public class CarManager : MonoBehaviour
         var cell_down = cell_position + Vector3Int.down;
         var cell_left = cell_position + Vector3Int.left;
 
+        var cell_UR = cell_position + Vector3Int.up + Vector3Int.right;
+        var cell_UL = cell_position + Vector3Int.up + Vector3Int.left;
+        var cell_DR = cell_position + Vector3Int.down + Vector3Int.right;
+        var cell_DL = cell_position + Vector3Int.down + Vector3Int.left;
+
         neighbor.Add(cell_up, dataFromTiles[cell_up]);
         neighbor.Add(cell_right, dataFromTiles[cell_right]);
         neighbor.Add(cell_down, dataFromTiles[cell_down]);
         neighbor.Add(cell_left, dataFromTiles[cell_left]);
+
+        neighbor.Add(cell_UR, dataFromTiles[cell_UR]);
+        neighbor.Add(cell_UL, dataFromTiles[cell_UL]);
+        neighbor.Add(cell_DR, dataFromTiles[cell_DR]);
+        neighbor.Add(cell_DL, dataFromTiles[cell_DL]);
 
         return neighbor;
     }
@@ -120,8 +129,7 @@ public class CarManager : MonoBehaviour
         return get_neighbor_tiles(gridPosition);
     }
 
-    public static List<Vector3Int> get_all_position_for_tile(TileBase tile)
-    {
+    public static List<Vector3Int> get_all_position_for_tile(TileBase tile) {
         return dataFromTiles.Where(pair => pair.Value == tile)
                             .Select(pair => pair.Key)
                             .ToList();
