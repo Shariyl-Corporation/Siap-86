@@ -5,6 +5,12 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using System;
+
+[Serializable]
+public class SpriteSet {
+    public List<Sprite> spriteList;
+}
 
 public class Car : MonoBehaviour {
     /*
@@ -24,30 +30,40 @@ public class Car : MonoBehaviour {
 
     private bool isInTurnTile = false;
     private bool isWantToStraight = false;
+    private bool isTilang;
     private TrafficLightController trafficLight;
     private Vector3Int dir_vector;
 
-    private bool isTilang;
+    [SerializeField] private List<SpriteSet> SpriteSelection;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    public enum ArahMataAngin {
+        Timur, 
+        Tenggara, 
+        Selatan, 
+        BaratDaya, 
+        Barat, 
+        BaratLaut, 
+        Utara, 
+        TimurLaut
+    }
+
+    private int SpriteSelect;
+
 
     void Start() {
         targetPosition = transform.position;
 
         driver = generateRandomDriver();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        SpriteSelect = 0; //UnityEngine.Random.Range(0, 3);
     }
+
     void Update(){
+        EvalRotation(transform.rotation.eulerAngles.z);
         if (isTilang) return;
+
         if (transform.position != targetPosition) {
             if (isInTurnTile) {
-                // if (isWantToStraight) {
-                //     if (trafficLight.CheckAllowStraightThrough(dir_vector))
-                //         isInTurnTile = false;
-                // } else {
-                //     if () {
-                //         isInTurnTile = false;
-                //     }
-
-                // }
-
                 if ((isWantToStraight && trafficLight.CheckAllowStraightThrough(dir_vector)) ||
                     trafficLight.CheckAllowTurn(dir_vector)) {
                     isInTurnTile = false;
@@ -59,7 +75,10 @@ public class Car : MonoBehaviour {
         else {
             do_astar_step();
         }
+    }
 
+    void LateUpdate() {
+        spriteRenderer.gameObject.transform.localRotation =  Quaternion.Inverse(transform.rotation);
     }
 
     void OnDestroy(){
@@ -164,7 +183,7 @@ public class Car : MonoBehaviour {
 
         foreach (var c in collision){
             var go = c.gameObject;
-            if (go.CompareTag("car"))
+            if (go.CompareTag("car") && go.GetInstanceID() != gameObject.GetInstanceID())
                 return;
         }
         
@@ -175,7 +194,7 @@ public class Car : MonoBehaviour {
     private Collider2D[] Percept() {
         var angle = angle_towards(targetPosition);
         var forwardVector = GetForwardVector();
-        var check_collision = transform.position + forwardVector*2;
+        var check_collision = transform.position + (Vector3)forwardVector*2.5f;
         var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(2, 2), angle, carLayerMask);
 
         return collision;
@@ -198,5 +217,27 @@ public class Car : MonoBehaviour {
     public void setDestination(Vector3Int destinationCell)
     {
         this.destinationCell = destinationCell;
+    }
+
+    private void EvalRotation(float angle) {
+        angle %= 360f;
+        var spriteList = SpriteSelection[SpriteSelect].spriteList;
+        if (angle < 22.5 || angle > 337.5)  {
+            spriteRenderer.sprite = spriteList[(int)ArahMataAngin.Timur];
+        } else if (angle < 67.5) {
+            spriteRenderer.sprite = spriteList[(int)ArahMataAngin.TimurLaut];
+        } else if (angle < 112.5) {
+            spriteRenderer.sprite = spriteList[(int)ArahMataAngin.Utara];
+        } else if (angle < 157.5) {
+            spriteRenderer.sprite = spriteList[(int)ArahMataAngin.BaratLaut];
+        } else if (angle < 202.5) {
+            spriteRenderer.sprite = spriteList[(int)ArahMataAngin.Barat];
+        } else if (angle < 247.5) {
+            spriteRenderer.sprite = spriteList[(int)ArahMataAngin.BaratDaya];
+        } else if (angle < 292.5) {
+            spriteRenderer.sprite = spriteList[(int)ArahMataAngin.Selatan];
+        } else {
+            spriteRenderer.sprite = spriteList[(int)ArahMataAngin.Tenggara];
+        }
     }
 }

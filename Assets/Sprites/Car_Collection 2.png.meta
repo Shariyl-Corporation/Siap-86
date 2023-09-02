@@ -33,12 +33,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -643,7 +643,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Car_Collection 2_23: -1573796143
       Car_Collection 2_14: -543703055
       Car_Collection 2_0: 1847202650
       Car_Collection 2_1: 1532852670
@@ -665,8 +664,9 @@ TextureImporter:
       Car_Collection 2_7: 752281108
       Car_Collection 2_5: 1037446025
       Car_Collection 2_11: -1592312196
-      Car_Collection 2_19: 1442833489
+      Car_Collection 2_23: -1573796143
       Car_Collection 2_3: 1932143978
+      Car_Collection 2_19: 1442833489
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

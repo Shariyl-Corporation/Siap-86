@@ -30,6 +30,8 @@ public class WorldControl : MonoBehaviour {
 
     public float testing_deadzone;
 
+    public SpriteRenderer fadeSpriteRenderer;
+
     void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(this); 
@@ -45,7 +47,8 @@ public class WorldControl : MonoBehaviour {
 
     IEnumerator Start() {
         Debug.Log(Time.timeScale);
-        yield return FastForward();
+        // yield return FastForward();
+        yield return FadeIn();
     }
 
     void Update () {
@@ -163,5 +166,16 @@ public class WorldControl : MonoBehaviour {
             }
         }
         return selectedCar;
+    }
+
+    IEnumerator FadeIn(){
+        Color color = Color.black;
+        color.a = 1;
+        fadeSpriteRenderer.color = color;
+        while (color.a > 0) {
+            fadeSpriteRenderer.color = color;
+            color.a -= .5f * Time.deltaTime;
+            yield return null;
+        }
     }
 }

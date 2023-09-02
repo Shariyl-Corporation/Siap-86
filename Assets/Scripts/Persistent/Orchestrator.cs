@@ -21,11 +21,16 @@ public class Orchestrator : MonoBehaviour {
         hoverCursor = Resources.Load("CursorHover") as Texture2D;
         Cursor.SetCursor(mouseCursor, new Vector2(0, 0), CursorMode.Auto);
     }
+    
     void Start(){
-        GoToMenu();
+        RollOpening();
     }
 
-    void Update(){}
+
+    public void RollOpening() {
+        SceneManager.LoadScene("Opening", LoadSceneMode.Additive);
+        OpeningScene.OnSceneUnloaded += GoToMenu;
+    }
 
     public void RollIntro(){
         SceneManager.LoadScene("Introduction", LoadSceneMode.Additive);

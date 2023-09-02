@@ -9,10 +9,7 @@ public class MainMenu : MonoBehaviour {
     public static MainMenu Instance;
 
     [SerializeField] private SpriteRenderer fadeSpriteRenderer;
-    [SerializeField] private GameObject playButton, settingsButton, creditsButton, quitButton;
-    private Camera mainCamera;
     
-
     void Awake() {
         if (Instance != null && Instance != this) { 
             Destroy(this); 
@@ -20,13 +17,10 @@ public class MainMenu : MonoBehaviour {
         else { 
             Instance = this; 
         }
-        mainCamera = Camera.main;
     }
 
     void Start(){
-        Color color = Color.black;
-        color.a = 0;
-        fadeSpriteRenderer.color = color;
+        StartCoroutine(FadeIn());
     }
 
     void Update(){}
@@ -57,10 +51,23 @@ public class MainMenu : MonoBehaviour {
     }
 
     IEnumerator FadeOut(){
-        Color color = fadeSpriteRenderer.color;
+        Color color = Color.black;
+        color.a = 0;
+        fadeSpriteRenderer.color = color;
         while (color.a < 1) {
             fadeSpriteRenderer.color = color;
             color.a += .5f * Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    IEnumerator FadeIn(){
+        Color color = Color.black;
+        color.a = 1;
+        fadeSpriteRenderer.color = color;
+        while (color.a > 0) {
+            fadeSpriteRenderer.color = color;
+            color.a -= .5f * Time.deltaTime;
             yield return null;
         }
     }
