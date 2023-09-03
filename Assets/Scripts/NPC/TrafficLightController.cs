@@ -36,8 +36,15 @@ public class TrafficLightController : MonoBehaviour {
     [SerializeField] private float PhaseDown = 15;
     [SerializeField] private float PhaseRight = 15;
     [SerializeField] private float PhaseUp = 15;
-
     [SerializeField] private float PhaseYellow = 5;
+
+    [SerializeField] private bool tlDirUp = true;
+    [SerializeField] private bool tlDirRight = true;
+    [SerializeField] private bool tlDirDown = true;
+    [SerializeField] private bool tlDirLeft = true;
+
+    [SerializeField] private DirectionFrom DefaultPhase = DirectionFrom.right;
+
     private bool isYellow = false;
 
     public static Dictionary<DirectionFrom, Vector3> DirectionToVector = new () {
@@ -71,6 +78,7 @@ public class TrafficLightController : MonoBehaviour {
         traffic_light =  new Dictionary<DirectionFrom, State>();
         build_traffic_light();
         UpdatePhaseTime();
+
     }
 
     void Update() {
@@ -113,37 +121,26 @@ public class TrafficLightController : MonoBehaviour {
         var up_tile = Vector3Int.RoundToInt(transform.position + new Vector3(2, 6, 0));
         var down_tile = Vector3Int.RoundToInt(transform.position + new Vector3(-2, -6, 0));
 
-        if (turn_tiles.Contains(right_tile)){
+        if (tlDirRight){// turn_tiles.Contains(right_tile)){
             traffic_light.Add(DirectionFrom.right, State.red);
             //Debug.Log("right");
         }
-        if (turn_tiles.Contains(left_tile)){
+        if (tlDirLeft){// turn_tiles.Contains(left_tile)){
             traffic_light.Add(DirectionFrom.left, State.red);
             //Debug.Log("left");
         }
-        if (turn_tiles.Contains(up_tile)){
+        if (tlDirUp){// turn_tiles.Contains(up_tile)){
             traffic_light.Add(DirectionFrom.up, State.red);
             //Debug.Log("up");
         }
-        if (turn_tiles.Contains(down_tile)){
+        if (tlDirDown){// turn_tiles.Contains(down_tile)){
             traffic_light.Add(DirectionFrom.down, State.red);
             //Debug.Log("down");
         }
 
-        // Debug.Log(right_tile + " " + left_tile + " " + up_tile + " " + down_tile);
-        // foreach(var traffic in traffic_light) {
-        //     Debug.Log(traffic.Key + " " + traffic.Value);
-        // }
-        // if (firstPrint) {
-        //     foreach(var tile in turn_tiles) {
-        //         Debug.Log(tile);
-        //     }
-        //     firstPrint = false;
-        // }
-        
         // pls fix
-        traffic_light[DirectionFrom.right] = State.green;
-        CurrentPhase = (int)DirectionFrom.right;
+        traffic_light[DefaultPhase] = State.green;
+        CurrentPhase = (int)DefaultPhase;
     }
 
     public bool CheckAllowStraightThrough(Vector3Int dir_vector) {

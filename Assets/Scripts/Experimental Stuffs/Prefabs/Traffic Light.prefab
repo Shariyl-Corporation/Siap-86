@@ -58,7 +58,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3, y: 1.3}
+  m_Size: {x: 1.6, y: 1.6}
   m_EdgeRadius: 0
 --- !u!212 &6925854782992226058
 SpriteRenderer:
@@ -138,3 +138,8 @@ MonoBehaviour:
   PhaseRight: 5
   PhaseUp: 5
   PhaseYellow: 2.5
+  tlDirUp: 1
+  tlDirRight: 1
+  tlDirDown: 1
+  tlDirLeft: 1
+  DefaultPhase: 2

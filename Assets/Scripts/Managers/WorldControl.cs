@@ -21,7 +21,7 @@ public class WorldControl : MonoBehaviour {
 
     public bool isControlEnabled = false;
     private bool isDragging = false;
-    private bool canInterrogate = true;
+    public bool canInterrogate = true;
 
     [SerializeField] private Vector2 minPos; // = new Vector3(-19.5f, -67.5f, 0);
     [SerializeField] private Vector2 maxPos; // = new Vector3(42, -35, 0);

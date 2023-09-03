@@ -52,6 +52,7 @@ public class Car : MonoBehaviour {
 
 
     void Start() {
+        carManager = FindObjectOfType<CarManager>();
         targetPosition = transform.position;
 
         driver = generateRandomDriver();
@@ -66,7 +67,7 @@ public class Car : MonoBehaviour {
         if (transform.position != targetPosition) {
             if (isInTurnTile) {
                 if ((isWantToStraight && trafficLight.CheckAllowStraightThrough(dir_vector)) ||
-                    trafficLight.CheckAllowTurn(dir_vector)) {
+                    !isWantToStraight && trafficLight.CheckAllowTurn(dir_vector)) {
                     isInTurnTile = false;
                 }
                 if (isInTurnTile) return;
@@ -304,7 +305,7 @@ public class Car : MonoBehaviour {
         var angle = angle_towards(targetPosition);
         var forwardVector = GetForwardVector();
         var check_collision = transform.position + (Vector3)forwardVector*2.5f;
-        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(2, 2), angle, carLayerMask);
+        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(1, 1), angle, carLayerMask);
 
         return collision;
     }

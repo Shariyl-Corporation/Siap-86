@@ -13,9 +13,9 @@ public class TileDebugger : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Grid grid;
     [SerializeField] private Text tileDebugMessage;
+
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -27,6 +27,8 @@ public class TileDebugger : MonoBehaviour
         
         string debugText = "Mouse at cell: " + currentCell.x + " " + currentCell.y + "\n" +
                             "World Position: " + mousePos.x + " " + mousePos.y + "\n";
+        
+        debugText += "Car Count " + CarManager.cars.Count;
                                 
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);

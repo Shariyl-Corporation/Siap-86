@@ -8,8 +8,8 @@ public class CarManager : MonoBehaviour {
 
     private List<Vector3Int> spawnPoints;
     private List<Vector3Int> endPoints;
-    private static HashSet<int> cars;
-    [SerializeField] private Car carGO;
+    public static HashSet<int> cars;
+    [SerializeField] private GameObject carGO;
     [SerializeField] private float spawnDelay = 3;
     [SerializeField] private int limitCar = 25;
     private float timer = 0;
@@ -22,26 +22,33 @@ public class CarManager : MonoBehaviour {
     public TileBase endTile;
 
 
-    [HideInInspector] private static Dictionary<Vector3Int, TileBase> dataFromTiles;
+    [HideInInspector] private static Dictionary<Vector3Int, TileBase> dataFromTiles = new();
 
 
     private void Awake() {
+        Debug.Log("CarManager awake");
+        Debug.Log("create cars");
         cars = new HashSet<int>();
-        dataFromTiles = new Dictionary<Vector3Int, TileBase>();
-        BoundsInt bounds = tilemap.cellBounds;
+    }
 
-        foreach (Vector3Int position in bounds.allPositionsWithin) {
-            TileBase tile = tilemap.GetTile(position);
-            // if (tile != null) Debug.Log(position);
-            dataFromTiles.Add(new Vector3Int(position.x, position.y, 0), tile);
+    private void Start() {
+        // error in awake func
+        Debug.Log("Datatiles count :" + dataFromTiles.Count);
+        if (dataFromTiles.Count == 0) {
+            Debug.Log("Get bounds");
+            BoundsInt bounds = tilemap.cellBounds;
+
+            Debug.Log("Iterating");
+            foreach (Vector3Int position in bounds.allPositionsWithin) {
+                TileBase tile = tilemap.GetTile(position);
+                // if (tile != null) Debug.Log(position);
+                dataFromTiles.Add(new Vector3Int(position.x, position.y, 0), tile);
+            }
         }
 
         spawnPoints = get_all_position_for_tile(spawnTile);
         endPoints = get_all_position_for_tile(endTile);
-    }
 
-    private void Start()
-    {
         spawnRandomCar();
     }
     private void Update()
@@ -139,10 +146,10 @@ public class CarManager : MonoBehaviour {
     [ContextMenu("spawn")]
     public void spawnRandomCar() {
         int spawnPosition = Random.Range(0, spawnPoints.Count);
-        Car car = Instantiate(carGO, spawnPoints[spawnPosition], transform.rotation);
+        GameObject car = Instantiate(carGO, spawnPoints[spawnPosition], transform.rotation);
 
         int destinationPosition = Random.Range(0, endPoints.Count);
-        car.setDestination(endPoints[destinationPosition]);
+        car.GetComponent<Car>().setDestination(endPoints[destinationPosition]);
 
         car.transform.parent = gameObject.transform;
         cars.Add(car.GetInstanceID());
