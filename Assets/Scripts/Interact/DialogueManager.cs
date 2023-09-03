@@ -226,6 +226,7 @@ public class DialogueManager : MonoBehaviour {
     private IEnumerator EndInterrogate(bool tilang) {
         yield return GiveVerdict(tilang);
         CalculateResult();
+        WorldControl.Instance.canInterrogate = true;
         UnloadScene();
         yield return null;
     }

@@ -6,9 +6,9 @@ using UnityEngine.Tilemaps;
 
 public class CarManager : MonoBehaviour {
 
-    private List<Vector3Int> spawnPoints;
-    private List<Vector3Int> endPoints;
-    public static HashSet<int> cars;
+    private static List<Vector3Int> spawnPoints;
+    private static List<Vector3Int> endPoints;
+    public static HashSet<GameObject> cars;
     [SerializeField] private GameObject carGO;
     [SerializeField] private float spawnDelay = 3;
     [SerializeField] private int limitCar = 25;
@@ -28,11 +28,7 @@ public class CarManager : MonoBehaviour {
     private void Awake() {
         Debug.Log("CarManager awake");
         Debug.Log("create cars");
-        cars = new HashSet<int>();
-    }
-
-    private void Start() {
-        // error in awake func
+        cars = new HashSet<GameObject>();
         Debug.Log("Datatiles count :" + dataFromTiles.Count);
         if (dataFromTiles.Count == 0) {
             Debug.Log("Get bounds");
@@ -44,10 +40,13 @@ public class CarManager : MonoBehaviour {
                 // if (tile != null) Debug.Log(position);
                 dataFromTiles.Add(new Vector3Int(position.x, position.y, 0), tile);
             }
+            spawnPoints = get_all_position_for_tile(spawnTile);
+            endPoints = get_all_position_for_tile(endTile);
         }
+    }
 
-        spawnPoints = get_all_position_for_tile(spawnTile);
-        endPoints = get_all_position_for_tile(endTile);
+    private void Start() {
+        // error in awake func
 
         spawnRandomCar();
     }
@@ -152,11 +151,14 @@ public class CarManager : MonoBehaviour {
         car.GetComponent<Car>().setDestination(endPoints[destinationPosition]);
 
         car.transform.parent = gameObject.transform;
-        cars.Add(car.GetInstanceID());
+        cars.Add(car);
     }
 
-    public static void RemoveCar(Car car){
-        cars.Remove(car.GetInstanceID());
+    public static void RemoveCar(GameObject car){
+        
+        if (!cars.Remove(car)) {
+            Debug.Log("Tidak ada instance ID" + car.GetInstanceID());
+        }
         Destroy(car.gameObject);
     }
 }

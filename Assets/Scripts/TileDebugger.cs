@@ -28,7 +28,7 @@ public class TileDebugger : MonoBehaviour
         string debugText = "Mouse at cell: " + currentCell.x + " " + currentCell.y + "\n" +
                             "World Position: " + mousePos.x + " " + mousePos.y + "\n";
         
-        debugText += "Car Count " + CarManager.cars.Count;
+        debugText += "Car Count " + CarManager.cars.Count + "\n";
                                 
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
@@ -47,6 +47,10 @@ public class TileDebugger : MonoBehaviour
                 debugText += "HasDoneSpeedLimit: " + car.driver.hasDoneSpeedLimit + "\n";
                 debugText += "HasDoneTerobosLampuMerah: " + car.driver.hasDoneTerobosLampuMerah + "\n";
                 debugText += "IsDrunk: " + car.driver.isDrunk + "\n";
+
+                debugText += car.transform.rotation.eulerAngles + "\n";
+                debugText += car.dir_vector + "\n";
+
             }
         }
 

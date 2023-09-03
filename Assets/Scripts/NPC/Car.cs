@@ -33,7 +33,7 @@ public class Car : MonoBehaviour {
     public bool isTilang;
     public bool isMundur;
     private TrafficLightController trafficLight;
-    private Vector3Int dir_vector;
+    public Vector3Int dir_vector;
 
     [SerializeField] private List<SpriteSet> SpriteSelection;
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -66,8 +66,11 @@ public class Car : MonoBehaviour {
 
         if (transform.position != targetPosition) {
             if (isInTurnTile) {
+                // Debug.Log(isInTurnTile);
+                // Debug.Log(trafficLight.CheckAllowStraightThrough(dir_vector));
+                // Debug.Log(trafficLight.CheckAllowTurn(dir_vector));
                 if ((isWantToStraight && trafficLight.CheckAllowStraightThrough(dir_vector)) ||
-                    !isWantToStraight && trafficLight.CheckAllowTurn(dir_vector)) {
+                    trafficLight.CheckAllowTurn(dir_vector)) {
                     isInTurnTile = false;
                 }
                 if (isInTurnTile) return;
@@ -84,7 +87,7 @@ public class Car : MonoBehaviour {
     }
 
     void OnDestroy(){
-        CarManager.RemoveCar(this);
+        CarManager.RemoveCar(gameObject);
     }
 
     Driver generateRandomDriver() {
@@ -124,11 +127,20 @@ public class Car : MonoBehaviour {
     }
 
     public IEnumerator Minggir() {
+        dir_vector = GetForwardVector();
         if (isInTurnTile) {
             isMundur = true;
+            // menuju kanan
+            if (dir_vector == new Vector3Int(1, 0, 0)) {
+                spriteRenderer.sortingOrder = 0;
+            } else if (dir_vector == new Vector3Int(-1, 0, 0)) { // menuju kiri
+                spriteRenderer.sortingOrder = 2;
+            }
+
             yield return MinggirMundur();
         } else {
             isMundur = false;
+            spriteRenderer.sortingOrder = 1;
             yield return MinggirMaju();
         }
 
@@ -144,12 +156,12 @@ public class Car : MonoBehaviour {
 
         Quaternion rotation = Quaternion.Euler(0, 0, angle);
         transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation)*1.2f);
+        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation)*1.5f);
 
         angle -= 45;
         rotation = Quaternion.Euler(0, 0, angle);
         transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation)*1.2f);
+        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation)*1.5f);
     }
 
     private IEnumerator MinggirMundur() {
@@ -158,12 +170,12 @@ public class Car : MonoBehaviour {
 
         Quaternion rotation = Quaternion.Euler(0, 0, angle);
         transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation)*1.2f);
+        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation)*1.5f);
 
         angle += 45;
         rotation = Quaternion.Euler(0, 0, angle);
         transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation)*1.2f);
+        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation)*1.5f);
     }
 
     public IEnumerator Kembali() {
@@ -277,8 +289,8 @@ public class Car : MonoBehaviour {
         targetPosition = decision;
 
         if (isInTurnTile) {
-            Debug.Log((targetPosition - transform.position).normalized);
-            Debug.Log(dir_vector);
+            // Debug.Log((targetPosition - transform.position).normalized);
+            // Debug.Log(dir_vector);
 
             isWantToStraight = Vector3Int.RoundToInt((targetPosition - transform.position).normalized) == dir_vector;
         }
@@ -305,7 +317,7 @@ public class Car : MonoBehaviour {
         var angle = angle_towards(targetPosition);
         var forwardVector = GetForwardVector();
         var check_collision = transform.position + (Vector3)forwardVector*2.5f;
-        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(1, 1), angle, carLayerMask);
+        var collision = Physics2D.OverlapBoxAll(check_collision, new Vector2(.5f, .5f), angle, carLayerMask);
 
         return collision;
     }

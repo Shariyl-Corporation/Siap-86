@@ -158,7 +158,7 @@ MonoBehaviour:
     - {fileID: 1116491760, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
     - {fileID: -1788840146, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
     - {fileID: 431483334, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
-    - {fileID: 1532852670, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
+    - {fileID: -878927831, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
     - {fileID: 1989775027, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
     - {fileID: -1592312196, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
     - {fileID: -543703055, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
@@ -166,11 +166,11 @@ MonoBehaviour:
     - {fileID: -764916755, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
     - {fileID: -890108312, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
     - {fileID: -18206877, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
-    - {fileID: -890108312, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
+    - {fileID: 487820172, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
     - {fileID: -938371035, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
     - {fileID: -1573796143, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
-    - {fileID: -18206877, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
-    - {fileID: 487820172, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
+    - {fileID: 1442833489, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
+    - {fileID: 188640211, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!61 &7328014771006564404
 BoxCollider2D:
