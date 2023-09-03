@@ -8,18 +8,22 @@ public class BaseInterrogateButton : BaseButton {
     // protected bool isAsked = false;
 
     protected string hintText;
+    public GameObject hintButton;
 
     protected override void Start() {
         base.Start();
         dialogueManager = FindObjectOfType<DialogueManager>();
+        OnMouseExit();
     }
+
     protected override void OnMouseOver() {
         base.OnMouseOver();
-
+        if (hintButton != null) hintButton.SetActive(true);
     }
 
     protected override void OnMouseExit() {
         base.OnMouseExit();
+        if (hintButton != null) hintButton.SetActive(false);
     }
 
     

@@ -19,8 +19,7 @@ public class Car : MonoBehaviour {
     [SerializeField] private CarManager carManager;
     [SerializeField] private float speed = 1;
     [SerializeField] private LayerMask carLayerMask;
-    [SerializeField] private LayerMask trafficLayerMask;
-
+    [SerializeField] private ParticleSystem smokeParticleSystem;
     public Driver driver;
 
     private HashSet<TileBase> visited2;
@@ -52,6 +51,7 @@ public class Car : MonoBehaviour {
 
 
     void Start() {
+        smokeParticleSystem.Play();
         carManager = FindObjectOfType<CarManager>();
         targetPosition = transform.position;
 
@@ -84,6 +84,7 @@ public class Car : MonoBehaviour {
 
     void LateUpdate() {
         spriteRenderer.gameObject.transform.localRotation =  Quaternion.Inverse(transform.rotation);
+        // smokeParticleSystem.gameObject.transform.localRotation = Quaternion.Inverse(transform.rotation);
     }
 
     void OnDestroy(){
@@ -124,6 +125,15 @@ public class Car : MonoBehaviour {
     public void PrepareInterrogate() {
         isTilang = true;
         StartCoroutine(Minggir());
+    }
+
+    public void PrepareKembali() {
+        isTilang = false;
+        StartCoroutine(Kembali());
+    }
+
+    public void PrepareDisintegrate() {
+        StartCoroutine(Disintegrate());
     }
 
     public IEnumerator Minggir() {
@@ -215,6 +225,18 @@ public class Car : MonoBehaviour {
         rotation = Quaternion.Euler(0, 0, angle);
         transform.rotation = rotation;
         yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation));
+    }
+
+    private IEnumerator Disintegrate() {
+        Color color = spriteRenderer.color;
+
+        color.a = 1;
+        while (color.a > 0) {
+            spriteRenderer.color = color;
+            color.a -= .5f * Time.deltaTime;
+            yield return null;
+        }
+        CarManager.RemoveCar(gameObject);
     }
 
 

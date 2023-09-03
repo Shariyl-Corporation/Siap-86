@@ -22,7 +22,7 @@ public class DialogueManager : MonoBehaviour {
     public GameObject card;
     private SpriteRenderer cardRenderer;
     public Sprite redCard, blueCard;
-    public bool isRedCard = true;
+    public bool isRedCard = false;
 
     public bool allowAction = true;
 
@@ -227,6 +227,11 @@ public class DialogueManager : MonoBehaviour {
         yield return GiveVerdict(tilang);
         CalculateResult();
         WorldControl.Instance.canInterrogate = true;
+        if (isRedCard) {
+            activeCar.PrepareDisintegrate();
+        } else {
+            activeCar.PrepareKembali();
+        }
         UnloadScene();
         yield return null;
     }

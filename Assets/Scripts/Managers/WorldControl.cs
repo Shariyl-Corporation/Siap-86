@@ -23,8 +23,8 @@ public class WorldControl : MonoBehaviour {
     private bool isDragging = false;
     public bool canInterrogate = true;
 
-    [SerializeField] private Vector2 minPos; // = new Vector3(-19.5f, -67.5f, 0);
-    [SerializeField] private Vector2 maxPos; // = new Vector3(42, -35, 0);
+    [SerializeField] private Transform minPos; // = new Vector3(-19.5f, -67.5f, 0);
+    [SerializeField] private Transform maxPos; // = new Vector3(42, -35, 0);
     [SerializeField] private float minCameraSize = 1;
     [SerializeField] private float maxCameraSize = 10;
 
@@ -70,8 +70,8 @@ public class WorldControl : MonoBehaviour {
             Vector3 diff = dragEnd - transform.position;
             Vector3 point_pos = dragOrigin - diff;
             transform.position = new Vector3(
-                                        Mathf.Clamp(point_pos.x, minPos.x, maxPos.x),
-                                        Mathf.Clamp(point_pos.y, minPos.y, maxPos.y),
+                                        Mathf.Clamp(point_pos.x, minPos.position.x, maxPos.position.x),
+                                        Mathf.Clamp(point_pos.y, minPos.position.y, maxPos.position.y),
                                         transform.position.z);
         }
 
