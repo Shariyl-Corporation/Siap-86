@@ -15,4 +15,8 @@ public class Driver : MonoBehaviour{
     public bool isDrunk;
 
     public int Age;
+
+    public bool CheckIsVisiblyGuilty() {
+        return hasDoneTerobosLampuMerah || hasDoneSpeedLimit || isDrunk;
+    }
 }

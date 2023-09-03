@@ -30,6 +30,7 @@ public class Orchestrator : MonoBehaviour {
     public void RollOpening() {
         SceneManager.LoadScene("Opening", LoadSceneMode.Additive);
         OpeningScene.OnSceneUnloaded += GoToMenu;
+        OpeningScene.OnSceneUnloaded += AudioManager.Instance.PlayMenuMusic;
     }
 
     public void RollIntro(){

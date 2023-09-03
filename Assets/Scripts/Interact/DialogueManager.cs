@@ -147,10 +147,10 @@ public class DialogueManager : MonoBehaviour {
         StartCoroutine(SwapCard());
     }
 
-    public void OnClickObrol() { // WIP
-        DisableAction();
-        StartCoroutine(BasicChat());
-    }
+    // public void OnClickObrol() { // WIP
+    //     DisableAction();
+    //     StartCoroutine(BasicChat());
+    // }
 
     public void OnClickTanya() { // WIP
         ShowChoicesAsk();
@@ -288,16 +288,21 @@ public class DialogueManager : MonoBehaviour {
     }
     
     public IEnumerator StrikeConversation() {
-        ConvoFlow convoFlow = convoPair.ConvGreetings[Random.Range(0, convoPair.ConvGreetings.Count)];
+        ConvoFlow convoFlow;
+        if (activeDriver.CheckIsVisiblyGuilty())
+            convoFlow = convoPair.ConvGreetingsGuilty[Random.Range(0, convoPair.ConvGreetingsGuilty.Count)];
+        else 
+            convoFlow = convoPair.ConvGreetingsInnocent[Random.Range(0, convoPair.ConvGreetingsInnocent.Count)];
         
         yield return StartCoroutine(PlayConvo(convoFlow));
     }
 
-    public IEnumerator BasicChat() {
-        ConvoFlow convoFlow = convoPair.ConvBasicChat[Random.Range(0, convoPair.ConvGreetings.Count)];
+    // public IEnumerator BasicChat() {
+    //     ConvoFlow convoFlow = convoPair.ConvBasicChat[Random.Range(0, convoPair.ConvGreetings.Count)];
         
-        yield return StartCoroutine(PlayConvo(convoFlow));
-    }
+    //     yield return StartCoroutine(PlayConvo(convoFlow));
+    // }
+
     public IEnumerator AskDocumentKTP(bool hasKTP) {
         ConvoFlow convoFlow;
         if (hasKTP)

@@ -11,7 +11,8 @@ public class ConvoFlow {
 
 public class ConvoPair : MonoBehaviour {
 
-    public List<ConvoFlow> ConvGreetings;
+    public List<ConvoFlow> ConvGreetingsInnocent;
+    public List<ConvoFlow> ConvGreetingsGuilty;
     public List<ConvoFlow> ConvBasicChat;
     public List<ConvoFlow> ConvKTP;
     public List<ConvoFlow> ConvNoKTP;
@@ -28,7 +29,8 @@ public class ConvoPair : MonoBehaviour {
 
     void Awake()
     {
-        InitGreetings();
+        InitGreetingsInnocent();
+        InitGreetingsGuilty();
         InitBasicChat();
 
         InitKTP();
@@ -44,16 +46,28 @@ public class ConvoPair : MonoBehaviour {
         InitVerdictInnocent();
     }
 
-    public void InitGreetings() {
-        ConvGreetings = new (){
+    public void InitGreetingsInnocent() {
+        ConvGreetingsInnocent = new (){
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "Sample Greetings" },
+                    new (){ speaker = you,    text = "Selamat pagi, anda tahu kenapa anda diberhentikan?" },
                     new (){ speaker = driver, text = "Responding to sample greetings" }
                 }
             },
         };
     }
+
+    public void InitGreetingsGuilty() {
+        ConvGreetingsGuilty = new (){
+            new () {
+                flow = new (){
+                    new (){ speaker = you,    text = "Selamat pagi, anda tahu kenapa anda diberhentikan?" },
+                    new (){ speaker = driver, text = "Responding to sample greetings" }
+                }
+            },
+        };
+    }
+
 
     public void InitBasicChat(){
         ConvBasicChat = new (){

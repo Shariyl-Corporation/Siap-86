@@ -9,6 +9,6 @@ public class ButtonChat : BaseInterrogateButton {
         OnMouseExit();
         
         audioManager.Click();
-        dialogueManager.OnClickObrol();
+        // dialogueManager.OnClickObrol();
     }
 }
