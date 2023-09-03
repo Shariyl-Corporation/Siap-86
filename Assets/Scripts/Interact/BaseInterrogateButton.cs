@@ -7,12 +7,15 @@ public class BaseInterrogateButton : BaseButton {
     public Sprite askedSprite;
     // protected bool isAsked = false;
 
+    protected string hintText;
+
     protected override void Start() {
         base.Start();
         dialogueManager = FindObjectOfType<DialogueManager>();
     }
     protected override void OnMouseOver() {
         base.OnMouseOver();
+
     }
 
     protected override void OnMouseExit() {
