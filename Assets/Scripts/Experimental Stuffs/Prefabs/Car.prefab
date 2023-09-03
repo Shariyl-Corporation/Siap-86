@@ -224,7 +224,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9189597018709442720}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.15, y: -0.67, z: 0}
+  m_LocalPosition: {x: -1.28, y: -0.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -239,8 +239,8 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9189597018709442720}
   serializedVersion: 8
-  lengthInSec: 3
-  simulationSpeed: 1
+  lengthInSec: 2
+  simulationSpeed: 1.25
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -313,9 +313,9 @@ ParticleSystem:
     enabled: 1
     startLifetime:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 3.6
-      minScalar: 5
+      minMaxState: 3
+      scalar: 1
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -366,9 +366,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startSpeed:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0.75
-      minScalar: 5
+      minMaxState: 3
+      scalar: 0.23
+      minScalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -483,7 +483,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 1.06
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -806,7 +806,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -0.01
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1004,7 +1004,7 @@ ParticleSystem:
           m_RotationOrder: 4
     arc:
       value: 360
-      mode: 3
+      mode: 0
       spread: 1
       speed:
         serializedVersion: 2
@@ -1741,7 +1741,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.03
+      scalar: 0.84
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1794,7 +1794,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.88
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1953,7 +1953,7 @@ ParticleSystem:
     orbitalZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -3.05
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2112,7 +2112,7 @@ ParticleSystem:
     orbitalOffsetZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.35
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2606,7 +2606,7 @@ ParticleSystem:
       m_Bits: 4294967295
     influenceList: []
   ClampVelocityModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
       minMaxState: 0
