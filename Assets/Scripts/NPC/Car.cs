@@ -59,7 +59,10 @@ public class Car : MonoBehaviour {
         carManager = FindObjectOfType<CarManager>();
         targetPosition = transform.position;
 
-        driver = generateRandomDriver();
+        if (FindObjectOfType<GameController>() != null){
+            driver = generateRandomDriver();
+        }
+        
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         SpriteSelect = UnityEngine.Random.Range(0, 3);
     }

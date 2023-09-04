@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
-    int hour, minute;
+    public int hour, minute;
 
-    private TextMeshPro timeText;
+    public TextMeshPro timeText;
 
     void Start() {
         Orchestrator.Instance.RollIntro();
@@ -28,21 +28,22 @@ public class GameController : MonoBehaviour {
         yield return Orchestrator.Instance.LoadScene("HUD");
         yield return Orchestrator.Instance.LoadScene("DialogueScene");
         DialogueScene.OnSceneUnloaded += AudioManager.Instance.PlayGameMusic;
+        DialogueScene.OnSceneUnloaded += StartTimer;
         // WorldControl.Instance.EnableControl();
     }
 
-    public void StartTimer(TextMeshPro time) {
+    public void StartTimer() {
         hour = 7;
         minute = 0;
-        StartCoroutine(RunTimer(time));
+        StartCoroutine(RunTimer());
     }
 
-    public IEnumerator RunTimer(TextMeshPro time) {
+    public IEnumerator RunTimer() {
         do {
             string minuteString = minute < 10 ? "0" + minute.ToString("D") : minute.ToString("D");
             string hourString = hour < 10 ? "0" + hour.ToString("D") : hour.ToString("D");
-            time.text = hourString + ":" + minuteString;
-            yield return new WaitForSeconds(5);
+            timeText.text = hourString + ":" + minuteString;
+            yield return new WaitForSeconds(10);
             incrementTime();
         } while (hour < 13 || minute < 10);
     }

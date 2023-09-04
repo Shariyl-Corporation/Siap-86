@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using System;
 
 public class HUDScene : MonoBehaviour {
-    [SerializeField] private TextMeshPro timeText;
+    [SerializeField] public TextMeshPro timeText;
     public GameObject GunButton;
     void Awake(){
     } 
