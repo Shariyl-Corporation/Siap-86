@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
     public int hour, minute;
@@ -32,6 +33,15 @@ public class GameController : MonoBehaviour {
         // WorldControl.Instance.EnableControl();
     }
 
+    public void UnloadAllStackScene() {
+        FindObjectOfType<DialogueManager>()?.UnloadScene();
+        FindObjectOfType<HUDScene>()?.UnloadScene();
+    }
+
+    public void LoadResult() {
+        SceneManager.LoadScene("Result", LoadSceneMode.Additive);
+    }
+
     public void StartTimer() {
         hour = 7;
         minute = 0;
@@ -46,6 +56,9 @@ public class GameController : MonoBehaviour {
             yield return new WaitForSeconds(10);
             incrementTime();
         } while (hour < 13 || minute < 10);
+
+        UnloadAllStackScene();
+        LoadResult();
     }
 
     public void incrementTime(){

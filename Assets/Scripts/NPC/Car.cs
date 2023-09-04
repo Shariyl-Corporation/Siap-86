@@ -61,10 +61,14 @@ public class Car : MonoBehaviour {
 
         if (FindObjectOfType<GameController>() != null){
             driver = generateRandomDriver();
+            if (driver.isDrunk) {
+                StartCoroutine(RandomWalk());
+            }
         }
-        
+
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         SpriteSelect = UnityEngine.Random.Range(0, 3);
+        
     }
 
     void Update(){
@@ -103,6 +107,17 @@ public class Car : MonoBehaviour {
         CarManager.RemoveCar(gameObject);
     }
 
+    IEnumerator RandomWalk() {
+        while (true) {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(2, 5));
+
+            if (carManager.tileAt(transform.position) != carManager.crossTile && isTilang){
+                var dir = UnityEngine.Random.Range(0, 1) > .5 ? -1 : 1;
+                yield return Move(.4f, transform.position, transform.position + (Vector3)RotateVectorByZ(GetForwardVector(), 45* dir)*0.5f);
+            }
+        }
+    }
+
     Driver generateRandomDriver() {
         Driver d = gameObject.AddComponent(typeof(Driver)) as Driver;
         Debug.Log(StateManager.Instance);
@@ -110,19 +125,19 @@ public class Car : MonoBehaviour {
         d.hasSIM = UnityEngine.Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["SIM"];
         d.hasSTNK = UnityEngine.Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["STNK"];
 
-        if (StateManager.Instance.DayCount >= 2){
-            d.isDrunk = UnityEngine.Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["DR"];
-        } else {
-            d.isDrunk = true;
-        }
+        // if (StateManager.Instance.DayCount >= 2){
+        d.isDrunk = UnityEngine.Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["DR"];
+        // } else {
+        //     d.isDrunk = false;
+        // }
 
-        if (StateManager.Instance.DayCount >= 3){
-            if (UnityEngine.Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["UA"]){
-                d.Age = UnityEngine.Random.Range(14, 17);
-            } else {
-                d.Age = UnityEngine.Random.Range(17, 53);
-            }
-        }
+        // if (StateManager.Instance.DayCount >= 3){
+            // if (UnityEngine.Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["UA"]){
+            //     d.Age = UnityEngine.Random.Range(14, 17);
+            // } else {
+            //     d.Age = UnityEngine.Random.Range(17, 53);
+            // }
+        // }
             
         return d;
     }

@@ -154,7 +154,7 @@ public class ConvoPair : MonoBehaviour {
             new () {
                 flow = new (){
                     new (){ speaker = you,    text = "Dimana SIM Anda?" },
-                    new (){ speaker = driver, text = "Sebentar pak, saya ambilkan.."}
+                    new (){ speaker = driver, text = "Sebentar pak, saya ambilkan.."},
                     new (){ speaker = driver, text = "Ini SIM saya"}
                 }
             },

@@ -51,6 +51,7 @@ public class DialogueManager : MonoBehaviour {
 
         ShowChoicesMain();
 
+        DisableAction();
         StartCoroutine(StrikeConversation());
     }
 

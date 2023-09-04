@@ -196,5 +196,27 @@ public class WorldControl : MonoBehaviour {
         fadeSpriteRenderer.gameObject.SetActive(false);
     }
 
+    IEnumerator FadeOut(){
+        fadeSpriteRenderer.gameObject.SetActive(true);
+
+        Color color = Color.black;
+        color.a = 0;
+        fadeSpriteRenderer.color = color;
+        while (color.a > 1) {
+            fadeSpriteRenderer.color = color;
+            color.a -= .5f * Time.deltaTime;
+            yield return null;
+        }
+
+    }
+
+    void UnloadScene() {
+        StartCoroutine(UnloadFade());
+    }
+    
+    IEnumerator UnloadFade() {
+        yield return FadeOut();
+        SceneManager.UnloadSceneAsync(gameObject.scene);
+    }
 
 }
