@@ -65,6 +65,12 @@ public class ConvoPair : MonoBehaviour {
                     new (){ speaker = driver, text = "Responding to sample greetings" }
                 }
             },
+            new () {
+                flow = new (){
+                    new (){ speaker = you,    text = "Selamat pagi, anda tahu kenapa anda diberhentikan?" },
+                    new (){ speaker = driver, text = "Responding to sample greetings" }
+                }
+            },
         };
     }
 
@@ -106,8 +112,7 @@ public class ConvoPair : MonoBehaviour {
             new () {
                 flow = new (){
                     new (){ speaker = you,    text = "KTP?" },
-                    new (){ speaker = driver, text = "Mmmm..."},
-                    new (){ speaker = driver, text = "Mmmm...mmm...."},
+                    new (){ speaker = driver, text = "Mmmm.."},
                     new (){ speaker = driver, text = "Maaf pak, dompet saya hilang"},
                 }
             },
@@ -198,7 +203,7 @@ public class ConvoPair : MonoBehaviour {
             },
             new() {
                 flow = new (){
-                    new (){ speaker = you,    text = "Kesimpullannya" },
+                    new (){ speaker = you,    text = "Kesimpulannya" },
                     new (){ speaker = driver, text = ".."}
                 }
             },
@@ -206,7 +211,7 @@ public class ConvoPair : MonoBehaviour {
     }
 
     public void InitVerdictInnocent() {
-        ConvVerdictGuilty = new (){
+        ConvVerdictInnocent = new (){
             new () {
                 flow = new (){
                     new (){ speaker = you,    text = "Kesimpulannya" },
@@ -215,7 +220,7 @@ public class ConvoPair : MonoBehaviour {
             },
             new() {
                 flow = new (){
-                    new (){ speaker = you,    text = "Kesimpullannya" },
+                    new (){ speaker = you,    text = "Kesimpulannya" },
                     new (){ speaker = driver, text = ".."}
                 }
             },
