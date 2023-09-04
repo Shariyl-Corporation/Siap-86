@@ -216,6 +216,7 @@ public class WorldControl : MonoBehaviour {
     
     IEnumerator UnloadFade() {
         yield return FadeOut();
+        AudioManager.Instance.StopMusic();
         SceneManager.UnloadSceneAsync(gameObject.scene);
     }
 

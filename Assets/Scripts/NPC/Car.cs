@@ -130,6 +130,7 @@ public class Car : MonoBehaviour {
         // } else {
         //     d.isDrunk = false;
         // }
+        d.Age = 25;
 
         // if (StateManager.Instance.DayCount >= 3){
             // if (UnityEngine.Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["UA"]){

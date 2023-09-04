@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class ButtonTilang : BaseInterrogateButton {
     void OnMouseDown() {
-        if (!dialogueManager.allowAction) return;
-        OnMouseExit();
-        
-        audioManager.Click();
-        dialogueManager.OnClickTilang();
+        if (dialogueManager.chose()){
+            if (!dialogueManager.allowAction) return;
+            OnMouseExit();
+            
+            audioManager.Click();
+            dialogueManager.OnClickTilang();
+
+        }
     }
+
+    protected override void OnMouseOver() {
+        if (dialogueManager.chose()) {
+            base.OnMouseOver();
+        }
+    }
+
 }

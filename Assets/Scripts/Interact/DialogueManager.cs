@@ -280,12 +280,27 @@ public class DialogueManager : MonoBehaviour {
             State.ModifySpawnRate("SL", verdictP287A5);
         }
 
-        bool verdictCorrect = verdictP288A1 && verdictP288A2 && verdictP281 && verdictP283 && verdictP287A2 && verdictP287A5;
-        if (verdictCorrect) {
+        
+
+        // bool verdictCorrect = verdictP288A1 && verdictP288A2 && verdictP281 && verdictP283 && verdictP287A2 && verdictP287A5;
+        bool verdict_pity = true;
+        if (sanksiP288A1) verdict_pity &= !activeDriver.hasSTNK;
+        if (sanksiP288A2) verdict_pity &= !activeDriver.hasSIM;
+        if (sanksiP283) verdict_pity &= activeDriver.isDrunk;
+        if (sanksiP287A2) verdict_pity &= activeDriver.hasDoneTerobosLampuMerah;
+        if (sanksiP287A5) verdict_pity &= activeDriver.hasDoneSpeedLimit;
+
+        
+        if (verdict_pity) {
             State.PlayerCorrectCountDay++;
         } else {
             State.PlayerIncorrectCountDay++;
         }
+        activeCar.PrepareDisintegrate();
+    }
+
+    public bool chose() {
+        return sanksiP288A1 || sanksiP288A2 || sanksiP283 || sanksiP287A2 || sanksiP287A5;
     }
     
     public IEnumerator StrikeConversation() {

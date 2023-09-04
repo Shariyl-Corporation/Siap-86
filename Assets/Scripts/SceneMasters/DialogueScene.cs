@@ -93,17 +93,17 @@ public class DialogueScene : MonoBehaviour {
         switch (letter)
         {
             case '.':
-                return 0.75f;
+                return 0.25f;
             case ',':
-                return 0.5f;
+                return 0.1f;
             case '!':
-                return 1.0f;
+                return .5f;
             case '?':
                 return 0.75f;
             case '\n':
                 return 0.2f;
             default:
-                return 0.05f;
+                return 0.025f;
         }
     }
 
