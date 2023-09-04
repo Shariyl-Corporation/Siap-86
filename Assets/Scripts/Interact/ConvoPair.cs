@@ -50,10 +50,22 @@ public class ConvoPair : MonoBehaviour {
         ConvGreetingsInnocent = new (){
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "Selamat pagi, anda tahu kenapa anda diberhentikan?" },
-                    new (){ speaker = driver, text = "Responding to sample greetings" }
+                    new (){ speaker = you,    text = "Selamat pagi, Anda tahu kenapa anda diberhentikan?" },
+                    new (){ speaker = driver, text = "Saya tidak tahu pak, saya merasa tidak melakukan hal yang salah" }
                 }
             },
+            new () {
+                flow = new (){
+                    new (){ speaker = you,    text = "Selamat pagi, tolong matikan mesin Anda" },
+                    new (){ speaker = driver, text = "Baik pak, kenapa saya diberhentikan?" }
+                }
+            },
+            new () {
+                flow = new (){
+                    new (){ speaker = you,    text = "Selamat pagi, saya perlu melihat kelengkapan surat-surat Anda" },
+                    new (){ speaker = driver, text = "Baik pak polisi" }
+                }
+            }
         };
     }
 
@@ -61,16 +73,22 @@ public class ConvoPair : MonoBehaviour {
         ConvGreetingsGuilty = new (){
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "Selamat pagi, anda tahu kenapa anda diberhentikan?" },
-                    new (){ speaker = driver, text = "Responding to sample greetings" }
+                    new (){ speaker = you,    text = "Selamat pagi, Anda tahu kenapa Anda diberhentikan?" },
+                    new (){ speaker = driver, text = "Kenapa pak?" }
                 }
             },
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "Selamat pagi, anda tahu kenapa anda diberhentikan?" },
-                    new (){ speaker = driver, text = "Responding to sample greetings" }
+                    new (){ speaker = you,    text = "Selamat pagi, saya melihat Anda melanggar lalu lintas, tolong siapkan surat-surat Anda" },
+                    new (){ speaker = driver, text = "Maaf pak, baik saya siapkan" }
                 }
             },
+            new () {
+                flow = new (){
+                    new (){ speaker = you,    text = "Selamat pagi, saya telah mencatat Anda melanggar lalu lintas, siapkan surat-surat Anda" },
+                    new (){ speaker = driver, text = "..." }
+                }
+            }
         };
     }
 
@@ -94,13 +112,13 @@ public class ConvoPair : MonoBehaviour {
         ConvKTP = new (){
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "KTP?" },
+                    new (){ speaker = you,    text = "Bisa saya lihat KTP Anda?" },
                     new (){ speaker = driver, text = "Ini, Pak"}
                 }
             },
             new() {
                 flow = new() {
-                    new (){ speaker = you,    text = "KTP?" },
+                    new (){ speaker = you,    text = "Tolong siapkan KTP Anda" },
                     new (){ speaker = driver, text = "Mmm.. ini, Pak"}
                 }
             },
@@ -111,15 +129,21 @@ public class ConvoPair : MonoBehaviour {
         ConvNoKTP = new (){
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "KTP?" },
+                    new (){ speaker = you,    text = "Bisa saya lihat KTP Anda?" },
                     new (){ speaker = driver, text = "Mmmm.."},
-                    new (){ speaker = driver, text = "Maaf pak, dompet saya hilang"},
+                    new (){ speaker = driver, text = "Maaf pak, dompet saya ketinggalan"},
                 }
             },
             new() {
                 flow = new (){
-                    new (){ speaker = you,    text = "KTP?"},
+                    new (){ speaker = you,    text = "Mana KTP Anda?"},
                     new (){ speaker = driver, text = "Hahaha, saya lupa bawa pak"}
+                }
+            },
+            new() {
+                flow = new (){
+                    new (){ speaker = you,    text = "Perlihatkan KTP Anda"},
+                    new (){ speaker = driver, text = "Mohon maaf pak, KTP saya tertinggal di rumah"}
                 }
             },
         };
@@ -129,16 +153,17 @@ public class ConvoPair : MonoBehaviour {
         ConvSIM = new (){
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "SIM?" },
-                    new (){ speaker = driver, text = ""}
+                    new (){ speaker = you,    text = "Dimana SIM Anda?" },
+                    new (){ speaker = driver, text = "Sebentar pak, saya ambilkan.."}
+                    new (){ speaker = driver, text = "Ini SIM saya"}
                 }
             },
             new() {
                 flow = new (){
-                    new (){ speaker = you,    text = "SIM?" },
-                    new (){ speaker = driver, text = ""}
+                    new (){ speaker = you,    text = "Bisa perlihatkan SIM Anda?" },
+                    new (){ speaker = driver, text = "Ini SIM saya pak"}
                 }
-            },
+            }
         };
     }
 
@@ -146,16 +171,22 @@ public class ConvoPair : MonoBehaviour {
         ConvNoSIM = new (){
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "SIM?" },
-                    new (){ speaker = driver, text = ""}
+                    new (){ speaker = you,    text = "Bisa tunjukkan SIM Anda?" },
+                    new (){ speaker = driver, text = "Maaf pak, saya tidak membawanya saat ini"}
                 }
             },
             new() {
                 flow = new (){
-                    new (){ speaker = you,    text = "SIM?" },
-                    new (){ speaker = driver, text = ""}
+                    new (){ speaker = you,    text = "Dimana SIM Anda?" },
+                    new (){ speaker = driver, text = "Uhh.. saya lupa bawa pak"}
                 }
             },
+            new() {
+                flow = new (){
+                    new (){ speaker = you,    text = "Bisa tunjukkan SIM Anda?" },
+                    new (){ speaker = driver, text = "Saya belum punya SIM pak"}
+                }
+            }
         };
     }
 
@@ -163,16 +194,16 @@ public class ConvoPair : MonoBehaviour {
         ConvSTNK = new (){
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "STNK?" },
-                    new (){ speaker = driver, text = ""}
+                    new (){ speaker = you,    text = "Bisa tunjukkan STNK Anda?" },
+                    new (){ speaker = driver, text = "Baik pak, ini STNK saya"}
                 }
             },
             new() {
                 flow = new (){
-                    new (){ speaker = you,    text = "STNK?" },
-                    new (){ speaker = driver, text = ""}
+                    new (){ speaker = you,    text = "Anda membawa SNTK?" },
+                    new (){ speaker = driver, text = "Iya pak"}
                 }
-            },
+            }
         };
     }
 
@@ -180,14 +211,14 @@ public class ConvoPair : MonoBehaviour {
         ConvNoSTNK = new (){
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "STNK?" },
-                    new (){ speaker = driver, text = ""}
+                    new (){ speaker = you,    text = "Bisa tunjukkan STNK Anda?" },
+                    new (){ speaker = driver, text = "Saya tinggalkan di rumah pak"}
                 }
             },
             new() {
                 flow = new (){
-                    new (){ speaker = you,    text = "STNK?" },
-                    new (){ speaker = driver, text = ""}
+                    new (){ speaker = you,    text = "Dimana STNK Anda?" },
+                    new (){ speaker = driver, text = "Waduh, saya lupa bawa pak, hehe"}
                 }
             },
         };
@@ -197,14 +228,26 @@ public class ConvoPair : MonoBehaviour {
         ConvVerdictGuilty = new (){
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "Kesimpulannya" },
+                    new (){ speaker = you,    text = "Anda akan dikenakan sanksi karena melanggar aturan lalu lintas" },
+                    new (){ speaker = driver, text = "Tolong pak, jangan tilang saya.."}
+                }
+            },
+            new() {
+                flow = new (){
+                    new (){ speaker = you,    text = "Mohon maaf, Anda akan diberi sanksi sesuai pasal yang tertera" },
                     new (){ speaker = driver, text = ".."}
                 }
             },
             new() {
                 flow = new (){
-                    new (){ speaker = you,    text = "Kesimpulannya" },
-                    new (){ speaker = driver, text = ".."}
+                    new (){ speaker = you,    text = "Anda terkena sanksi karena melanggar lalu lintas, ini slip Anda" },
+                    new (){ speaker = driver, text = "P-pak saya tidak salah apa-apa"}
+                }
+            },
+            new() {
+                flow = new (){
+                    new (){ speaker = you,    text = "Lain kali jangan dilakukan lagi, ini slip sanksi Anda" },
+                    new (){ speaker = driver, text = "Hm.."}
                 }
             },
         };
@@ -214,16 +257,22 @@ public class ConvoPair : MonoBehaviour {
         ConvVerdictInnocent = new (){
             new () {
                 flow = new (){
-                    new (){ speaker = you,    text = "Kesimpulannya" },
-                    new (){ speaker = driver, text = ".."}
+                    new (){ speaker = you,    text = "Baik, sepertinya surat-surat Anda sudah lengkap, Anda boleh pergi" },
+                    new (){ speaker = driver, text = "Terima kasih pak"}
                 }
             },
             new() {
                 flow = new (){
-                    new (){ speaker = you,    text = "Kesimpulannya" },
-                    new (){ speaker = driver, text = ".."}
+                    new (){ speaker = you,    text = "Maaf mengganggu waktu Anda, Anda boleh pergi" },
+                    new (){ speaker = driver, text = "Baik"}
                 }
             },
+            new() {
+                flow = new (){
+                    new (){ speaker = you,    text = "Sepertinya surat-surat Anda sudah lengkap semua, silakan melanjutkan perjalanan Anda" },
+                    new (){ speaker = driver, text = ".."}
+                }
+            }
         };
     }
 
