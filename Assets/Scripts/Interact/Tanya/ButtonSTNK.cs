@@ -7,7 +7,7 @@ public class ButtonSTNK : BaseInterrogateButton {
         if (!dialogueManager.allowAction) return;
         OnMouseExit();
 
-        audioManager.Click();
+        AudioManager.Instance.PlaySFX(AudioManager.sfx.select);
         dialogueManager.OnClickSTNK();
     }
 }

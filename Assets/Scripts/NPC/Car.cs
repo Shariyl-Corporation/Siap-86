@@ -65,7 +65,7 @@ public class Car : MonoBehaviour {
                 StartCoroutine(RandomWalk());
             }
             if (driver.highSpeedDriver) {
-                speed = 10;
+                speed = 6;
             }
         }
 

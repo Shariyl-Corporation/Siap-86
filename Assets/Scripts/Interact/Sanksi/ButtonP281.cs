@@ -9,7 +9,7 @@ public class ButtonP281 : BaseInterrogateButtonSanksi {
 
         // if (!isAsked) {
         //     SetAsked();
-            audioManager.Click();
+            AudioManager.Instance.PlaySFX(AudioManager.sfx.select);
             ToggleState();
             dialogueManager.OnClickP281();
         // }

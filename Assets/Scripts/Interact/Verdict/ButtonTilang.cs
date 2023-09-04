@@ -8,7 +8,7 @@ public class ButtonTilang : BaseInterrogateButton {
             if (!dialogueManager.allowAction) return;
             OnMouseExit();
             
-            audioManager.Click();
+            AudioManager.Instance.PlaySFX(AudioManager.sfx.select);
             dialogueManager.OnClickTilang();
 
         }

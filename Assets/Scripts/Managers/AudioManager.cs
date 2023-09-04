@@ -50,6 +50,7 @@ public class AudioManager : MonoBehaviour {
         else {
             Debug.LogWarning("SFX clip index out of range.");
         }
+        
     }
 
     public IEnumerator PlayMusic(int clipIndex) {

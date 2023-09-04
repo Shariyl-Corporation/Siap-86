@@ -6,10 +6,9 @@ public class ButtonAkhiri : BaseInterrogateButton {
     void OnMouseDown() {
         if (!dialogueManager.allowAction) return;
         OnMouseExit();
-        
+        AudioManager.Instance.PlaySFX(AudioManager.sfx.select);
         Debug.Log("Button clicked");
-        audioManager.Click();
-
+        
         dialogueManager.OnClickAkhiri();
     }
 }
