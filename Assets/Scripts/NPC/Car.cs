@@ -23,15 +23,19 @@ public class Car : MonoBehaviour {
     public Driver driver;
 
     private HashSet<TileBase> visited2;
-    private Vector3 targetPosition;
-    private Vector3 destinationCell;
-    private Vector3 prevCell;
+    public Vector3 targetPosition;
+    public Vector3 destinationCell;
+    private HashSet<Vector3> prevCell = new();
 
     public bool isInTurnTile = false;
-    public bool isWantToStraight = false;
+    public bool isWantToGoStraight = false;
     public bool isTilang;
     public bool isMundur;
-    private TrafficLightController trafficLight;
+    public bool isInCrossing;
+    public bool isDoingHardTurn;
+    public Vector3 crossDestination;
+
+    public TrafficLightController trafficLight;
     public Vector3Int dir_vector;
 
     [SerializeField] private List<SpriteSet> SpriteSelection;
@@ -69,11 +73,16 @@ public class Car : MonoBehaviour {
                 // Debug.Log(isInTurnTile);
                 // Debug.Log(trafficLight.CheckAllowStraightThrough(dir_vector));
                 // Debug.Log(trafficLight.CheckAllowTurn(dir_vector));
-                if ((isWantToStraight && trafficLight.CheckAllowStraightThrough(dir_vector)) ||
+                if (trafficLight == null) {
+                    trafficLight = Percept()[0].GetComponent<TrafficLightController>();
+                }
+                if ((isWantToGoStraight && trafficLight.CheckAllowStraightThrough(dir_vector)) ||
                     trafficLight.CheckAllowTurn(dir_vector)) {
                     isInTurnTile = false;
                 }
+
                 if (isInTurnTile) return;
+                // StartCoroutine(Move(.5f, transform.position, transform.position + GetForwardVector()*3));
             }
             MoveTowardsTargetPosition();
         }
@@ -256,6 +265,8 @@ public class Car : MonoBehaviour {
 
         // Ensure the final position is exactly the target position
         transform.position = endPosition;
+
+        isInCrossing = false;
     }
 
     Vector3 QuaternionToVectorZ(Quaternion quaternion) {
@@ -273,7 +284,9 @@ public class Car : MonoBehaviour {
 
     // calculating cell to the destination, BOTH using the local coordinate (grid)
     private float calculate_heuristic_at(Vector3Int cell) {
-        return Vector3.Distance(cell, destinationCell);
+        // var highPriorityBonus = carManager.tileAt(cell) == carManager.highPriorityTile ? 5 : 0;
+        var highPriorityBonus = isDoingHardTurn ? Vector3.Distance(cell, crossDestination) : 0;
+        return Vector3.Distance(cell, destinationCell) + highPriorityBonus*200; // - highPriorityBonus;
     }
 
     // it is actually not an a star, cuz it cant backtrack, maybe hill climbing?
@@ -281,6 +294,16 @@ public class Car : MonoBehaviour {
         Vector3Int decision = new Vector3Int();
         float min_heuristic = float.PositiveInfinity;
         Dictionary<Vector3Int, TileBase> dict;
+
+        if (carManager.tileAt(transform.position) == carManager.endTile){
+            CarManager.RemoveCar(gameObject);
+        }
+
+        if (carManager.tileAt(transform.position) == carManager.boundaryTile) {
+            isInCrossing = false;
+            isDoingHardTurn = false;
+        }
+
         if (carManager.tileAt(transform.position) == carManager.crossTile) {
             dict = carManager.get_turn_end_tiles(transform.position, transform.rotation);
             isInTurnTile = true;
@@ -292,8 +315,10 @@ public class Car : MonoBehaviour {
         }
 
         foreach (var kp in dict) {
-            if (kp.Value != null && (Vector3)kp.Key != prevCell) {
+            if (kp.Value != null && !prevCell.Contains((Vector3)kp.Key)) {
                 float heuristic = calculate_heuristic_at(kp.Key);
+                if (!isDoingHardTurn && kp.Value == carManager.hardTile)
+                    continue;
                 if (heuristic < min_heuristic) {
                     decision = kp.Key;
                     min_heuristic = heuristic;
@@ -304,18 +329,23 @@ public class Car : MonoBehaviour {
         // cant go anywhere
         if (min_heuristic == float.PositiveInfinity) {
             // Debug.Log("Cant go anywhere! " + gameObject.transform.position);
-            Destroy(gameObject);
+            CarManager.RemoveCar(gameObject);
         }
 
-        prevCell = transform.position;
+        prevCell.Add(transform.position);
         targetPosition = decision;
 
         if (isInTurnTile) {
-            // Debug.Log((targetPosition - transform.position).normalized);
-            // Debug.Log(dir_vector);
+            isInCrossing = true;
 
-            isWantToStraight = Vector3Int.RoundToInt((targetPosition - transform.position).normalized) == dir_vector;
+            isWantToGoStraight = Vector3Int.RoundToInt((targetPosition - transform.position).normalized) == dir_vector;
+            if (!isWantToGoStraight) {
+                isDoingHardTurn = Vector3.Distance(targetPosition, transform.position) > 5;
+                crossDestination = targetPosition;
+                targetPosition = transform.position + GetForwardVector();
+            }
         }
+
         // Debug.Log("Move Towards: " + targetPosition.x + " " + targetPosition.y);
         // Debug.Log("From: " + transform.position.x + " " + transform.position.y);
     }

@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
 
     public void LoadWorldWithControlCaller(){
         StartCoroutine(LoadWorldWithControl());
+        AudioManager.Instance.PlayGameMusic();
     }
 
     public IEnumerator LoadWorldWithControl(){

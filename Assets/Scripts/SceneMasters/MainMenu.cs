@@ -46,6 +46,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public IEnumerator FadeToGame() {
+        AudioManager.Instance.StopMusic();
         yield return FadeOut();
         yield return Orchestrator.Instance.GoToGame();
     }

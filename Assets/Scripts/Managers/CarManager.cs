@@ -21,6 +21,10 @@ public class CarManager : MonoBehaviour {
     public TileBase crossTile;
     public TileBase endTile;
 
+    public TileBase hardTile;
+    public TileBase boundaryTile;
+
+
 
     [HideInInspector] private static Dictionary<Vector3Int, TileBase> dataFromTiles = new();
 
@@ -145,9 +149,16 @@ public class CarManager : MonoBehaviour {
     [ContextMenu("spawn")]
     public void spawnRandomCar() {
         int spawnPosition = Random.Range(0, spawnPoints.Count);
+        if (Physics2D.OverlapBox(new Vector2(spawnPoints[spawnPosition].x, spawnPoints[spawnPosition].y), new Vector2(1, 1), 0)) {
+            return;
+        }
         GameObject car = Instantiate(carGO, spawnPoints[spawnPosition], transform.rotation);
 
         int destinationPosition = Random.Range(0, endPoints.Count);
+        while (Vector3.Distance(endPoints[destinationPosition], spawnPoints[spawnPosition]) < 10){
+            destinationPosition = Random.Range(0, endPoints.Count);
+        }
+
         car.GetComponent<Car>().setDestination(endPoints[destinationPosition]);
 
         car.transform.parent = gameObject.transform;

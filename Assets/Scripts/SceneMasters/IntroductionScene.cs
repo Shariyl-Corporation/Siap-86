@@ -29,11 +29,11 @@ public class IntroductionScene : MonoBehaviour
     void Start(){
         currentCoroutine = ChangeFrame(frames[currentFrame]);
         StartCoroutine(currentCoroutine);
+        AudioManager.Instance.PlayIntro1Music();
     }
 
     void Update(){
         if (!isAnimating){               // skip one frame 
-            currentFrame++;
             if (currentFrame < frames.Count){
                 currentCoroutine = ChangeFrame(frames[currentFrame]);
                 StartCoroutine(currentCoroutine);
@@ -53,15 +53,16 @@ public class IntroductionScene : MonoBehaviour
 
     IEnumerator ChangeFrame(Frame frame) { // possible issue on second frame 
         currentFrame++;
-        bool onlyText = currentFrame == 1 || currentFrame == 6 || currentFrame == 9;
+        bool holdFigure = currentFrame == 1 || currentFrame == 6 || currentFrame == 9;
+        bool preserveFigure = currentFrame == 2 || currentFrame == 7 || currentFrame == 10;
 
         figureRenderer.sprite = frame.sprite;
         caption.text = frame.text;
         isAnimating = true;
 
-        yield return StartCoroutine(RaiseOpacity(false));
+        yield return StartCoroutine(RaiseOpacity(preserveFigure));
         yield return new WaitForSeconds(2);
-        yield return StartCoroutine(LowerOpacity(false));
+        yield return StartCoroutine(LowerOpacity(holdFigure));
         yield return new WaitForSeconds(1);
         isAnimating = false;
     }
@@ -90,6 +91,7 @@ public class IntroductionScene : MonoBehaviour
     }
 
     public void UnloadScene() {
+        AudioManager.Instance.StopMusic();
         SceneManager.UnloadSceneAsync(gameObject.scene);
     }
 }

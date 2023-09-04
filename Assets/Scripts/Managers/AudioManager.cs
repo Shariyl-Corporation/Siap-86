@@ -23,7 +23,6 @@ public class AudioManager : MonoBehaviour {
     void Awake() {
         if (Instance == null) {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else {
             Destroy(gameObject);
@@ -47,7 +46,8 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public void PlayMusic(int clipIndex) {
+    public IEnumerator PlayMusic(int clipIndex) {
+        yield return FadeOutMusicCoroutine(1);
         if (clipIndex >= 0 && clipIndex < musicClips.Count) {
             musicAudioSource.clip = musicClips[clipIndex];
             musicAudioSource.loop = true; 
@@ -56,25 +56,63 @@ public class AudioManager : MonoBehaviour {
         else {
             Debug.LogWarning("Music clip index out of range.");
         }
-    }
-
-    public void StopMusic() {
-        musicAudioSource.Stop();
+        yield return FadeInMusicCoroutine(1);
     }
 
     public void PlayMenuMusic() {
-        PlayMusic((int)music.menu);
+        StartCoroutine(PlayMusic((int)music.menu));
     }
 
     public void PlayIntro1Music() {
-        PlayMusic((int)music.intro1);
+        StartCoroutine(PlayMusic((int)music.intro1));
     }
 
     public void PlayIntro2Music() {
-        PlayMusic((int)music.intro2);
+        StartCoroutine(PlayMusic((int)music.intro2));
     }
 
     public void PlayGameMusic() {
-        PlayMusic((int)music.game);
+        StartCoroutine(PlayMusic((int)music.game));
+    }
+
+    public void StopMusic() {
+        StartCoroutine(FadeOutMusicCoroutine(1));
+    }
+
+
+    public void FadeInMusic(float duration) {
+        StartCoroutine(FadeInMusicCoroutine(duration));
+    }
+
+
+    private IEnumerator FadeInMusicCoroutine(float duration) {
+        float startVolume = musicAudioSource.volume;
+        float targetVolume = .1f;
+        float currentTime = 0.0f;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            musicAudioSource.volume = Mathf.Lerp(startVolume, targetVolume, currentTime / duration);
+            yield return null;
+        }
+
+        musicAudioSource.volume = targetVolume;
+    }
+
+    private IEnumerator FadeOutMusicCoroutine(float duration) {
+        float startVolume = musicAudioSource.volume;
+        float targetVolume = 0.0f;
+        float currentTime = 0.0f;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            musicAudioSource.volume = Mathf.Lerp(startVolume, targetVolume, currentTime / duration);
+            yield return null;
+        }
+
+        musicAudioSource.volume = targetVolume;
+        musicAudioSource.Stop();
     }
 }
