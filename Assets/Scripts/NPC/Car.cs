@@ -64,6 +64,9 @@ public class Car : MonoBehaviour {
             if (driver.isDrunk) {
                 StartCoroutine(RandomWalk());
             }
+            if (driver.highSpeedDriver) {
+                speed = 10;
+            }
         }
 
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -74,6 +77,8 @@ public class Car : MonoBehaviour {
     void Update(){
         EvalRotation(transform.rotation.eulerAngles.z);
         if (isTilang) return;
+
+        // if ()
 
         if (transform.position != targetPosition) {
             if (isInTurnTile) {
@@ -99,7 +104,7 @@ public class Car : MonoBehaviour {
     }
 
     void LateUpdate() {
-        spriteRenderer.gameObject.transform.localRotation =  Quaternion.Inverse(transform.rotation);
+        spriteRenderer.gameObject.transform.localRotation = Quaternion.Inverse(transform.rotation);
         // smokeParticleSystem.gameObject.transform.localRotation = Quaternion.Inverse(transform.rotation);
     }
 
@@ -111,7 +116,7 @@ public class Car : MonoBehaviour {
         while (true) {
             yield return new WaitForSeconds(UnityEngine.Random.Range(2, 5));
 
-            if (carManager.tileAt(transform.position) != carManager.crossTile && isTilang){
+            if (carManager.tileAt(transform.position) != carManager.crossTile && !isTilang){
                 var dir = UnityEngine.Random.Range(0, 1) > .5 ? -1 : 1;
                 yield return Move(.4f, transform.position, transform.position + (Vector3)RotateVectorByZ(GetForwardVector(), 45* dir)*0.5f);
             }
@@ -127,6 +132,7 @@ public class Car : MonoBehaviour {
 
         // if (StateManager.Instance.DayCount >= 2){
         d.isDrunk = UnityEngine.Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["DR"];
+        d.highSpeedDriver = UnityEngine.Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["SP"];
         // } else {
         //     d.isDrunk = false;
         // }

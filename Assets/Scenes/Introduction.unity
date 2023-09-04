@@ -832,7 +832,7 @@ MonoBehaviour:
   caption: {fileID: 1683210621}
   frames:
   - sprite: {fileID: 21300000, guid: 908e232dae6e942408f1b32ffcbfb58b, type: 3}
-    text: Namaku X, aku telah tinggal di kota Y sejak aku kecil
+    text: Namaku Joko, aku telah tinggal di kota Elba sejak aku kecil
   - sprite: {fileID: 21300000, guid: 908e232dae6e942408f1b32ffcbfb58b, type: 3}
     text: Saat aku duduk di bangku SMP, aku pernah terlibat dalam kecelakan lalu
       lintas

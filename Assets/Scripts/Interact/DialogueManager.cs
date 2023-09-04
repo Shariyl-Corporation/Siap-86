@@ -288,7 +288,7 @@ public class DialogueManager : MonoBehaviour {
         if (sanksiP288A2) verdict_pity &= !activeDriver.hasSIM;
         if (sanksiP283) verdict_pity &= activeDriver.isDrunk;
         if (sanksiP287A2) verdict_pity &= activeDriver.hasDoneTerobosLampuMerah;
-        if (sanksiP287A5) verdict_pity &= activeDriver.hasDoneSpeedLimit;
+        if (sanksiP287A5) verdict_pity &= activeDriver.highSpeedDriver;
 
         
         if (verdict_pity) {
@@ -363,13 +363,13 @@ public class DialogueManager : MonoBehaviour {
         switch (letter)
         {
             case '.':
-                return 0.75f;
+                return 0.25f;
             case ',':
-                return 0.5f;
+                return 0.125f;
             case '!':
-                return 1.0f;
+                return .5f;
             case '?':
-                return 0.75f;
+                return 0.25f;
             case '\n':
                 return 0.2f;
             default:
@@ -405,13 +405,13 @@ public class DialogueManager : MonoBehaviour {
         // if (isSpeakerDriver) driverAnimator?.SetBool("talking", false);
         audioSource.Stop();
 
-        yield return new WaitForSecondsRealtime(1.0f);
+        yield return new WaitForSecondsRealtime(.1f);
     }
 
     private IEnumerator PlayConvo(ConvoFlow convoFlow) {
         foreach(var convo in convoFlow.flow){
             yield return StartCoroutine(PlayText(convo.text, convo.speaker));
-            yield return new WaitForSecondsRealtime(0.75f);
+            yield return new WaitForSecondsRealtime(0.1f);
         }
         EnableAction();
     }

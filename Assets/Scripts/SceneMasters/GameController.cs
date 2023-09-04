@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour {
     public void UnloadAllStackScene() {
         FindObjectOfType<DialogueManager>()?.UnloadScene();
         FindObjectOfType<HUDScene>()?.UnloadScene();
+        FindObjectOfType<WorldControl>()?.UnloadScene();
     }
 
     public void LoadResult() {

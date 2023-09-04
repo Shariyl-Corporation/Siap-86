@@ -18,18 +18,19 @@ public class DialogueScene : MonoBehaviour {
 
     void Awake(){
         convoFlow = new List<Convo>() {
-            new Convo() {speaker = "Mentor", text = "Halo anak baru! Selamat datang di xxx"},
+            new Convo() {speaker = "Mentor", text = "Halo anak baru! Selamat datang di Elba"},
             new Convo() {speaker = "Mentor", text = "Tugasmu disini adalah menjaga ketertiban lalu lintas di dekat sini, jelas."},
             new Convo() {speaker = "Mentor", text = "Tentunya kamu sudah paham dengan peraturan berlalu lintas kan !?"},
             new Convo() {speaker = "Mentor", text = "Mengecek kelengkapan dokumen seperti STNK dan SIM, patuhi rambu lalu lintas, dan ya kau tau lah ya!?"},
-            new Convo() {speaker = "Mentor", text = "Jika tidak yakin, kamu bisa membaca undang undang mengenai peraturan berlalu lintas di sini, silahkan dicek nanti."},
+            new Convo() {speaker = "Mentor", text = "Jika tidak yakin, kamu bisa membaca catatanku mengenai pelanggaran yang sering terjadi di sini, silahkan dicek nanti."},
             new Convo() {speaker = "Joko", text = "Terimakasih Pak!"},
-            new Convo() {speaker = "Mentor", text = "Oh, ya dan satu lagi sebelum kamu memulai tugasmu."},
-            new Convo() {speaker = "Mentor", text = "Akhir akhir ini sering terjadi pelanggaran penerobosan lampu merah."},
-            new Convo() {speaker = "Mentor", text = "Dan pelanggaran itu mengakibatkan GRIDLOCK. Ehe."},
-            new Convo() {speaker = "Mentor", text = "Untuk mengatasi hal tersebut, atasan memberikan senjata ampuh yang bisa menghapus mobil yang membuat kemacetan."},
-            new Convo() {speaker = "Mentor", text = "Ini merupakan informasi konfidental. Jangan bilang siapa siapa!"},
-            new Convo() {speaker = "Mentor", text = "Dan jangan disalahgunakan! Sekian."},
+            new Convo() {speaker = "Mentor", text = "Untuk hari pertamamu ini, tolong jagakan area ini sampai jam 13:00, ok?"},
+            // new Convo() {speaker = "Mentor", text = "Oh, ya dan satu lagi sebelum kamu memulai tugasmu."},
+            // new Convo() {speaker = "Mentor", text = "Akhir akhir ini sering terjadi pelanggaran penerobosan lampu merah."},
+            // new Convo() {speaker = "Mentor", text = "Dan pelanggaran itu mengakibatkan GRIDLOCK. Ehe."},
+            // new Convo() {speaker = "Mentor", text = "Untuk mengatasi hal tersebut, atasan memberikan senjata ampuh yang bisa menghapus mobil yang membuat kemacetan."},
+            // new Convo() {speaker = "Mentor", text = "Ini merupakan informasi konfidensial. Jangan bilang siapa siapa!"},
+            // new Convo() {speaker = "Mentor", text = "Dan jangan disalahgunakan! Sekian."},
             new Convo() {speaker = "Joko", text = "Siap, 86!"},
         };
         Debug.Log("Panjang convo: " + convoFlow.Count);

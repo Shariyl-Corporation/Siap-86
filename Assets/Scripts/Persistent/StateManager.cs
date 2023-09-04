@@ -18,10 +18,11 @@ public class StateManager : MonoBehaviour {
 
     public Dictionary<string, float> SpawnRate = new Dictionary<string, float>(){
         {"KTP",   0.1f},
-        {"SIM",   0.1f},
-        {"STNK", 0.1f},
+        {"SIM",   0.15f},
+        {"STNK", 0.15f},
         {"RL",   0.1f},
-        {"DR",   0.1f},
+        {"SP",   0.075f},
+        {"DR",   0.075f},
         {"UA",   0.1f},
     };
 
@@ -59,10 +60,11 @@ public class StateManager : MonoBehaviour {
 
     public void ResetSpawnRate() {
         SpawnRate["KTP"] = 0.1f;
-        SpawnRate["SIM"] = 0.1f;
-        SpawnRate["STNK"] = 0.1f;
+        SpawnRate["SIM"] = 0.15f;
+        SpawnRate["STNK"] = 0.15f;
         SpawnRate["RL"] = 0.1f;
-        SpawnRate["DR"] = 0.1f;
+        SpawnRate["SP"] = 0.1f;
+        SpawnRate["DR"] = 0.075f;
         SpawnRate["UA"] = 0.1f;
     }
 

@@ -20,6 +20,11 @@ public class AudioManager : MonoBehaviour {
         world   
     }
 
+    public enum sfx {
+        select,
+        stop
+    }
+
     void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -37,7 +42,8 @@ public class AudioManager : MonoBehaviour {
         clickAudioSource.Play();
     }
 
-    public void PlaySFX(int clipIndex) {
+    public void PlaySFX(sfx s) {
+        int clipIndex = (int)s;
         if (clipIndex >= 0 && clipIndex < sfxClips.Count) {
             sfxAudioSource.PlayOneShot(sfxClips[clipIndex]);
         }

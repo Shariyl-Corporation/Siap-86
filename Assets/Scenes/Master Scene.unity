@@ -187,7 +187,9 @@ MonoBehaviour:
   clickAudioSource: {fileID: 1181642610}
   sfxAudioSource: {fileID: 196170495}
   musicAudioSource: {fileID: 911679103}
-  sfxClips: []
+  sfxClips:
+  - {fileID: 8300000, guid: ca8daf21593823943bada66362964d26, type: 3}
+  - {fileID: 8300000, guid: 3d47a2ce831249142a9e34c584e7f7d5, type: 3}
   musicClips:
   - {fileID: 8300000, guid: 61cd7843d9185a24b86dc8a8f2c9ee51, type: 3}
   - {fileID: 8300000, guid: d9f2d1ea5a82c6f4e9b38680e90442f0, type: 3}

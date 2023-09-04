@@ -122,6 +122,8 @@ public class WorldControl : MonoBehaviour {
             Car selectedCar = GetCar(ray);
             if (selectedCar != null) {
                 if (!selectedCar.isTilangEd){
+                    AudioManager.Instance.PlaySFX(AudioManager.sfx.stop);
+
                     ActiveCar = selectedCar;
                     ActiveCar.PrepareInterrogate();
                     Time.timeScale = 0.75f;
@@ -210,12 +212,12 @@ public class WorldControl : MonoBehaviour {
 
     }
 
-    void UnloadScene() {
+    public void UnloadScene() {
         StartCoroutine(UnloadFade());
     }
     
     IEnumerator UnloadFade() {
-        yield return FadeOut();
+        yield return FadeIn();
         AudioManager.Instance.StopMusic();
         SceneManager.UnloadSceneAsync(gameObject.scene);
     }

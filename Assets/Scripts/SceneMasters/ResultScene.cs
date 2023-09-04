@@ -50,7 +50,7 @@ public class ResultScene : MonoBehaviour {
             c = "Good work!";
         } else if (acc < 90) {
             n = "A";
-            c = "Incredible!";
+            c = "Pak Ogah!";
         } else {
             n = "S";
             c = "Professional!";
@@ -66,7 +66,8 @@ public class ResultScene : MonoBehaviour {
 
     void Update(){
         if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)) && !isAnimating) {
-            // go to menu
+            Orchestrator.Instance.GoToMenu();
+            UnloadScene();
         }
     }
 
@@ -82,7 +83,7 @@ public class ResultScene : MonoBehaviour {
 
     private IEnumerator UpdateMissionStatus(string status) {
         while (Mission.text.EndsWith("-")){
-            Mission.text = Mission.text[..^-1];
+            Mission.text = Mission.text.Remove(Mission.text.Length - 1);
             yield return new WaitForSecondsRealtime(.1f);
         }
 

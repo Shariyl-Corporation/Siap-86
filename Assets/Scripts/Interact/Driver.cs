@@ -12,6 +12,7 @@ public class Driver : MonoBehaviour{
 
     public bool hasDoneTerobosLampuMerah;
     public bool hasDoneSpeedLimit;
+    public bool highSpeedDriver;
     public bool isDrunk;
 
     public int Age;

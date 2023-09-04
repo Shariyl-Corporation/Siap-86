@@ -17,9 +17,9 @@ public class Orchestrator : MonoBehaviour {
             Instance = this; 
         }
 
-        mouseCursor = Resources.Load("Cursor") as Texture2D;
-        hoverCursor = Resources.Load("CursorHover") as Texture2D;
-        Cursor.SetCursor(mouseCursor, new Vector2(0, 0), CursorMode.Auto);
+        // mouseCursor = Resources.Load("Cursor") as Texture2D;
+        // hoverCursor = Resources.Load("CursorHover") as Texture2D;
+        // Cursor.SetCursor(mouseCursor, new Vector2(0, 0), CursorMode.Auto);
     }
     
     void Start(){
