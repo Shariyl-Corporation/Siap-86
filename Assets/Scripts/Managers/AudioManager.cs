@@ -87,7 +87,7 @@ public class AudioManager : MonoBehaviour {
 
     private IEnumerator FadeInMusicCoroutine(float duration) {
         float startVolume = musicAudioSource.volume;
-        float targetVolume = .1f;
+        float targetVolume = .2f;
         float currentTime = 0.0f;
 
         while (currentTime < duration)

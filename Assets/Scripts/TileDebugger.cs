@@ -37,7 +37,6 @@ public class TileDebugger : MonoBehaviour
             debugText += gohit.name + "\n";
             if (gohit.GetComponent<Car>() != null) {
                 Car car = gohit.GetComponent<Car>();
-                debugText += "IsMundur: " + car.isMundur + "\n";
                 debugText += "IsTilang: " + car.isTilang + "\n";
                 debugText += "IsWantToStraight: " + car.isWantToGoStraight + "\n";
                 debugText += "Age: " + car.driver.Age + "\n";

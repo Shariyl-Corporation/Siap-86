@@ -30,7 +30,7 @@ public class Car : MonoBehaviour {
     public bool isInTurnTile = false;
     public bool isWantToGoStraight = false;
     public bool isTilang;
-    public bool isMundur;
+    public bool isTilangEd;
     public bool isInCrossing;
     public bool isDoingHardTurn;
     public Vector3 crossDestination;
@@ -102,23 +102,23 @@ public class Car : MonoBehaviour {
 
     Driver generateRandomDriver() {
         Driver d = gameObject.AddComponent(typeof(Driver)) as Driver;
-        // d.hasKTP = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["KTP"];
-        // d.hasSIM = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["SIM"];
-        // d.hasSTNK = Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["STNK"];
+        d.hasKTP = UnityEngine.Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["KTP"];
+        d.hasSIM = UnityEngine.Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["SIM"];
+        d.hasSTNK = UnityEngine.Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["STNK"];
 
-        // if (StateManager.Instance.DayCount >= 2){
-        //     d.isDrunk = Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["DR"];
-        // } else {
-        //     d.isDrunk = true;
-        // }
+        if (StateManager.Instance.DayCount >= 2){
+            d.isDrunk = UnityEngine.Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["DR"];
+        } else {
+            d.isDrunk = true;
+        }
 
-        // if (StateManager.Instance.DayCount >= 3){
-        //     if (Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["UA"]){
-        //         d.Age = Random.Range(14, 17);
-        //     } else {
-        //         d.Age = Random.Range(17, 53);
-        //     }
-        // }
+        if (StateManager.Instance.DayCount >= 3){
+            if (UnityEngine.Random.Range(0.0f, 1.0f) < StateManager.Instance.SpawnRate["UA"]){
+                d.Age = UnityEngine.Random.Range(14, 17);
+            } else {
+                d.Age = UnityEngine.Random.Range(17, 53);
+            }
+        }
             
         return d;
     }
@@ -137,6 +137,7 @@ public class Car : MonoBehaviour {
     }
 
     public void PrepareKembali() {
+        isTilangEd = true;
         isTilang = false;
         StartCoroutine(Kembali());
     }
@@ -148,7 +149,6 @@ public class Car : MonoBehaviour {
     public IEnumerator Minggir() {
         dir_vector = GetForwardVector();
         if (isInTurnTile) {
-            isMundur = true;
             // menuju kanan
             if (dir_vector == new Vector3Int(1, 0, 0)) {
                 spriteRenderer.sortingOrder = 0;
@@ -158,7 +158,6 @@ public class Car : MonoBehaviour {
 
             yield return MinggirMundur();
         } else {
-            isMundur = false;
             spriteRenderer.sortingOrder = 1;
             yield return MinggirMaju();
         }
@@ -201,40 +200,46 @@ public class Car : MonoBehaviour {
         var collider = GetComponent<Collider2D>();
         collider.enabled = true;
 
-        if (isMundur) {
-            yield return KembaliMaju();
-        } else {
-            yield return KembaliMundur();
-        }
+    //     if (isMundur) {
+    //         yield return KembaliMaju();
+    //     } else {
+    //         yield return KembaliMundur();
+    //     }
+    // }
+
+    // private IEnumerator KembaliMaju() {
+        dir_vector = GetForwardVector();
+        // float angle = Mathf.Atan2(dir_vector.y, dir_vector.x) * Mathf.Rad2Deg;
+
+        // angle -= 45;
+        // Quaternion rotation = Quaternion.Euler(0, 0, angle);
+        // transform.rotation = rotation;
+        // yield return Move(.7f, transform.position, transform.position + QuaternionToVectorZ(rotation)*1.5f);
+        targetPosition = transform.position + dir_vector + RotateVectorByZ(dir_vector, -90.0f);
+
+        yield return null;
     }
 
-    private IEnumerator KembaliMaju() {
-        float angle = Mathf.Atan2(dir_vector.y, dir_vector.x) * Mathf.Rad2Deg;
+    Vector3 RotateVectorByZ(Vector3 vector, float angle)
+    {
+        float radianAngle = angle * Mathf.Deg2Rad;
+        float cosAngle = Mathf.Cos(radianAngle);
+        float sinAngle = Mathf.Sin(radianAngle);
 
-        Quaternion rotation = Quaternion.Euler(0, 0, angle);
-        transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation));
+        float x = vector.x * cosAngle - vector.y * sinAngle;
+        float y = vector.x * sinAngle + vector.y * cosAngle;
 
-        angle -= 45;
-        angle += 45;
-        rotation = Quaternion.Euler(0, 0, angle);
-        transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position + QuaternionToVectorZ(rotation));
+        return new Vector3(x, y, vector.z);
     }
 
-    private IEnumerator KembaliMundur() {
-        float angle = Mathf.Atan2(dir_vector.y, dir_vector.x) * Mathf.Rad2Deg;
-        angle -= 45;
+    // private IEnumerator KembaliMundur() {
+    //     float angle = Mathf.Atan2(dir_vector.y, dir_vector.x) * Mathf.Rad2Deg;
 
-        Quaternion rotation = Quaternion.Euler(0, 0, angle);
-        transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation));
-
-        angle += 45;
-        rotation = Quaternion.Euler(0, 0, angle);
-        transform.rotation = rotation;
-        yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation));
-    }
+    //     angle -= 45;
+    //     Quaternion rotation = Quaternion.Euler(0, 0, angle);
+    //     transform.rotation = rotation;
+    //     yield return Move(1, transform.position, transform.position - QuaternionToVectorZ(rotation));
+    // }
 
     private IEnumerator Disintegrate() {
         Color color = spriteRenderer.color;

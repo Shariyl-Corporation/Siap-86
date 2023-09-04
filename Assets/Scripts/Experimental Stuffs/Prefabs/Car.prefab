@@ -138,10 +138,16 @@ MonoBehaviour:
     m_Bits: 8
   smokeParticleSystem: {fileID: 9039965005767772168}
   driver: {fileID: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
+  destinationCell: {x: 0, y: 0, z: 0}
   isInTurnTile: 0
-  isWantToStraight: 0
+  isWantToGoStraight: 0
   isTilang: 0
-  isMundur: 0
+  isTilangEd: 0
+  isInCrossing: 0
+  isDoingHardTurn: 0
+  crossDestination: {x: 0, y: 0, z: 0}
+  trafficLight: {fileID: 0}
   dir_vector: {x: 0, y: 0, z: 0}
   SpriteSelection:
   - spriteList:
@@ -171,7 +177,7 @@ MonoBehaviour:
     - {fileID: -1573796143, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
     - {fileID: 1442833489, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
     - {fileID: 188640211, guid: ae19018cbd10fc44eb74fb155abb7cb6, type: 3}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 7059243372496555341}
 --- !u!61 &7328014771006564404
 BoxCollider2D:
   m_ObjectHideFlags: 0

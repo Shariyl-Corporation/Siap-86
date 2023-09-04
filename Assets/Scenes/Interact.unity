@@ -4946,7 +4946,7 @@ MonoBehaviour:
   card: {fileID: 1548889160}
   redCard: {fileID: 21300000, guid: a0fdff2ec8127d74c8b292cdfd232ba2, type: 3}
   blueCard: {fileID: 21300000, guid: a116252a622b6fa4b91cee87ec71522a, type: 3}
-  isRedCard: 1
+  isRedCard: 0
   allowAction: 1
   sanksiP288A1: 0
   sanksiP288A2: 0
@@ -9059,6 +9059,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickAudioSource: {fileID: 1511742455}
+  sfxAudioSource: {fileID: 0}
+  musicAudioSource: {fileID: 0}
+  sfxClips: []
+  musicClips: []
 --- !u!4 &2085365351
 Transform:
   m_ObjectHideFlags: 0

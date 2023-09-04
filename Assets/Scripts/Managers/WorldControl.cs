@@ -59,6 +59,7 @@ public class WorldControl : MonoBehaviour {
         Car selectedCar = GetCar(ray);
         Color color = fadeSpriteRenderer.color;
         if (selectedCar != null) {
+            if (selectedCar.isTilangEd) return;
             color.a = .3f;
             fadeSpriteRenderer.color = color;
             Time.timeScale = 0.2f;
@@ -120,13 +121,15 @@ public class WorldControl : MonoBehaviour {
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
             Car selectedCar = GetCar(ray);
             if (selectedCar != null) {
-                ActiveCar = selectedCar;
-                ActiveCar.PrepareInterrogate();
-                Time.timeScale = 0.75f;
-                DisableInterrogate();
-                Debug.Log("Interacted with " + ActiveCar);
+                if (!selectedCar.isTilangEd){
+                    ActiveCar = selectedCar;
+                    ActiveCar.PrepareInterrogate();
+                    Time.timeScale = 0.75f;
+                    DisableInterrogate();
+                    Debug.Log("Interacted with " + ActiveCar);
 
-                SceneManager.LoadScene("Interact", LoadSceneMode.Additive);
+                    SceneManager.LoadScene("Interact", LoadSceneMode.Additive);
+                } 
             }
         }
     }
