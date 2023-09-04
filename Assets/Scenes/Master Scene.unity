@@ -189,11 +189,10 @@ MonoBehaviour:
   musicAudioSource: {fileID: 911679103}
   sfxClips: []
   musicClips:
-  - {fileID: 8300000, guid: 4c3601fabf4562e418cfe4e2d0057311, type: 3}
+  - {fileID: 8300000, guid: 61cd7843d9185a24b86dc8a8f2c9ee51, type: 3}
   - {fileID: 8300000, guid: d9f2d1ea5a82c6f4e9b38680e90442f0, type: 3}
-  - {fileID: 8300000, guid: fdd47b4311d69c24a8df9b66fe34b871, type: 3}
-  - {fileID: 8300000, guid: fdd47b4311d69c24a8df9b66fe34b871, type: 3}
   - {fileID: 8300000, guid: fe62f55676290dd48985fca2b569876b, type: 3}
+  - {fileID: 8300000, guid: 4c3601fabf4562e418cfe4e2d0057311, type: 3}
 --- !u!81 &14585715
 AudioListener:
   m_ObjectHideFlags: 0

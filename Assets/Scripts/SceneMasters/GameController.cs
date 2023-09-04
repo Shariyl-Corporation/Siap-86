@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
     void Start() {
         Orchestrator.Instance.RollIntro();
-        IntroductionScene.OnSceneUnloaded += LoadWorldWithControlCaller;
+        IntroductionScene.OnSceneUnloaded += SetupAfterIntro;
     }
 
     // Update is called once per frame
@@ -13,13 +13,16 @@ public class GameController : MonoBehaviour {
         
     }
 
-    public void LoadWorldWithControlCaller(){
-        StartCoroutine(LoadWorldWithControl());
-        AudioManager.Instance.PlayGameMusic();
+    public void SetupAfterIntro(){
+        StartCoroutine(LoadWorldAndDialogue());
+        AudioManager.Instance.PlayDialogueMusic();
     }
 
-    public IEnumerator LoadWorldWithControl(){
+    public IEnumerator LoadWorldAndDialogue(){
         yield return Orchestrator.Instance.LoadWorld();
-        WorldControl.Instance.EnableControl();
+        yield return Orchestrator.Instance.LoadScene("DialogueScene");
+        DialogueScene.OnSceneUnloaded += AudioManager.Instance.PlayGameMusic;
+        // WorldControl.Instance.EnableControl();
+
     }
 }

@@ -43,6 +43,8 @@ public class WorldControl : MonoBehaviour {
         vcam = FindObjectOfType<CinemachineVirtualCamera>();
         convoPair = GetComponent<ConvoPair>();
         animator = GetComponent<Animator>();
+        animator.enabled = false;
+        isControlEnabled = true;
     }
 
     IEnumerator Start() {
@@ -55,9 +57,14 @@ public class WorldControl : MonoBehaviour {
 
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         Car selectedCar = GetCar(ray);
+        Color color = fadeSpriteRenderer.color;
         if (selectedCar != null) {
+            color.a = .3f;
+            fadeSpriteRenderer.color = color;
             Time.timeScale = 0.2f;
         } else {
+            color.a = 0;
+            fadeSpriteRenderer.color = color;
             Time.timeScale = 1f;
         }
     }
@@ -150,6 +157,7 @@ public class WorldControl : MonoBehaviour {
 
     public void DisableControl() {
         isControlEnabled = false;
+        animator.enabled = true;
         animator.Play("Phase1");
     }
     

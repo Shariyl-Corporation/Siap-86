@@ -29,7 +29,7 @@ public class IntroductionScene : MonoBehaviour
     void Start(){
         currentCoroutine = ChangeFrame(frames[currentFrame]);
         StartCoroutine(currentCoroutine);
-        AudioManager.Instance.PlayIntro1Music();
+        AudioManager.Instance.PlayIntroMusic();
     }
 
     void Update(){

@@ -43,6 +43,7 @@ public class Orchestrator : MonoBehaviour {
 
     public IEnumerator LoadWorldThenMenu(){
         yield return LoadWorld();
+        WorldControl.Instance.DisableControl();
         yield return LoadMenu();
     }
 
@@ -74,8 +75,8 @@ public class Orchestrator : MonoBehaviour {
         // }
     }
 
-    public void ChangeCursor(bool hover) {
-        Cursor.SetCursor(hover ? hoverCursor : mouseCursor, new Vector2(0, 0), CursorMode.Auto);
-    }
+    // public void ChangeCursor(bool hover) {
+    //     Cursor.SetCursor(hover ? hoverCursor : mouseCursor, new Vector2(0, 0), CursorMode.Auto);
+    // }
 
 }

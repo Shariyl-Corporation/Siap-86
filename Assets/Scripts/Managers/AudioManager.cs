@@ -15,9 +15,9 @@ public class AudioManager : MonoBehaviour {
 
     public enum music {
         menu,
-        intro1,
-        intro2,
-        game
+        intro,
+        dialogue,
+        world   
     }
 
     void Awake() {
@@ -63,16 +63,16 @@ public class AudioManager : MonoBehaviour {
         StartCoroutine(PlayMusic((int)music.menu));
     }
 
-    public void PlayIntro1Music() {
-        StartCoroutine(PlayMusic((int)music.intro1));
+    public void PlayIntroMusic() {
+        StartCoroutine(PlayMusic((int)music.intro));
     }
 
-    public void PlayIntro2Music() {
-        StartCoroutine(PlayMusic((int)music.intro2));
+    public void PlayDialogueMusic() {
+        StartCoroutine(PlayMusic((int)music.dialogue));
     }
 
     public void PlayGameMusic() {
-        StartCoroutine(PlayMusic((int)music.game));
+        StartCoroutine(PlayMusic((int)music.world));
     }
 
     public void StopMusic() {

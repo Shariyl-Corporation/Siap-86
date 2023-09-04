@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour {
     void Update(){}
 
     public void changeCursor(bool hover) {
-        Orchestrator.Instance.ChangeCursor(hover);
+        // Orchestrator.Instance.ChangeCursor(hover);
     }
 
     public void OnClickPlay() {
