@@ -102,6 +102,7 @@ public class Car : MonoBehaviour {
 
     Driver generateRandomDriver() {
         Driver d = gameObject.AddComponent(typeof(Driver)) as Driver;
+        Debug.Log(StateManager.Instance);
         d.hasKTP = UnityEngine.Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["KTP"];
         d.hasSIM = UnityEngine.Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["SIM"];
         d.hasSTNK = UnityEngine.Random.Range(0.0f, 1.0f) > StateManager.Instance.SpawnRate["STNK"];
